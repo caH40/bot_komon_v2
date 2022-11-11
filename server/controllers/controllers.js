@@ -1,5 +1,16 @@
 import { getResultsStage } from '../../preparation_data/results-stage.js';
+import path from 'path';
 
+const __dirname = path.resolve();
+
+export function mainPage(req, res) {
+	try {
+		res.status(200);
+		res.sendFile(path.resolve(__dirname, 'static', 'index.html'));
+	} catch (error) {
+		console.log(error);
+	}
+}
 export async function resultsStage(req, res) {
 	try {
 		const stageId = req.query.stageId;

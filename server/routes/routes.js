@@ -1,6 +1,7 @@
 import { Router } from 'express';
-import { resultsStage } from '../controllers/controllers.js';
+import { mainPage, resultsStage } from '../controllers/controllers.js';
 
-export const route = new Router();
+export const router = new Router();
 
-route.get('/results/stage', resultsStage);
+router.get('/', mainPage);
+router.get('/results/stage', resultsStage);
