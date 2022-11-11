@@ -4,6 +4,7 @@ import { Stage } from '../Model/Stage.js';
 
 import { secondesToTime, secondesToTimeThousandths } from '../utility/date-convert.js';
 import { gapValue, maxValue } from '../utility/gap.js';
+import { filterThousandths } from '../utility/thousandths-seconds.js';
 
 export async function getResultsStage(request) {
 	try {
@@ -51,16 +52,17 @@ export async function getResultsStage(request) {
 		resultFiltered = await gapValue(resultFiltered);
 		resultFiltered = await maxValue(resultFiltered);
 
-		resultFiltered.forEach(elm => {
-			elm.gap = secondesToTime(elm.gap);
-			elm.time = secondesToTimeThousandths(elm.time);
-			elm.gapPrev = secondesToTime(elm.gapPrev);
-			elm.weightInGrams = Math.round(elm.weightInGrams / 10) / 100;
-		});
-
-		const categoryStr = category === 'T' ? `Общий протокол` : `Группа "${category}"`;
+		const categoryStr = category === 'T' ? `Абсолют` : `Группа "${category}"`;
 		const title = `${name}, Этап ${seriesNumber}, ${seriesType}, ${categoryStr}`;
 
+		resultFiltered.forEach((result, index) => {
+			result.gap = secondesToTime(result.gap);
+			result.time = secondesToTimeThousandths(result.time);
+			result.gapPrev = secondesToTime(result.gapPrev);
+			result.weightInGrams = Math.round(result.weightInGrams / 10) / 100;
+			result.title = title;
+		});
+		resultFiltered = filterThousandths(resultFiltered);
 		return resultFiltered;
 	} catch (error) {
 		console.log(error);

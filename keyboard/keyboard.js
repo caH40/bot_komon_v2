@@ -80,15 +80,19 @@ export async function resultSeriesKeyboard(cbqData) {
 	};
 }
 export function resultStageCatKeyboard(stageId) {
-	console.log('process.env.RESULTS_STAGE', process.env.RESULTS_STAGE);
 	return {
 		parse_mode: 'html',
 		...Markup.inlineKeyboard([
-			[Markup.button.webApp('Общий протокол 📌', `${process.env.RESULTS_STAGE}T${stageId}`)],
-			[Markup.button.webApp('Группа "A" 💪', `${process.env.RESULTS_STAGE}A${stageId}`)],
-			[Markup.button.webApp('Группа "B" 👊', `${process.env.RESULTS_STAGE}B${stageId}`)],
-			[Markup.button.webApp('Группа "C" ✌️', `${process.env.RESULTS_STAGE}C${stageId}`)],
-			[Markup.button.webApp('Группа "W" 👍', `${process.env.RESULTS_STAGE}W${stageId}`)],
+			[
+				Markup.button.webApp(
+					'Общий протокол 📌',
+					`${process.env.SERVER}/results/stage/T${stageId}`
+				),
+			],
+			[Markup.button.webApp('Группа "A" 💪', `${process.env.SERVER}/results/stage/A${stageId}`)],
+			[Markup.button.webApp('Группа "B" 👊', `${process.env.SERVER}/results/stage/B${stageId}`)],
+			[Markup.button.webApp('Группа "C" ✌️', `${process.env.SERVER}/results/stage/C${stageId}`)],
+			[Markup.button.webApp('Группа "W" 👍', `${process.env.SERVER}/results/stage/W${stageId}`)],
 			[Markup.button.callback('Главное меню ❗️', 'main')],
 		]),
 	};
