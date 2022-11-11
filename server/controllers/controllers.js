@@ -5,7 +5,6 @@ const __dirname = path.resolve();
 
 export function mainPage(req, res) {
 	try {
-		console.log('static', req.query.stageId);
 		res.status(200);
 		res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
 	} catch (error) {
@@ -14,7 +13,6 @@ export function mainPage(req, res) {
 }
 export async function resultsStage(req, res) {
 	try {
-		console.log('dyn=============');
 		const stageId = req.query.stageId;
 
 		const resultsDB = await getResultsStage(stageId);
