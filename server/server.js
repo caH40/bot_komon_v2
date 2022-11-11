@@ -10,7 +10,7 @@ export async function serverExpress() {
 	const PORT = 8080;
 
 	app.use(express.json());
-	app.use('/', express.static(path.resolve(__dirname, 'static/')));
+	app.use(express.static(path.resolve(__dirname, 'build')));
 	app.use(cors());
 
 	app.use(router);
