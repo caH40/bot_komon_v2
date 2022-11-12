@@ -1,6 +1,6 @@
 import { Click } from '../Model/Click.js';
 
-export async function getCharts(ctx) {
+export async function getClicks(ctx) {
 	try {
 		// let clicksTotalDB = await Click.aggregate([
 		// 	{
@@ -39,8 +39,10 @@ export async function getCharts(ctx) {
 		const keys = Object.keys(total);
 
 		keys.forEach(day => {
-			let emoji = total[day] > 20 ? '😎' : '🧊';
-			emoji = total[day] > 50 ? '🔥' : emoji;
+			let emoji = '🧊';
+			if (total[day] > 99 && total[day] < 199) emoji = '🌡️';
+			if (total[day] > 199 && total[day] < 300) emoji = '🔥';
+			if (total[day] > 299) emoji = '🧨';
 			totalStr += `${emoji} ${day} - <u>${total[day] ? total[day] : 0}</u>;\n`;
 		});
 		await ctx.replyWithHTML(totalStr);

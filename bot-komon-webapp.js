@@ -9,7 +9,7 @@ import { callbackQuery } from './controllers/callback-query.js';
 import { filterMessage } from './middleware/filter-message.js';
 import { activationScenes } from './scenes/activation-scenes.js';
 import { countClick } from './middleware/count-click.js';
-import { getCharts } from './modules/chartist.js';
+import { getClicks } from './controllers/clicks.js';
 import { nodeSchedule } from './modules/node-schedule.js';
 import { serverExpress } from './server/server.js';
 
@@ -32,7 +32,7 @@ bot.use(countClick);
 bot.command('start', async ctx => await start(ctx));
 bot.command('help', async ctx => await help(ctx));
 bot.command('main', async ctx => await mainMenu(ctx));
-bot.command('click', async ctx => await getCharts(ctx));
+bot.command('click', async ctx => await getClicks(ctx));
 bot.on('callback_query', async ctx => await callbackQuery(ctx));
 
 bot.launch().then(nodeSchedule());
