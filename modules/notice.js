@@ -14,8 +14,10 @@ export async function noticeGetResult(ctx, protocol) {
 				stageDB.number
 			} ${stageDB.seriesId.name} ${subMessage} 📋`;
 
-			setTimeout(() => {
-				ctx.telegram.sendMessage(rider.telegramId, message);
+			setTimeout(async () => {
+				await ctx.telegram
+					.sendMessage(rider.telegramId, message)
+					.catch(error => console.log(error));
 			}, index * 30);
 		});
 	} catch (error) {

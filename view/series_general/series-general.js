@@ -1,6 +1,6 @@
-import { Result } from '../../Model/Result.js';
 import { Series } from '../../Model/Series.js';
 import { Stage } from '../../Model/Stage.js';
+import { getResultsSeriesForGeneral } from '../../modules/getResults.js';
 import { posting } from './posting.js';
 
 export async function resultsSeriesGeneral(ctx, cbqData) {
@@ -9,14 +9,8 @@ export async function resultsSeriesGeneral(ctx, cbqData) {
 		const category = cbqData.slice(14, 15);
 
 		const stagesDB = await Stage.find({ seriesId, hasResults: true });
-		const seriesIds = stagesDB.map(stage => stage._id);
 
-		let resultsSeries = [];
-		const lengthSeries = seriesIds.length;
-		for (let index = 0; index < lengthSeries; index++) {
-			let results = await Result.find({ stageId: seriesIds[index] }).populate('riderId');
-			resultsSeries = [...resultsSeries, ...results];
-		}
+		let resultsSeries = await getResultsSeriesForGeneral(seriesId);
 
 		// сначала необходимо найти все элементы с уникальными именами
 		let zwiftRiderIds = new Set();
