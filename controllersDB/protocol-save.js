@@ -1,43 +1,46 @@
 import { Result } from '../Model/Result.js';
 import { Rider } from '../Model/Rider.js';
 import { Stage } from '../Model/Stage.js';
+import { updateCategoryDB } from '../modules/category-update.js';
 import { ruleCategory } from '../utility/category-rule.js';
 import { convertTime } from '../utility/date-convert.js';
 
-export async function protocolToDB(dataResult, seriesId, stageId) {
+export async function protocolToDB(results, seriesId, stageId) {
 	try {
 		//riderId ,берется после идентификации райдера в протоколе
-		const length = dataResult.length;
+		const length = results.length;
 		for (let index = 0; index < length; index++) {
 			let categoryCurrent = ruleCategory(
-				dataResult[index].watt,
-				dataResult[index].wattPerKg,
-				dataResult[index].gender
+				results[index].watt,
+				results[index].wattPerKg,
+				results[index].gender
 			);
-			let time =
-				typeof dataResult[index].time === 'string'
-					? convertTime(dataResult[index].time)
-					: dataResult[index].time;
 
-			let riderId = await Rider.findOne({ zwiftId: dataResult[index].zwiftId });
+			const newCategory = await updateCategoryDB(results[index], categoryCurrent);
+			let time =
+				typeof results[index].time === 'string'
+					? convertTime(results[index].time)
+					: results[index].time;
+
+			let riderId = await Rider.findOne({ zwiftId: results[index].zwiftId });
 			let result = new Result({
 				stageId,
 				riderId,
-				zwiftRiderId: dataResult[index].zwiftId,
-				name: dataResult[index].name, //
-				placeAbsolute: dataResult[index].placeAbsolute,
-				watt: dataResult[index].watt,
-				wattPerKg: dataResult[index].wattPerKg,
+				zwiftRiderId: results[index].zwiftId,
+				name: results[index].name, //
+				placeAbsolute: results[index].placeAbsolute,
+				watt: results[index].watt,
+				wattPerKg: results[index].wattPerKg,
 				time,
-				category: riderId?.category,
+				category: newCategory.category,
 				categoryCurrent,
-				teamCurrent: dataResult[index].teamCurrent,
-				pointsStage: dataResult[index].pointsStage,
-				weightInGrams: dataResult[index].weightInGrams,
-				heightInCentimeters: dataResult[index].heightInCentimeters,
-				avgHeartRate: dataResult[index].avgHeartRate,
-				gender: dataResult[index].gender,
-				imageSrc: dataResult[index].imageSrc,
+				teamCurrent: results[index].teamCurrent,
+				pointsStage: results[index].pointsStage,
+				weightInGrams: results[index].weightInGrams,
+				heightInCentimeters: results[index].heightInCentimeters,
+				avgHeartRate: results[index].avgHeartRate,
+				gender: results[index].gender,
+				imageSrc: results[index].imageSrc,
 			});
 			const response = await result.save().catch(error => console.log(error));
 			if (response) {
@@ -46,7 +49,7 @@ export async function protocolToDB(dataResult, seriesId, stageId) {
 				return console.log('Ошибка при сохранении данных результатов этапа!');
 			}
 		}
-		return { results: dataResult, stageId };
+		return { results: results, stageId };
 	} catch (error) {
 		console.log(error);
 	}
