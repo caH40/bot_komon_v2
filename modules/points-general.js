@@ -10,7 +10,7 @@ export async function updatePointsGeneral(seriesId) {
 		for (let i = 0; i < stagesDB.length; i++) {
 			let resultsDB = await Result.find({
 				stageId: stagesDB[i]._id,
-				riderId: { $ne: undefined },
+				// riderId: { $ne: undefined },
 			}).populate('riderId');
 
 			//что делать если время одинаковое
@@ -22,7 +22,7 @@ export async function updatePointsGeneral(seriesId) {
 			let placeW = 0;
 
 			for (let j = 0; j < resultsDB.length; j++) {
-				if (resultsDB[j].riderId?.category === 'A') {
+				if (resultsDB[j].category === 'A') {
 					placeA++;
 
 					await Result.findByIdAndUpdate(
@@ -30,21 +30,21 @@ export async function updatePointsGeneral(seriesId) {
 						{ $set: { pointsStage: points[placeA] } }
 					);
 				}
-				if (resultsDB[j].riderId?.category === 'B') {
+				if (resultsDB[j].category === 'B') {
 					placeB++;
 					await Result.findByIdAndUpdate(
 						{ _id: resultsDB[j]._id },
 						{ $set: { pointsStage: points[placeB] } }
 					);
 				}
-				if (resultsDB[j].riderId?.category === 'C') {
+				if (resultsDB[j].category === 'C') {
 					placeC++;
 					await Result.findByIdAndUpdate(
 						{ _id: resultsDB[j]._id },
 						{ $set: { pointsStage: points[placeC] } }
 					);
 				}
-				if (resultsDB[j].riderId?.category === 'W') {
+				if (resultsDB[j].category === 'W') {
 					placeW++;
 					await Result.findByIdAndUpdate(
 						{ _id: resultsDB[j]._id },
