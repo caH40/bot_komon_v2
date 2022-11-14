@@ -3,9 +3,9 @@ import {
 	adminKeyboard,
 	adminTeamKeyboard,
 } from '../../keyboard/keyboard.js';
+import { assignCategoryRiderFromStage } from '../../modules/category-update.js';
 import {
 	approvalTeam,
-	assignCategoryRiderFromStage,
 	assignCatRider,
 	categoryRiderFromStage,
 	pointsMountain,
@@ -15,7 +15,6 @@ import {
 	pointsSMStage,
 	pointsSprinter,
 	requestTeam,
-	riderCategory,
 	updatePointsSeries,
 } from './helper.js';
 
