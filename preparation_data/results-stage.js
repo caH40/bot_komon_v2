@@ -21,7 +21,6 @@ export async function getResultsStage(request) {
 
 		let results = resultsDB.map(result => result.toObject());
 		let resultFiltered = [];
-
 		if (category === 'T') {
 			const categories = ['A', 'B', 'C', 'W'];
 			for (let i = 0; i < categories.length; i++) {
@@ -29,7 +28,7 @@ export async function getResultsStage(request) {
 					.filter(result =>
 						result.riderId?.category
 							? result.riderId?.category === categories[i]
-							: result.categoryCurrent === categories[i]
+							: result.category === categories[i]
 					)
 					.sort((a, b) => a.placeAbsolute - b.placeAbsolute);
 
@@ -42,7 +41,7 @@ export async function getResultsStage(request) {
 				.filter(result =>
 					result.riderId?.category
 						? result.riderId?.category === category
-						: result.categoryCurrent === category
+						: result.category === category
 				)
 				.sort((a, b) => a.placeAbsolute - b.placeAbsolute);
 			resultFiltered.forEach((result, index) => (result.placeCategory = index + 1));
