@@ -1,7 +1,7 @@
 import { Scenes } from 'telegraf';
 
 import textJson from '../../locales/ru.json' assert { type: 'json' };
-import { riderCategory } from '../../handlers/menu_admin/helper.js';
+import { riderCategory } from '../../modules/category-update.js';
 
 export const categoryRiderScene = () => {
 	try {
@@ -9,7 +9,7 @@ export const categoryRiderScene = () => {
 
 		categoryRide.enter(async ctx => {
 			await ctx.replyWithHTML(
-				`Выбор райдера.\nВведите первые буквы фамилии на кириллице. Сформируется список райдеров,  согласно заданному поиску.\n<i>Для выхода нажмите /quit</i> `
+				`Выбор райдера.\nВведите первые буквы lastname из Zwift. Сформируется список райдеров,  согласно заданному поиску.\n<i>Для выхода нажмите /quit</i> `
 			);
 		});
 		categoryRide.command('quit', async ctx => await ctx.scene.leave());
