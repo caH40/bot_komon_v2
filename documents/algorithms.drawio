@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-11-14T10:52:01.611Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.124 YaBrowser/22.9.5.710 Yowser/2.5 Safari/537.36" etag="O7tFCGdz5tbLUSiYLrUI" version="20.5.3" type="github" pages="6">
+<mxfile host="app.diagrams.net" modified="2022-11-14T17:43:14.016Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.124 YaBrowser/22.9.5.710 Yowser/2.5 Safari/537.36" etag="rsKBNo--qsWld5dpq4Rg" version="20.5.3" type="github" pages="6">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="1582" dy="881" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1654" math="0" shadow="0">
       <root>
@@ -69,26 +69,26 @@
     </mxGraphModel>
   </diagram>
   <diagram id="36cmjkotEJlb06e4dRGP" name="Download a protocol stage">
-    <mxGraphModel dx="1049" dy="626" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1654" math="0" shadow="0">
+    <mxGraphModel dx="1582" dy="881" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1654" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="ocHDmZ8IkbQ4bMqWWeLt-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=10;" edge="1" parent="1" source="PXQkOPpw7VEYQgHzUpNi-1" target="ocHDmZ8IkbQ4bMqWWeLt-1">
+        <mxCell id="ocHDmZ8IkbQ4bMqWWeLt-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=10;" parent="1" source="PXQkOPpw7VEYQgHzUpNi-1" target="ocHDmZ8IkbQ4bMqWWeLt-1" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="PXQkOPpw7VEYQgHzUpNi-1" value="Начало" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;arcSize=50;" vertex="1" parent="1">
+        <mxCell id="PXQkOPpw7VEYQgHzUpNi-1" value="Начало" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;arcSize=50;" parent="1" vertex="1">
           <mxGeometry x="145" y="80" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="ocHDmZ8IkbQ4bMqWWeLt-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.472;entryY=0.005;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=10;" edge="1" parent="1" source="ocHDmZ8IkbQ4bMqWWeLt-1" target="ocHDmZ8IkbQ4bMqWWeLt-3">
+        <mxCell id="ocHDmZ8IkbQ4bMqWWeLt-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.472;entryY=0.005;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=10;" parent="1" source="ocHDmZ8IkbQ4bMqWWeLt-1" target="ocHDmZ8IkbQ4bMqWWeLt-3" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ocHDmZ8IkbQ4bMqWWeLt-1" value="Результаты&lt;br&gt;райдеров на этапе&lt;br&gt;resultsDB" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fontSize=10;" vertex="1" parent="1">
+        <mxCell id="ocHDmZ8IkbQ4bMqWWeLt-1" value="Результаты&lt;br&gt;райдеров на этапе&lt;br&gt;resultsDB" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fontSize=10;" parent="1" vertex="1">
           <mxGeometry x="145" y="170" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="ocHDmZ8IkbQ4bMqWWeLt-2" value="&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(248, 249, 250); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Выбор файла протокола с результатами Этапа&lt;/span&gt;" style="text;whiteSpace=wrap;html=1;fontSize=10;" vertex="1" parent="1">
+        <mxCell id="ocHDmZ8IkbQ4bMqWWeLt-2" value="&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(248, 249, 250); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Выбор файла протокола с результатами Этапа&lt;/span&gt;" style="text;whiteSpace=wrap;html=1;fontSize=10;" parent="1" vertex="1">
           <mxGeometry x="380" y="10" width="300" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="ocHDmZ8IkbQ4bMqWWeLt-3" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(248, 249, 250); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Установка категорий&amp;nbsp;&amp;nbsp;&lt;br&gt;райдерам в результатах&amp;nbsp;&lt;/span&gt;resultsDB&lt;br&gt;&lt;/font&gt;" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fontSize=10;" vertex="1" parent="1">
+        <mxCell id="ocHDmZ8IkbQ4bMqWWeLt-3" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(248, 249, 250); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Установка категорий&amp;nbsp;&amp;nbsp;&lt;br&gt;райдерам в результатах&amp;nbsp;&lt;/span&gt;resultsDB&lt;br&gt;&lt;/font&gt;" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fontSize=10;" parent="1" vertex="1">
           <mxGeometry x="120" y="270" width="180" height="60" as="geometry" />
         </mxCell>
       </root>
@@ -386,7 +386,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="1HLid4NRmSPez2BCcGfh" name="Change categories manual">
-    <mxGraphModel dx="1582" dy="881" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1654" math="0" shadow="0">
+    <mxGraphModel dx="753" dy="420" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1654" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -407,7 +407,7 @@
             <mxPoint x="414.97" y="260" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="j9xnHU3LvakZ4E2G8Jek-10" value="Новая категория&lt;br&gt;categoryManual" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fontSize=10;" parent="1" vertex="1">
+        <mxCell id="j9xnHU3LvakZ4E2G8Jek-10" value="riderId или zwiftId" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fontSize=10;" parent="1" vertex="1">
           <mxGeometry x="354.97" y="170" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="j9xnHU3LvakZ4E2G8Jek-11" value="Конец" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;arcSize=50;" parent="1" vertex="1">
@@ -459,6 +459,9 @@
         </mxCell>
         <mxCell id="j9xnHU3LvakZ4E2G8Jek-39" value="конец" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;arcSize=50;" parent="1" vertex="1">
           <mxGeometry x="354.97" y="590" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7iS64Q3IsDTKPMswUzpS-1" value="Новая категория&lt;br&gt;categoryManual" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="560" y="160" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
