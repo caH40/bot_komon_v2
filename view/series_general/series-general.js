@@ -8,10 +8,7 @@ export async function resultsSeriesGeneral(ctx, cbqData) {
 		const seriesId = cbqData.slice(16);
 		const category = cbqData.slice(14, 15);
 
-		const stagesDB = await Stage.find({ seriesId, hasResults: true });
-
 		let resultsSeries = await getResultsSeriesForGeneral(seriesId);
-
 		// сначала необходимо найти все элементы с уникальными именами
 		let zwiftRiderIds = new Set();
 		let points = 0;
@@ -27,13 +24,12 @@ export async function resultsSeriesGeneral(ctx, cbqData) {
 			resultsGeneral.push({ zwiftRiderId, pointsGeneral: points });
 		});
 		//в будущем брать данные по группе и команде из коллекции Riders
-		// console.log(resultsSeries);
 		resultsGeneral = resultsGeneral.map(rider => {
 			const categoryFilter = resultsSeries.find(elm => elm.zwiftRiderId === rider.zwiftRiderId);
 
 			const categoryNew = categoryFilter.riderId
 				? categoryFilter.riderId?.category
-				: categoryFilter.categoryCurrent;
+				: categoryFilter.category;
 			return {
 				zwiftRiderId: rider.zwiftRiderId,
 				pointsGeneral: rider.pointsGeneral,

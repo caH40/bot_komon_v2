@@ -34,13 +34,14 @@ export async function assignCategoryRiderFromStage(ctx, cbqData) {
 		const resultDB = await Result.find({ stageId });
 
 		for (let i = 0; i < resultDB.length; i++) {
-			if (resultDB.riderId) {
+			if (resultDB[i].riderId) {
 				let riderDB = await Rider.findOne({ _id: resultDB[i].riderId });
-				if (riderDB.category < resultDB[i].category) {
+				if (riderDB.category > resultDB[i].category) {
 					let resultsForUpdateDB = await Result.updateMany(
 						{ riderId: resultDB[i].riderId },
 						{ $set: { category: resultDB[i].category } }
 					);
+
 					let riderDB = await Rider.findOneAndUpdate(
 						{ _id: resultDB[i].riderId },
 						{ $set: { category: resultDB[i].category } }
