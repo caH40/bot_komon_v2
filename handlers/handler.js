@@ -8,7 +8,7 @@ import { listRiders } from '../view/team/riders-view.js';
 
 import { handlerResults } from './menu-results/handler-results.js';
 import { handlerTeam } from './menu-team/handler-menu.js';
-import { teamChooseForJoin } from './menu-team/helper.js';
+import { settings, teamChooseForJoin } from './menu-team/helper.js';
 import { handlerAdmin } from './menu_admin/handler-menu.js';
 import { account, getSchedule } from './helper-main.js';
 import { getScheduleWeekly } from '../modules/schedule-weekle.js';
@@ -40,6 +40,7 @@ export async function handler(ctx, cbqData) {
 		if (cbqData.includes('m_3_2_E__')) return await listRiders(ctx, cbqData);
 		if (cbqData.includes('m_3_2_4_1_E--teamLeave_')) return await teamLeaveDB(ctx, cbqData);
 		if (cbqData.includes('m_3_2_2_all_E__teamJoin_')) return await teamChooseForJoin(ctx, cbqData);
+		if (cbqData === 'm_3_4_') return await settings(ctx, cbqData);
 		// ловим V-- для выбора устройства
 		if (cbqData.includes('V--')) {
 			return await ctx.editMessageText(

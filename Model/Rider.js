@@ -17,6 +17,13 @@ const riderSchema = new Schema({
 	yearBirth: String,
 	category: String,
 	gender: String,
+	settings: {
+		notice: {
+			news: { type: Boolean, default: true },
+			newRace: { type: Boolean, default: true },
+			botInfo: { type: Boolean, default: true },
+		},
+	},
 });
 
 export const Rider = model('Rider', riderSchema);

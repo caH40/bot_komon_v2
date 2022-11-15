@@ -12,6 +12,7 @@ export async function accountButtons(ctx) {
 				? [Markup.button.callback('Обновить данные регистрации 🔄', 'account_registration')]
 				: [Markup.button.callback('Регистрация 🆔', 'account_registration')],
 			[Markup.button.callback('Команда 🤝', 'm_3_2_')],
+			[Markup.button.callback('Настройки ⚙️', 'm_3_4_')],
 			[Markup.button.callback('Главное меню ❗️', 'main')],
 		];
 	} catch (error) {
