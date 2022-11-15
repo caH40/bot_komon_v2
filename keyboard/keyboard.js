@@ -265,14 +265,3 @@ export function mobVsDesKeyboard(queryData) {
 
 	return keyboard;
 }
-export function settingsKeyboard(telegramId) {
-	const keyboard = {
-		parse_mode: 'html',
-		...Markup.inlineKeyboard([
-			[Markup.button.webApp('Оповещения', `${process.env.SERVER}/settings/notice/${telegramId}`)],
-			[Markup.button.callback('Главное меню ❗️', 'main')],
-		]),
-	};
-
-	return keyboard;
-}

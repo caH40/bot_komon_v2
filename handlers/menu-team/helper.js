@@ -1,6 +1,5 @@
 import { addRiderDB, notAddRiderDB } from '../../controllersDB/team-add-rider.js';
 import {
-	settingsKeyboard,
 	teamAddRiderKeyboard,
 	teamKeyboard,
 	teamLeaveKeyboard,
@@ -253,15 +252,6 @@ export async function teamWait(ctx) {
 export async function teamDescription(ctx) {
 	try {
 		await ctx.scene.enter('teamDescription');
-	} catch (error) {
-		console.log(error);
-	}
-}
-
-export async function settings(ctx) {
-	try {
-		const userId = ctx.update.callback_query.from.id;
-		return await ctx.editMessageText(`<b>⚙️ Настройки аккаунта</b>`, settingsKeyboard(userId));
 	} catch (error) {
 		console.log(error);
 	}
