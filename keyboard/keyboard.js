@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
 import { Markup } from 'telegraf';
-import { accountButtons } from './button/accaunt.js';
+import { accountButtons } from './button/account.js';
 import { buttonCatFromStageRiders } from './button/admin.js';
 import { mainBtn } from './button/main.js';
 import { resultSeriesBtn } from './button/schedule-btn.js';
