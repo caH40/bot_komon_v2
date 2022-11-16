@@ -3,7 +3,7 @@ import { Stage } from '../Model/Stage.js';
 
 export async function noticeGetResult(ctx, protocol) {
 	try {
-		const ridersDB = await Rider.find();
+		const ridersDB = await Rider.find({ 'settings.notice.botInfo': true });
 		const stageDB = await Stage.findOne({ _id: protocol.stageId }).populate('seriesId');
 
 		ridersDB.forEach((rider, index) => {

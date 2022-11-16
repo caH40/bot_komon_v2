@@ -12,7 +12,14 @@ export async function accountButtons(ctx) {
 				? [Markup.button.callback('Обновить данные регистрации 🔄', 'account_registration')]
 				: [Markup.button.callback('Регистрация 🆔', 'account_registration')],
 			[Markup.button.callback('Команда 🤝', 'm_3_2_')],
-			[Markup.button.webApp('Настройки ⚙️', `${process.env.SERVER}/settings/notice/${telegramId}`)],
+			riderDB
+				? [
+						Markup.button.webApp(
+							'Настройки ⚙️',
+							`${process.env.SERVER}/settings/notice/${telegramId}`
+						),
+				  ]
+				: [],
 			[Markup.button.callback('Главное меню ❗️', 'main')],
 		];
 	} catch (error) {
