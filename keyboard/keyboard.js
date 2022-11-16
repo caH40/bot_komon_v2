@@ -142,7 +142,8 @@ export const adminKeyboard = {
 		[Markup.button.callback('Загрузить расписание 📄', 'admin_getSchedule')],
 		[Markup.button.callback('Установка категорий райдерам 🦾', 'm_5_4_')],
 		[Markup.button.callback('Обновление генеральных зачетов 🔄', 'm_5_5_')],
-		[Markup.button.callback('Спринт и горный зачеты 💨', 'm_5_6_')],
+		[Markup.button.callback('Редактирование данных заезда 🔧', 'm_5_6_')],
+		// [Markup.button.callback('Спринт и горный зачеты 💨', 'm_5_6_')],
 		[Markup.button.callback('Главное меню ❗️', 'main')],
 	]),
 };
@@ -191,7 +192,7 @@ export function adminPointsSeriesKeyboard(series) {
 		]),
 	};
 }
-export function pointsSMSeriesKeyboard(series) {
+export function editDataSeriesKeyboard(series) {
 	return {
 		parse_mode: 'html',
 		...Markup.inlineKeyboard([
@@ -201,20 +202,21 @@ export function pointsSMSeriesKeyboard(series) {
 	};
 }
 
-export function pointsSMStageKeyboard(stages) {
+export function editDataStagesKeyboard(stages) {
 	return {
 		parse_mode: 'html',
 		...Markup.inlineKeyboard([
 			...stages.map(stage => [
-				Markup.button.callback(
+				Markup.button.webApp(
 					`Этап №${stage.number}, ${stage.type} 🏁`,
-					`m_5_6_all_all__${stage._id}`
+					`${process.env.SERVER}/edit/stage/T${stage._id}`
 				),
 			]),
 			[Markup.button.callback('Главное меню ❗️', 'main')],
 		]),
 	};
 }
+
 export function pointsSMboard(stageId) {
 	return {
 		parse_mode: 'html',

@@ -27,28 +27,30 @@ export async function updatePointsGeneral(seriesId) {
 
 					await Result.findByIdAndUpdate(
 						{ _id: resultsDB[j]._id },
-						{ $set: { pointsStage: points[placeA] } }
+						{ $set: { pointsStage: points[placeA] ? points[placeA] : 0 } }
 					);
 				}
 				if (resultsDB[j].category === 'B') {
 					placeB++;
-					await Result.findByIdAndUpdate(
+					let resp = await Result.findByIdAndUpdate(
 						{ _id: resultsDB[j]._id },
-						{ $set: { pointsStage: points[placeB] } }
+						{ $set: { pointsStage: points[placeB] ? points[placeB] : 0 } },
+						{ returnDocument: 'after' }
 					);
+					// console.log(resp.category, resp.name, resp.pointsStage, 'placeB-', placeB);
 				}
 				if (resultsDB[j].category === 'C') {
 					placeC++;
 					await Result.findByIdAndUpdate(
 						{ _id: resultsDB[j]._id },
-						{ $set: { pointsStage: points[placeC] } }
+						{ $set: { pointsStage: points[placeC] ? points[placeC] : 0 } }
 					);
 				}
 				if (resultsDB[j].category === 'W') {
 					placeW++;
 					await Result.findByIdAndUpdate(
 						{ _id: resultsDB[j]._id },
-						{ $set: { pointsStage: points[placeW] } }
+						{ $set: { pointsStage: points[placeW] ? points[placeW] : 0 } }
 					);
 				}
 			}

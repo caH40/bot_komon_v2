@@ -2,8 +2,8 @@ import {
 	adminCatRidersFromStageKeyboard,
 	adminPointsSeriesKeyboard,
 	pointsSMboard,
-	pointsSMSeriesKeyboard,
-	pointsSMStageKeyboard,
+	editDataSeriesKeyboard,
+	editDataStagesKeyboard,
 	teamForApprovalKeyboard,
 } from '../../keyboard/keyboard.js';
 import { mainMenu } from '../../keyboard/main-menu.js';
@@ -87,31 +87,31 @@ export async function pointsSeries(ctx) {
 		console.log(error);
 	}
 }
-export async function pointsSMSeries(ctx) {
+export async function editDataSeries(ctx) {
 	try {
 		const seriesDB = await Series.find();
 		return ctx.editMessageText(
-			'<b>💨 Спринт и горный зачеты. Выбор серии.</b>',
-			pointsSMSeriesKeyboard(seriesDB)
+			'<b>🔧 Редактирование данных заезда. Выбор серии.</b>',
+			editDataSeriesKeyboard(seriesDB)
 		);
 	} catch (error) {
 		console.log(error);
 	}
 }
 
-export async function pointsSMStage(ctx, cbqData) {
+export async function editDataStages(ctx, cbqData) {
 	try {
 		const seriesId = cbqData.slice(11);
 		const stagesDB = await Stage.find({ seriesId, hasResults: true });
 		return ctx.editMessageText(
-			'<b>💨 Спринт и горный зачеты. Выбор этапа.</b>',
-			pointsSMStageKeyboard(stagesDB)
+			'<b>🔧 Редактирование данных заезда. Выбор этапа.</b>',
+			editDataStagesKeyboard(stagesDB)
 		);
 	} catch (error) {
 		console.log(error);
 	}
 }
-export async function pointsSM(ctx, cbqData) {
+export async function editDataStage(ctx, cbqData) {
 	try {
 		const stageId = cbqData.slice(15);
 		return ctx.editMessageText('<b>💨 Спринт и горный зачеты.</b>', pointsSMboard(stageId));

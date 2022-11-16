@@ -1,6 +1,9 @@
 import { getResultsStage } from '../../preparation_data/results-stage.js';
 import path from 'path';
 import { Rider } from '../../Model/Rider.js';
+import { Result } from '../../Model/Result.js';
+import { Series } from '../../Model/Series.js';
+import { Stage } from '../../Model/Stage.js';
 
 const __dirname = path.resolve();
 
@@ -55,6 +58,40 @@ export async function postRiderSettings(req, res) {
 				.status(200)
 				.json({ message: `Обновлены настройки оповещения`, settings: riderDB.settings });
 		return res.status(400).json({ message: `Райдер не найден в БД` });
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+export async function postStageEdit(req, res) {
+	try {
+		const data = req.body;
+
+		const riderDB = await Rider.findOneAndUpdate(
+			{ zwiftId: data.zwiftId },
+			{ $set: { category: data.newCategory } }
+		);
+		// if (!riderDB) return res.status(400).json({ message: `Райдер не найден в БД` });
+
+		const seriesDB = await Series.findOne({ stageId: data.stageId });
+		if (!seriesDB) return res.status(400).json({ message: `Не найдена серия заездов` });
+
+		const stagesDB = await Stage.find({ seriesId: seriesDB._id });
+		if (stagesDB.length === 0)
+			return res.status(400).json({ message: `Не найден ни один этап серии` });
+
+		const resultDB = await Result.findOne({ zwiftRiderId: data.zwiftId });
+
+		for (let i = 0; i < stagesDB.length; i++) {
+			let response = await Result.updateMany(
+				{ stageId: stagesDB[i]._id, zwiftRiderId: data.zwiftId },
+				{ $set: { category: data.newCategory } }
+			);
+		}
+
+		const message = `Радеру ${resultDB.name} изменена категория с "${resultDB.category}" на "${data.newCategory}"`;
+		console.log(message);
+		return res.status(200).json({ message });
 	} catch (error) {
 		console.log(error);
 	}
