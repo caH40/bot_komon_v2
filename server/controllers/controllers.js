@@ -89,7 +89,7 @@ export async function postStageEdit(req, res) {
 			);
 		}
 
-		const message = `Райдеру "${resultDB.name}" изменена категория с "${resultDB.category}" на "${data.newCategory}"`;
+		const message = `Успех! Райдеру "${resultDB.name}" изменена категория с "${resultDB.category}" на "${data.newCategory}"`;
 
 		return res.status(200).json({ message });
 	} catch (error) {
@@ -104,14 +104,22 @@ export async function postStagePoints(req, res) {
 
 		const element = `${nameElement}.${numberElementPoints}.place`;
 
+		const { stageId } = await Result.findOne({ _id: resultId });
+
+		const resultCheckingDB = await Result.findOne({ stageId, [element]: place });
+		if (resultCheckingDB)
+			return res.status(202).json({
+				message: `Внимание!!! Место №${place} уже присвоено райдеру "${resultCheckingDB.name}"`,
+			});
+
 		const resultDB = await Result.findOneAndUpdate(
 			{ _id: resultId },
 			{ $set: { [element]: place } }
 		);
 
-		if (!resultDB) return res.status(400).json({ message: `Не найден результат id:`, resultId });
+		if (!resultDB) return res.status(400).json({ message: `Не найден результат id: ${resultId}` });
 
-		const message = `Райдеру "${resultDB.name}" присвоено ${place} место в "${name}"`;
+		const message = `Успех! Райдеру "${resultDB.name}" присвоено №${place} место в "${name}"`;
 		return res.status(200).json({ message });
 	} catch (error) {
 		console.log(error);
