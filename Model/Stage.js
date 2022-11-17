@@ -15,6 +15,8 @@ const stageSchema = new Schema({
 	ascent: String,
 	laps: String,
 	link: String,
+	quantitySprints: { type: Number, default: 0 },
+	quantityMountains: { type: Number, default: 0 },
 	registeredRider: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Rider' }],
 	protocol: { type: String },
 	hasResults: { type: Boolean, hasResults: false },

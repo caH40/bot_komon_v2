@@ -89,8 +89,8 @@ export async function postStageEdit(req, res) {
 			);
 		}
 
-		const message = `Радеру ${resultDB.name} изменена категория с "${resultDB.category}" на "${data.newCategory}"`;
-		console.log(message);
+		const message = `Райдеру ${resultDB.name} изменена категория с "${resultDB.category}" на "${data.newCategory}"`;
+
 		return res.status(200).json({ message });
 	} catch (error) {
 		console.log(error);
