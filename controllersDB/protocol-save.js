@@ -15,12 +15,12 @@ export async function protocolToDB(results, seriesId, stageId) {
 		for (let i = 1; i < stageDB.quantitySprints + 1; i++)
 			pointsSprint.push({
 				sprint: i,
-				points: 0,
+				place: 'none',
 			});
 		for (let i = 1; i < stageDB.quantityMountains + 1; i++)
 			pointsMountain.push({
 				mountain: i,
-				points: 0,
+				place: 'none',
 			});
 
 		const length = results.length;
