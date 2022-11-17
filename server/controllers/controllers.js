@@ -106,11 +106,13 @@ export async function postStagePoints(req, res) {
 
 		const { stageId } = await Result.findOne({ _id: resultId });
 
-		const resultCheckingDB = await Result.findOne({ stageId, [element]: place });
-		if (resultCheckingDB)
-			return res.status(202).json({
-				message: `Внимание!!! Место №${place} уже присвоено райдеру "${resultCheckingDB.name}"`,
-			});
+		if (place !== 'none') {
+			const resultCheckingDB = await Result.findOne({ stageId, [element]: place });
+			if (resultCheckingDB)
+				return res.status(202).json({
+					message: `Внимание!!! Место №${place} уже присвоено райдеру "${resultCheckingDB.name}"`,
+				});
+		}
 
 		const resultDB = await Result.findOneAndUpdate(
 			{ _id: resultId },
@@ -118,8 +120,12 @@ export async function postStagePoints(req, res) {
 		);
 
 		if (!resultDB) return res.status(400).json({ message: `Не найден результат id: ${resultId}` });
-
-		const message = `Успех! Райдеру "${resultDB.name}" присвоено №${place} место в "${name}"`;
+		let message = '';
+		if (place === 'none') {
+			message = `Успех! Райдеру "${resultDB.name}" установленно "${place}" в "${name}"`;
+		} else {
+			message = `Успех! Райдеру "${resultDB.name}" присвоено №${place} место в "${name}"`;
+		}
 		return res.status(200).json({ message });
 	} catch (error) {
 		console.log(error);
