@@ -89,8 +89,29 @@ export async function postStageEdit(req, res) {
 			);
 		}
 
-		const message = `Райдеру ${resultDB.name} изменена категория с "${resultDB.category}" на "${data.newCategory}"`;
+		const message = `Райдеру "${resultDB.name}" изменена категория с "${resultDB.category}" на "${data.newCategory}"`;
 
+		return res.status(200).json({ message });
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+export async function postStagePoints(req, res) {
+	try {
+		const { nameElement, name, place, resultId } = req.body;
+		const numberElementPoints = +name.slice(-1) - 1;
+
+		const element = `${nameElement}.${numberElementPoints}.place`;
+
+		const resultDB = await Result.findOneAndUpdate(
+			{ _id: resultId },
+			{ $set: { [element]: place } }
+		);
+
+		if (!resultDB) return res.status(400).json({ message: `Не найден результат id:`, resultId });
+
+		const message = `Райдеру "${resultDB.name}" присвоено ${place} место в "${name}"`;
 		return res.status(200).json({ message });
 	} catch (error) {
 		console.log(error);
