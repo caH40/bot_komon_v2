@@ -7,7 +7,22 @@ import { convertTime } from '../utility/date-convert.js';
 
 export async function protocolToDB(results, seriesId, stageId) {
 	try {
-		//riderId ,берется после идентификации райдера в протоколе
+		const stageDB = await Stage.findOne({ _id: stageId });
+		if (!stageDB) return console.log('Не найден этап в БД', stageId);
+
+		const pointsSprint = [];
+		const pointsMountain = [];
+		for (let i = 1; i < stageDB.quantitySprints + 1; i++)
+			pointsSprint.push({
+				sprint: i,
+				points: 0,
+			});
+		for (let i = 1; i < stageDB.quantityMountains + 1; i++)
+			pointsMountain.push({
+				mountain: i,
+				points: 0,
+			});
+
 		const length = results.length;
 		for (let index = 0; index < length; index++) {
 			let categoryCurrent = ruleCategory(
@@ -36,6 +51,8 @@ export async function protocolToDB(results, seriesId, stageId) {
 				categoryCurrent,
 				teamCurrent: results[index].teamCurrent,
 				pointsStage: results[index].pointsStage,
+				pointsSprint,
+				pointsMountain,
 				weightInGrams: results[index].weightInGrams,
 				heightInCentimeters: results[index].heightInCentimeters,
 				avgHeartRate: results[index].avgHeartRate,
