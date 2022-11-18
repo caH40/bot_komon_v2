@@ -1,5 +1,9 @@
-export function stagesCheck(ridersWithPoints, stagesDB) {
+import { Stage } from '../../Model/Stage.js';
+
+export async function stagesCheck(ridersWithPoints, seriesId) {
 	try {
+		const stagesDB = await Stage.find({ seriesId, hasResults: true });
+
 		ridersWithPoints.forEach(rider => {
 			if (stagesDB.length === 4) {
 				if (!rider.pointsStage.find(stage => stage.type === 'TT')) rider.resultStatus = false;
