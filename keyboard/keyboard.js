@@ -125,10 +125,10 @@ export function resultSeriesGeneralKeyboard(seriesId) {
 	return {
 		parse_mode: 'html',
 		...Markup.inlineKeyboard([
-			[Markup.button.callback('Группа "A" 💪', `m_1_all_2_all_A_${seriesId}`)],
-			[Markup.button.callback('Группа "B" 👊', `m_1_all_2_all_B_${seriesId}`)],
-			[Markup.button.callback('Группа "C" ✌️', `m_1_all_2_all_C_${seriesId}`)],
-			[Markup.button.callback('Группа "W" 👍', `m_1_all_2_all_W_${seriesId}`)],
+			[Markup.button.webApp('Группа "A" 💪', `${process.env.SERVER}/results/general/A${seriesId}`)],
+			[Markup.button.webApp('Группа "B" 👊', `${process.env.SERVER}/results/general/B${seriesId}`)],
+			[Markup.button.webApp('Группа "C" ✌️', `${process.env.SERVER}/results/general/C${seriesId}`)],
+			[Markup.button.webApp('Группа "W" 👍', `${process.env.SERVER}/results/general/W${seriesId}`)],
 			[Markup.button.callback('Главное меню ❗️', 'main')],
 		]),
 	};

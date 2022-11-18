@@ -4,6 +4,7 @@ import { Rider } from '../../Model/Rider.js';
 import { Result } from '../../Model/Result.js';
 import { Series } from '../../Model/Series.js';
 import { Stage } from '../../Model/Stage.js';
+import { resultsSeriesGeneral } from '../../preparation_data/general-series.js';
 
 const __dirname = path.resolve();
 
@@ -127,6 +128,20 @@ export async function postStagePoints(req, res) {
 			message = `Успех! Райдеру "${resultDB.name}" присвоено №${place} место в "${name}"`;
 		}
 		return res.status(200).json({ message });
+	} catch (error) {
+		console.log(error);
+	}
+}
+getGeneralPoints;
+export async function getGeneralPoints(req, res) {
+	try {
+		const seriesId = req.query.seriesId;
+		const generalPoints = await resultsSeriesGeneral(seriesId);
+		if (generalPoints)
+			return res
+				.status(200)
+				.json({ message: `Данные по генеральному зачету получены`, generalPoints });
+		return res.status(400).json({ message: `Ошибка при получении данных генерального зачета` });
 	} catch (error) {
 		console.log(error);
 	}
