@@ -4,7 +4,7 @@ import { Rider } from '../../Model/Rider.js';
 import { Result } from '../../Model/Result.js';
 import { Series } from '../../Model/Series.js';
 import { Stage } from '../../Model/Stage.js';
-import { resultsSeriesGeneral } from '../../preparation_data/general-series.js';
+import { resultsSeriesGeneral } from '../../preparation_data/general/general-series.js';
 
 const __dirname = path.resolve();
 

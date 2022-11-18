@@ -1,8 +1,14 @@
-import { Result } from '../Model/Result.js';
-import { Stage } from '../Model/Stage.js';
+import { Result } from '../../Model/Result.js';
+import { Stage } from '../../Model/Stage.js';
+import { countPoints } from './points-count.js';
+import { sortRiders } from './riders-sort.js';
+import { stagesCheck } from './stages-check.js';
 
-export async function generalRiders(seriesId, category) {
+export async function resultsSeriesGeneral(seriesIdAndCategory) {
 	try {
+		const seriesId = seriesIdAndCategory.slice(1);
+		const category = seriesIdAndCategory.slice(0, 1);
+
 		const stagesDB = await Stage.find({ seriesId, hasResults: true });
 
 		let results = [];
@@ -16,7 +22,7 @@ export async function generalRiders(seriesId, category) {
 		ridersTelegram = [...ridersTelegram];
 
 		let rider = { pointsStage: [] };
-		const riders = [];
+		const ridersWithPoints = [];
 
 		ridersTelegram.forEach(zwiftRiderId => {
 			const riderResults = results.filter(result => result.zwiftRiderId === zwiftRiderId);
@@ -26,17 +32,24 @@ export async function generalRiders(seriesId, category) {
 				rider.zwiftRiderId = zwiftRiderId;
 				rider.imageSrc = result.imageSrc ? result.imageSrc : '';
 				rider.category = result.category;
+				rider.resultStatus = true;
+				rider.team = result.teamCurrent;
 				rider.pointsStage.push({
 					type: result.stageId.type,
 					number: result.stageId.number,
 					points: result.pointsStage,
 				});
 			});
-			riders.push(rider);
+			ridersWithPoints.push(rider);
 			rider = { pointsStage: [] };
 		});
 
-		return riders;
+		const ridersChecked = stagesCheck(ridersWithPoints, stagesDB);
+		const riderWithCountedPoints = countPoints(ridersChecked);
+		const ridersFinalTable = sortRiders(riderWithCountedPoints);
+
+		console.log(ridersFinalTable);
+		return ridersFinalTable;
 	} catch (error) {
 		console.log(error);
 	}
