@@ -3,8 +3,9 @@ import { Series } from '../Model/Series.js';
 import { Stage } from '../Model/Stage.js';
 
 import { secondesToTime, secondesToTimeThousandths } from '../utility/date-convert.js';
-import { gapValue, maxValue } from '../utility/gap.js';
+import { gapValue } from '../utility/gap.js';
 import { filterThousandths } from '../utility/thousandths-seconds.js';
+import { maxValue } from '../utility/value-max.js';
 
 export async function getResultsStage(request) {
 	try {
@@ -49,7 +50,6 @@ export async function getResultsStage(request) {
 		}
 
 		resultFiltered = await gapValue(resultFiltered);
-		resultFiltered = await maxValue(resultFiltered);
 
 		const categoryStr = category === 'T' ? `Абсолют` : `Группа "${category}"`;
 		const title = `${name}, Этап ${seriesNumber}, ${seriesType}, ${categoryStr}`;
@@ -61,6 +61,8 @@ export async function getResultsStage(request) {
 			result.weightInGrams = Math.round(result.weightInGrams / 10) / 100;
 			result.title = title;
 		});
+
+		resultFiltered = await maxValue(resultFiltered);
 		resultFiltered = filterThousandths(resultFiltered);
 		return resultFiltered;
 	} catch (error) {
