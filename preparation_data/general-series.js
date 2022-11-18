@@ -1,13 +1,15 @@
 import { Series } from '../Model/Series.js';
 import { Stage } from '../Model/Stage.js';
-import { getResultsSeriesForGeneral } from '../modules/getResults.js';
+import { generalRiders } from './general-riders.js';
+import { getResultsSeriesForGeneral } from './results-series.js';
 
 export async function resultsSeriesGeneral(seriesIdAndCategory) {
 	try {
 		const seriesId = seriesIdAndCategory.slice(1);
 		const category = seriesIdAndCategory.slice(0, 1);
 
-		let resultsSeries = await getResultsSeriesForGeneral(seriesId);
+		let resultsSeries = await generalRiders(seriesId, category);
+		console.log(resultsSeries.length);
 		// сначала необходимо найти все элементы с уникальными именами
 		let zwiftRiderIds = new Set();
 		let points = 0;
@@ -50,7 +52,7 @@ export async function resultsSeriesGeneral(seriesIdAndCategory) {
 		resultsGeneral.forEach((rider, index) => {
 			rider.place = index + 1;
 		});
-		console.log(resultsGeneral);
+		// console.log(resultsGeneral);
 		return resultsGeneral;
 	} catch (error) {
 		console.log(error);
