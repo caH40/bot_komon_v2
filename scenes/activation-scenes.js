@@ -16,7 +16,6 @@ import {
 	eighthSceneReg,
 } from '../scenes/registration/registration.js';
 import { firstSceneCreateTeam, secondSceneCreateTeam } from './team_create/team-create.js';
-import { categoryRiderScene } from './category_rider/category-rider.js';
 import { teamDescriptionScene } from './team-desc/description.js';
 import { pointsSprinterScene } from './sprinter/points-set.js';
 import { pointsMountainScene } from './mountain/points-set.js';
@@ -39,7 +38,6 @@ export function activationScenes() {
 			eighthSceneReg,
 			firstSceneCreateTeam,
 			secondSceneCreateTeam,
-			categoryRiderScene(),
 			teamDescriptionScene(),
 			pointsSprinterScene(),
 			pointsMountainScene(),

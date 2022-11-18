@@ -3,7 +3,7 @@ import {
 	adminKeyboard,
 	adminTeamKeyboard,
 } from '../../keyboard/keyboard.js';
-import { assignCategoryRiderFromStage, assignCatRider } from '../../modules/category-update.js';
+import { assignCategoryRiderFromStage } from '../../modules/category-update.js';
 import {
 	approvalTeam,
 	categoryRiderFromStage,
@@ -27,8 +27,6 @@ export async function handlerAdmin(ctx, cbqData) {
 			);
 
 		if (cbqData === 'm_5_1_1_E') return await requestTeam(ctx);
-		if (cbqData === 'm_5_4_1_') return await ctx.scene.enter('categoryRider');
-		if (cbqData.includes('m_5_4_1_E')) return await assignCatRider(ctx, cbqData);
 		if (cbqData === 'm_5_4_2_') return await categoryRiderFromStage(ctx);
 		if (cbqData.includes('m_5_4_2_E')) return await assignCategoryRiderFromStage(ctx, cbqData);
 		if (cbqData.includes('m_5_team_add_')) return await approvalTeam(ctx, cbqData);

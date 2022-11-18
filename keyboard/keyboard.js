@@ -158,24 +158,11 @@ export const adminTeamKeyboard = {
 export const adminCategoriesKeyboard = {
 	parse_mode: 'html',
 	...Markup.inlineKeyboard([
-		[Markup.button.callback('Выбор райдера', 'm_5_4_1_')],
 		[Markup.button.callback('Выбор заезда', 'm_5_4_2_')],
 		[Markup.button.callback('Главное меню ❗️', 'main')],
 	]),
 };
 
-export function adminCatRidersKeyboard(riderId) {
-	return {
-		parse_mode: 'html',
-		...Markup.inlineKeyboard([
-			[
-				Markup.button.callback('A', `m_5_4_1_E__A_${riderId}`),
-				Markup.button.callback('B', `m_5_4_1_E__B_${riderId}`),
-				Markup.button.callback('C', `m_5_4_1_E__C_${riderId}`),
-			],
-		]),
-	};
-}
 export function adminCatRidersFromStageKeyboard(stages) {
 	return {
 		parse_mode: 'html',
