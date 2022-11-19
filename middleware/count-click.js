@@ -5,6 +5,8 @@ export async function countClick(ctx, next) {
 		if (ctx.update.callback_query) {
 			const user = ctx.update.callback_query.from;
 
+			if (user.id === 412801722) return next();
+
 			const click = await Click.findOneAndUpdate({ 'user.id': user.id }, { $inc: { clicks: 1 } });
 
 			if (!click) {
