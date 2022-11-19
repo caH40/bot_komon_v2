@@ -1,5 +1,5 @@
 import { teamLeaveDB } from '../controllersDB/team-leave.js';
-import { mobVsDesKeyboard, resultSeriesKeyboard } from '../keyboard/keyboard.js';
+import { resultSeriesKeyboard } from '../keyboard/keyboard.js';
 import { beingDeveloped } from '../modules/beingDeveloped.js';
 import { myResults } from '../view/myresults/myresults-view.js';
 
@@ -15,7 +15,6 @@ import { getScheduleWeekly } from '../modules/schedule-weekle.js';
 import { resultsSeriesTeams } from '../view/result-teams/teams.js';
 import { seriesBtn } from '../keyboard/button/schedule-btn.js';
 import { resultGeneral } from './menu-results/helper.js';
-import { resultsSeriesGeneral } from '../view/series_general/series-general.js';
 import { mainMenu } from '../keyboard/main-menu.js';
 import { resultsPoints } from '../view/points/points.js';
 import { handlerDescription } from './menu_description/handler.js';
@@ -33,20 +32,13 @@ export async function handler(ctx, cbqData) {
 			await ctx.deleteMessage(messagesIdForDelete[index]);
 		}
 		ctx.session.data.messagesIdForDelete = [];
-		// console.log(cbqData); //❗❗❗
 
 		if (cbqData === 'main') return await mainMenu(ctx);
 		if (cbqData.includes('m_1_all_3_E__')) return await resultsSeriesTeams(ctx, cbqData);
 		if (cbqData.includes('m_3_2_E__')) return await listRiders(ctx, cbqData);
 		if (cbqData.includes('m_3_2_4_1_E--teamLeave_')) return await teamLeaveDB(ctx, cbqData);
 		if (cbqData.includes('m_3_2_2_all_E__teamJoin_')) return await teamChooseForJoin(ctx, cbqData);
-		// ловим V-- для выбора устройства
-		if (cbqData.includes('V--')) {
-			return await ctx.editMessageText(
-				'<b>👨‍💻 Выбор используемого устройства.</b>',
-				mobVsDesKeyboard(cbqData)
-			);
-		}
+
 		if (cbqData === 'm_1_')
 			return ctx.editMessageText(
 				'<b>🏆 Результаты заездов серий. Выбор серии.</b>',
@@ -60,7 +52,6 @@ export async function handler(ctx, cbqData) {
 			);
 		}
 		if (cbqData.includes('m_1_all_2__')) return await resultGeneral(ctx, cbqData);
-		if (cbqData.includes('m_1_all_2_all_')) return await resultsSeriesGeneral(ctx, cbqData);
 		if (cbqData.includes('m_1_all_4_E')) return await resultsPoints(ctx, cbqData);
 		if (cbqData.includes('m_1_all_5_E')) return await resultsPoints(ctx, cbqData);
 		if (cbqData.includes('m_3_2')) return await handlerTeam(ctx, cbqData);

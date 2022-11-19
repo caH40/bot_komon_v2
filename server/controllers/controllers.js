@@ -132,7 +132,7 @@ export async function postStagePoints(req, res) {
 		console.log(error);
 	}
 }
-getGeneralPoints;
+
 export async function getGeneralPoints(req, res) {
 	try {
 		const seriesId = req.query.seriesId;

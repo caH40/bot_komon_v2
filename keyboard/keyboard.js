@@ -143,7 +143,6 @@ export const adminKeyboard = {
 		[Markup.button.callback('Установка категорий райдерам 🦾', 'm_5_4_')],
 		[Markup.button.callback('Обновление генеральных зачетов 🔄', 'm_5_5_')],
 		[Markup.button.callback('Редактирование данных заезда 🔧', 'm_5_6_')],
-		// [Markup.button.callback('Спринт и горный зачеты 💨', 'm_5_6_')],
 		[Markup.button.callback('Главное меню ❗️', 'main')],
 	]),
 };
@@ -239,18 +238,3 @@ export const clearCharts = {
 	parse_mode: 'html',
 	...Markup.inlineKeyboard([[Markup.button.callback('Очистить сообщения', `clear`)]]),
 };
-
-export function mobVsDesKeyboard(queryData) {
-	const keyboard = {
-		parse_mode: 'html',
-		...Markup.inlineKeyboard([
-			[
-				Markup.button.callback('Десктоп 💻', `Des_${queryData}`),
-				Markup.button.callback('Смартфон 📱', `Mob_${queryData}`),
-			],
-			[Markup.button.callback('Главное меню ❗️', 'main')],
-		]),
-	};
-
-	return keyboard;
-}
