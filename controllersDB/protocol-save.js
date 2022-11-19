@@ -31,7 +31,7 @@ export async function protocolToDB(results, seriesId, stageId) {
 				results[index].gender
 			);
 
-			const newCategory = await updateCategoryDB(results[index], categoryCurrent);
+			const newCategory = await updateCategoryDB(stageDB.seriesId, results[index], categoryCurrent);
 			let time =
 				typeof results[index].time === 'string'
 					? convertTime(results[index].time)
