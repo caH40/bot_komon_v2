@@ -146,3 +146,21 @@ export async function getGeneralPoints(req, res) {
 		console.log(error);
 	}
 }
+
+export async function getMountainPoints(req, res) {
+	try {
+		const seriesId = req.query.seriesId;
+		console.log(seriesId);
+		//pointsMountain
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+export async function getSprintPoints(req, res) {
+	try {
+		const seriesId = req.query.seriesId;
+	} catch (error) {
+		console.log(error);
+	}
+}

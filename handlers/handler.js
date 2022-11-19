@@ -16,7 +16,6 @@ import { resultsSeriesTeams } from '../view/result-teams/teams.js';
 import { seriesBtn } from '../keyboard/button/schedule-btn.js';
 import { resultGeneral } from './menu-results/helper.js';
 import { mainMenu } from '../keyboard/main-menu.js';
-import { resultsPoints } from '../view/points/points.js';
 import { handlerDescription } from './menu_description/handler.js';
 
 export async function handler(ctx, cbqData) {
@@ -52,8 +51,6 @@ export async function handler(ctx, cbqData) {
 			);
 		}
 		if (cbqData.includes('m_1_all_2__')) return await resultGeneral(ctx, cbqData);
-		if (cbqData.includes('m_1_all_4_E')) return await resultsPoints(ctx, cbqData);
-		if (cbqData.includes('m_1_all_5_E')) return await resultsPoints(ctx, cbqData);
 		if (cbqData.includes('m_3_2')) return await handlerTeam(ctx, cbqData);
 		if (cbqData.includes('m_4_')) return await handlerDescription(ctx, cbqData);
 		if (cbqData.includes('m_5_')) return await handlerAdmin(ctx, cbqData);
