@@ -3,6 +3,7 @@ import { protocolToDB } from '../../controllersDB/protocol-save.js';
 import { deleteFile } from '../../file-manager/file-delete.js';
 import { noticeGetResult } from '../../modules/notice.js';
 import textJson from '../../locales/ru.json' assert { type: 'json' };
+import { updatePointsGeneral } from '../../modules/points-general.js';
 
 export const confirmUploadProtocolScene = () => {
 	try {
@@ -20,6 +21,7 @@ export const confirmUploadProtocolScene = () => {
 				await ctx.reply(text.wrongToDB);
 				await ctx.scene.leave('confirmUploadProtocol');
 			}
+			await updatePointsGeneral(ctx.session.data.seriesId);
 			await noticeGetResult(ctx, response);
 			await ctx.reply(text.successfully);
 			await ctx.scene.leave('confirmUploadProtocol');
