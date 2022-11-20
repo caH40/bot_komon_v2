@@ -19,6 +19,7 @@ const resultSchema = new Schema({
 	pointsStage: { type: Number, default: 0 },
 	pointsSprint: [
 		{
+			stageNumber: { type: Number },
 			sprint: { type: Number },
 			place: { type: String },
 			points: { type: Number, default: 0 },
@@ -27,6 +28,7 @@ const resultSchema = new Schema({
 	],
 	pointsMountain: [
 		{
+			stageNumber: { type: Number },
 			mountain: { type: Number },
 			place: { type: String },
 			points: { type: Number, default: 0 },
