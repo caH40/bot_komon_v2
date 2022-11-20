@@ -6,7 +6,7 @@ export async function getPointsMountain(series) {
 	try {
 		const resultsFiltered = await filterResults(series);
 		const ridersResult = await getRiders(resultsFiltered, series);
-		const ridersSorted = await sortRiders(ridersResult);
+		const ridersSorted = sortRiders(ridersResult);
 
 		return ridersSorted;
 	} catch (error) {

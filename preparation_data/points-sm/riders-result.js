@@ -22,11 +22,14 @@ export async function getRiders(results, series) {
 		let rider = {};
 		rider.pointsMountain = [];
 		let ridersWithPoints = [];
+		let points = 0;
 
 		ridersTelegram.forEach(zwiftRiderId => {
 			const riderResults = results.filter(result => result.zwiftRiderId === zwiftRiderId);
+
 			//массив с результатами одного райдера zwiftRiderId
 			riderResults.forEach(result => {
+				console.log(result.pointsMountain);
 				rider.stages = stage;
 				rider.name = result.name;
 				rider.zwiftRiderId = zwiftRiderId;
@@ -39,13 +42,15 @@ export async function getRiders(results, series) {
 
 				rider.pointsMountain.push(...result.pointsMountain);
 
-				let points = 0;
-				result.pointsMountain.forEach(elm => (points += elm.points));
+				result.pointsMountain.forEach(elm => {
+					points += elm.points;
+				});
 				rider.pointsTotal = points;
 			});
 			ridersWithPoints.push(rider);
 			rider = {};
 			rider.pointsMountain = [];
+			points = 0;
 		});
 
 		return ridersWithPoints;
