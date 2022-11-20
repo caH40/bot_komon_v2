@@ -1,0 +1,26 @@
+export const sprintTable = [
+	{ place: 'none', points: 0 },
+	{ place: '1', points: 100 },
+	{ place: '2', points: 70 },
+	{ place: '3', points: 50 },
+	{ place: '4', points: 30 },
+	{ place: '5', points: 20 },
+	{ place: '6', points: 10 },
+	{ place: '7', points: 5 },
+	{ place: '8', points: 3 },
+	{ place: '9', points: 2 },
+	{ place: '10', points: 1 },
+];
+export const mountainTable = [
+	{ place: 'none', points: 0 },
+	{ place: '1', points: 100 },
+	{ place: '2', points: 80 },
+	{ place: '3', points: 60 },
+	{ place: '4', points: 40 },
+	{ place: '5', points: 35 },
+	{ place: '6', points: 30 },
+	{ place: '7', points: 25 },
+	{ place: '8', points: 20 },
+	{ place: '9', points: 15 },
+	{ place: '10', points: 10 },
+];

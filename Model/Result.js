@@ -17,8 +17,22 @@ const resultSchema = new Schema({
 	teamCurrent: String,
 	isNeedCount: { type: Boolean, default: true },
 	pointsStage: { type: Number, default: 0 },
-	pointsSprint: [{ sprint: { type: Number }, place: { type: String }, _id: false }],
-	pointsMountain: [{ mountain: { type: Number }, place: { type: String }, _id: false }],
+	pointsSprint: [
+		{
+			sprint: { type: Number },
+			place: { type: String },
+			points: { type: Number, default: 0 },
+			_id: false,
+		},
+	],
+	pointsMountain: [
+		{
+			mountain: { type: Number },
+			place: { type: String },
+			points: { type: Number, default: 0 },
+			_id: false,
+		},
+	],
 	isUnderChecking: { type: String, default: false },
 	comment: String,
 	weightInGrams: Number,

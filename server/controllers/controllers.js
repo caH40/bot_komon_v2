@@ -5,6 +5,7 @@ import { Result } from '../../Model/Result.js';
 import { Series } from '../../Model/Series.js';
 import { Stage } from '../../Model/Stage.js';
 import { resultsSeriesGeneral } from '../../preparation_data/general/general-series.js';
+import { mountainTable, sprintTable } from '../../utility/points.js';
 
 const __dirname = path.resolve();
 
@@ -103,12 +104,19 @@ export async function postStagePoints(req, res) {
 		const { nameElement, name, place, resultId } = req.body;
 		const numberElementPoints = +name.slice(-1) - 1;
 
-		const element = `${nameElement}.${numberElementPoints}.place`;
+		let pointsTable = {};
+		if (nameElement === 'pointsMountain') pointsTable = mountainTable;
+		if (nameElement === 'pointsSprint') pointsTable = sprintTable;
+
+		const points = pointsTable.find(point => point.place === place)?.points;
+		const elementPoints = `${nameElement}.${numberElementPoints}.points`;
+
+		const elementPlace = `${nameElement}.${numberElementPoints}.place`;
 
 		const { stageId } = await Result.findOne({ _id: resultId });
 
 		if (place !== 'none') {
-			const resultCheckingDB = await Result.findOne({ stageId, [element]: place });
+			const resultCheckingDB = await Result.findOne({ stageId, [elementPlace]: place });
 			if (resultCheckingDB)
 				return res.status(202).json({
 					message: `Внимание!!! Место №${place} уже присвоено райдеру "${resultCheckingDB.name}"`,
@@ -117,7 +125,7 @@ export async function postStagePoints(req, res) {
 
 		const resultDB = await Result.findOneAndUpdate(
 			{ _id: resultId },
-			{ $set: { [element]: place } }
+			{ $set: { [elementPlace]: place, [elementPoints]: points } }
 		);
 
 		if (!resultDB) return res.status(400).json({ message: `Не найден результат id: ${resultId}` });
