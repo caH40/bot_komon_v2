@@ -6,6 +6,7 @@ import { Series } from '../../Model/Series.js';
 import { Stage } from '../../Model/Stage.js';
 import { resultsSeriesGeneral } from '../../preparation_data/general/general-series.js';
 import { mountainTable, sprintTable } from '../../utility/points.js';
+import { pointsMountain } from '../../preparation_data/points-sm/points-mountain.js';
 
 const __dirname = path.resolve();
 
@@ -158,8 +159,8 @@ export async function getGeneralPoints(req, res) {
 export async function getMountainPoints(req, res) {
 	try {
 		const seriesId = req.query.seriesId;
-		console.log(seriesId);
-		//pointsMountain
+
+		const resultMountain = await pointsMountain(seriesId);
 	} catch (error) {
 		console.log(error);
 	}
