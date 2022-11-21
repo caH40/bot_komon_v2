@@ -6,7 +6,7 @@ import { Series } from '../../Model/Series.js';
 import { Stage } from '../../Model/Stage.js';
 import { resultsSeriesGeneral } from '../../preparation_data/general/general-series.js';
 import { mountainTable, sprintTable } from '../../utility/points.js';
-import { getPointsMountain } from '../../preparation_data/points-sm/points-mountain.js';
+import { getPointsSM } from '../../preparation_data/points-sm/points-sm.js';
 
 const __dirname = path.resolve();
 
@@ -160,8 +160,8 @@ export async function getMountainPoints(req, res) {
 	try {
 		const seriesId = req.query.seriesId;
 
-		const pointsMountain = await getPointsMountain(seriesId);
-		// console.log(resultMountain);
+		const pointsMountain = await getPointsSM(seriesId);
+
 		if (pointsMountain)
 			return res.status(200).json({ message: `Данные по горному зачету`, pointsMountain });
 		return res.status(400).json({ message: `Ошибка при получении данных горного зачета` });
@@ -173,6 +173,12 @@ export async function getMountainPoints(req, res) {
 export async function getSprintPoints(req, res) {
 	try {
 		const seriesId = req.query.seriesId;
+
+		const pointsSprint = await getPointsSM(seriesId);
+
+		if (pointsSprint)
+			return res.status(200).json({ message: `Данные по спринтерскому зачету`, pointsSprint });
+		return res.status(400).json({ message: `Ошибка при получении данных спринтерского зачета` });
 	} catch (error) {
 		console.log(error);
 	}

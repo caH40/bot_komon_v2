@@ -4,6 +4,8 @@ import { Stage } from '../../Model/Stage.js';
 export async function filterResults(series) {
 	try {
 		const seriesId = series.slice(1);
+		const type = series.slice(0, 1);
+		const stringForType = { S: 'pointsSprint.sprint', M: 'pointsMountain.mountain' };
 
 		const stagesDB = await Stage.find({ seriesId, hasResults: true });
 
@@ -11,7 +13,7 @@ export async function filterResults(series) {
 		for (let i = 0; i < stagesDB.length; i++) {
 			let resultsDB = await Result.find({
 				stageId: stagesDB[i]._id,
-				'pointsMountain.mountain': 1,
+				[stringForType[type]]: 1,
 			}).populate('stageId');
 			results.push(...resultsDB);
 		}

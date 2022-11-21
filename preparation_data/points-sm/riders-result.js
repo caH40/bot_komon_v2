@@ -3,14 +3,20 @@ import { Stage } from '../../Model/Stage.js';
 export async function getRiders(results, series) {
 	try {
 		const seriesId = series.slice(1);
-		const stagesDB = await Stage.find({ seriesId, quantityMountains: { $ne: 0 } });
+		const type = series.slice(0, 1);
+		const stringForType = {
+			S: { quantity: 'quantitySprints', points: 'pointsSprint' },
+			M: { quantity: 'quantityMountains', points: 'pointsMountain' },
+		};
+
+		const stagesDB = await Stage.find({ seriesId, [stringForType[type].quantity]: { $ne: 0 } });
 
 		let stage = [];
 		stagesDB.forEach(stageDB => {
 			stage.push({
 				number: stageDB.number,
 				route: stageDB.route,
-				quantityMountains: stageDB.quantityMountains,
+				[stringForType[type].quantity]: stageDB[stringForType[type].quantity],
 			});
 		});
 		stage = stage.sort((a, b) => a.number - b.number);
@@ -20,7 +26,7 @@ export async function getRiders(results, series) {
 		ridersTelegram = [...ridersTelegram];
 
 		let rider = {};
-		rider.pointsMountain = [];
+		rider[stringForType[type].points] = [];
 		let ridersWithPoints = [];
 		let points = 0;
 
@@ -29,27 +35,26 @@ export async function getRiders(results, series) {
 
 			//массив с результатами одного райдера zwiftRiderId
 			riderResults.forEach(result => {
-				console.log(result.pointsMountain);
 				rider.stages = stage;
 				rider.name = result.name;
 				rider.zwiftRiderId = zwiftRiderId;
 				rider.imageSrc = result.imageSrc ? result.imageSrc : '';
 				rider.category = result.category;
 				rider.team = result.teamCurrent;
-				result.pointsMountain.forEach(pointsStage => {
+				result[stringForType[type].points].forEach(pointsStage => {
 					pointsStage.stageNumber = result.stageId.number;
 				});
 
-				rider.pointsMountain.push(...result.pointsMountain);
+				rider[stringForType[type].points].push(...result[stringForType[type].points]);
 
-				result.pointsMountain.forEach(elm => {
+				result[stringForType[type].points].forEach(elm => {
 					points += elm.points;
 				});
 				rider.pointsTotal = points;
 			});
 			ridersWithPoints.push(rider);
 			rider = {};
-			rider.pointsMountain = [];
+			rider[stringForType[type].points] = [];
 			points = 0;
 		});
 
