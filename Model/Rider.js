@@ -22,6 +22,7 @@ const riderSchema = new Schema({
 			news: { type: Boolean, default: true },
 			newRace: { type: Boolean, default: true },
 			botInfo: { type: Boolean, default: true },
+			training: { type: Boolean, default: true },
 		},
 	},
 });
