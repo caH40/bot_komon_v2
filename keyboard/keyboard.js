@@ -79,7 +79,7 @@ export async function resultSeriesKeyboard(cbqData) {
 		...Markup.inlineKeyboard(await resultSeriesBtn(cbqData)),
 	};
 }
-export function resultStageCatKeyboard(stageId) {
+export function resultStageCatKeyboard(stageId, seriesId) {
 	return {
 		parse_mode: 'html',
 		...Markup.inlineKeyboard([
@@ -93,6 +93,7 @@ export function resultStageCatKeyboard(stageId) {
 			[Markup.button.webApp('Группа "B" 👊', `${process.env.SERVER}/results/stage/B${stageId}`)],
 			[Markup.button.webApp('Группа "C" ✌️', `${process.env.SERVER}/results/stage/C${stageId}`)],
 			[Markup.button.webApp('Группа "W" 👍', `${process.env.SERVER}/results/stage/W${stageId}`)],
+			[Markup.button.callback('<< назад >>', `result_Stages_${seriesId}`)],
 			[Markup.button.callback('Главное меню ❗️', 'main')],
 		]),
 	};
@@ -129,6 +130,7 @@ export function resultSeriesGeneralKeyboard(seriesId) {
 			[Markup.button.webApp('Группа "B" 👊', `${process.env.SERVER}/results/general/B${seriesId}`)],
 			[Markup.button.webApp('Группа "C" ✌️', `${process.env.SERVER}/results/general/C${seriesId}`)],
 			[Markup.button.webApp('Группа "W" 👍', `${process.env.SERVER}/results/general/W${seriesId}`)],
+			[Markup.button.callback('<< назад >>', `m_1_all__${seriesId}`)],
 			[Markup.button.callback('Главное меню ❗️', 'main')],
 		]),
 	};
@@ -216,11 +218,11 @@ export function pointsSMboard(stageId) {
 }
 
 // меню выбора результатов этапов серии
-export function resultStagesKeyboard(series) {
+export function resultStagesKeyboard(stages, seriesId) {
 	const keyboard = {
 		parse_mode: 'html',
 		...Markup.inlineKeyboard([
-			...series.map(stage => [
+			...stages.map(stage => [
 				Markup.button.callback(
 					`Этап ${stage.number}, ${new Date(stage.dateStart).toLocaleDateString()}, ${
 						stage.type
@@ -228,6 +230,7 @@ export function resultStagesKeyboard(series) {
 					`stage_${stage._id}`
 				),
 			]),
+			[Markup.button.callback('<< назад >>', `m_1_all__${seriesId}`)],
 			[Markup.button.callback('Главное меню ❗️', 'main')],
 		]),
 	};

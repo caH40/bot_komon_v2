@@ -14,7 +14,7 @@ export async function resultStages(ctx, cbqData) {
 
 		return await ctx.editMessageText(
 			`<b>📝 Результаты этапов ${name}.</b>`,
-			resultStagesKeyboard(stagesDB)
+			resultStagesKeyboard(stagesDB, seriesId)
 		);
 	} catch (error) {
 		console.log(error);
@@ -29,7 +29,7 @@ export async function resultStage(ctx, cbqData) {
 
 		return await ctx.editMessageText(
 			`<b>📝 Результаты этапа №${number} ${name}.</b>`,
-			resultStageCatKeyboard(stageId)
+			resultStageCatKeyboard(stageId, seriesId)
 		);
 	} catch (error) {
 		console.log(error);
