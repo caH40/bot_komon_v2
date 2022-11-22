@@ -4,6 +4,7 @@ const hashTags = ['news', 'newRace', 'training'];
 
 export async function readChannelPosts(ctx, post) {
 	try {
+		console.log(post.sender_chat.id);
 		let text = '';
 		if (post.text) text = post.text;
 		if (post.caption) text = post.caption;
