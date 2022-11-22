@@ -25,10 +25,13 @@ export async function scheduleToDB(dataSeries, dataStages) {
 				dateStart: convertDate(dataStages[index].dateStart, dataStages[index].timeStart),
 				world: dataStages[index].world,
 				route: dataStages[index].route,
+				routeLink: dataStages[index].routeLink,
 				laps: dataStages[index].laps,
 				distance: dataStages[index].distance,
 				ascent: dataStages[index].ascent,
 				type: dataStages[index].type,
+				quantitySprints: dataStages[index].quantitySprints,
+				quantityMountains: dataStages[index].quantityMountains,
 				link: dataStages[index].link,
 			});
 			await stage.save().catch(error => console.log(error));

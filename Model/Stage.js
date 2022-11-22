@@ -11,6 +11,7 @@ const stageSchema = new Schema({
 	timeStart: Number,
 	world: String,
 	route: String,
+	routeLink: String,
 	distance: String,
 	ascent: String,
 	laps: String,

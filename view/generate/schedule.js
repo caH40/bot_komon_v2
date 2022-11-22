@@ -37,7 +37,7 @@ export function generateView(data, title = '') {
 			let emoji = row.dateStart < new Date().getTime() ? '✅' : '❗';
 			body = `${body}${emoji} <u>${ternary(row.dateStart)} Этап №${row.number}</u>\nМир: <i>${
 				row.world
-			}</i>, маршрут: <i>${row.route}</i>, кругов <i>${row.laps}</i>, <i>${
+			}</i>, <a href="${row.routeLink}">${row.route}</a>, кругов <i>${row.laps}</i>, <i>${
 				row.distance
 			}км</i>, <i>${row.ascent}м</i>, тип заезда: <i>${row.type}</i>, <a href="${
 				row.link

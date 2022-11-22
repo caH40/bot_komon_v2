@@ -5,7 +5,8 @@ import { scheduleKeyboard, seriesKeyboard } from '../keyboard.js';
 export async function scheduleBtn() {
 	try {
 		const seriesDB = await Series.find();
-		return scheduleKeyboard(seriesDB);
+		const seriesSorted = seriesDB.sort((a, b) => b.dateStart - a.dateStart);
+		return scheduleKeyboard(seriesSorted);
 	} catch (error) {
 		console.log(error);
 	}
@@ -13,7 +14,8 @@ export async function scheduleBtn() {
 export async function seriesBtn() {
 	try {
 		const seriesDB = await Series.find();
-		return seriesKeyboard(seriesDB);
+		const seriesSorted = seriesDB.sort((a, b) => b.dateStart - a.dateStart);
+		return seriesKeyboard(seriesSorted);
 	} catch (error) {
 		console.log(error);
 	}

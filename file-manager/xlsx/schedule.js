@@ -28,10 +28,13 @@ export async function getExcel(ctx, fileName) {
 				timeStart: elm['Время'],
 				world: elm['Мир'],
 				route: elm['Маршрут'],
+				routeLink: elm['Ссылка на маршрут'],
 				laps: elm['Количество кругов'],
 				distance: elm['Общая протяженность, км'],
 				ascent: elm['Общий набор высоты, м'],
 				type: elm['Тип заезда'],
+				quantitySprints: elm['Количество спринтов'],
+				quantityMountains: elm['Количество гор'],
 				link: elm['Ссылка на заезд в Звифте'],
 			};
 		});
