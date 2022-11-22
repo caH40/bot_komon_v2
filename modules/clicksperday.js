@@ -15,6 +15,8 @@ export async function countClicksPerDay() {
 
 			currentDay.clicks = total - prePeriod;
 
+			if (currentDay === 0) return;
+
 			await Click.findOneAndUpdate({ _id: user._id }, { $push: { clicksPerDay: currentDay } });
 		});
 	} catch (error) {
