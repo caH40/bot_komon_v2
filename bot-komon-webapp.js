@@ -12,6 +12,7 @@ import { countClick } from './middleware/count-click.js';
 import { getClicks } from './controllers/clicks.js';
 import { nodeSchedule } from './modules/node-schedule.js';
 import { serverExpress } from './server/server.js';
+import { readChannelPosts } from './modules/channel.js';
 
 await mongoose
 	.connect(process.env.MONGODB)
@@ -34,6 +35,7 @@ bot.command('help', async ctx => await help(ctx));
 bot.command('main', async ctx => await mainMenu(ctx));
 bot.command('click', async ctx => await getClicks(ctx));
 bot.on('callback_query', async ctx => await callbackQuery(ctx));
+bot.on('channel_post', async ctx => await readChannelPosts(ctx, ctx.update.channel_post));
 
 bot.launch().then(nodeSchedule());
 
