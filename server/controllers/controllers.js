@@ -50,16 +50,27 @@ export async function postRiderSettings(req, res) {
 
 		const riderDB = await Rider.findOneAndUpdate(
 			{ telegramId },
-			{ $set: { 'settings.notice': notice } },
-			{
-				returnDocument: 'after',
-			}
+			{ $set: { 'settings.notice': notice } }
 		);
 
+		const messages = {
+			true: 'Включено!',
+			false: 'Выключено!',
+			news: 'Оповещение о новостях:',
+			newRace: 'Оповещение об анонсах заездов:',
+			botInfo: 'Оповещение об изменениях данных в боте:',
+			training: 'Оповещение о новых статьях про велотренировки:',
+		};
+
+		let response = '';
+		const keys = Object.keys(notice);
+		keys.forEach(key => {
+			if (notice[key] !== riderDB.settings.notice[key])
+				response = `${messages[key]} ${messages[notice[key]]}`;
+		});
+
 		if (riderDB)
-			return res
-				.status(200)
-				.json({ message: `Обновлены настройки оповещения`, settings: riderDB.settings });
+			return res.status(200).json({ message: `Обновлены настройки оповещения`, response });
 		return res.status(400).json({ message: `Райдер не найден в БД` });
 	} catch (error) {
 		console.log(error);
