@@ -34,14 +34,19 @@ export function generateView(data, title = '') {
 		let body = '';
 
 		data.forEach(row => {
-			let emoji = row.dateStart < new Date().getTime() ? '✅' : '❗';
-			body = `${body}${emoji} <u>${ternary(row.dateStart)} Этап №${row.number}</u>\nМир: <i>${
-				row.world
-			}</i>, <a href="${row.routeLink}">${row.route}</a>, кругов <i>${row.laps}</i>, <i>${
-				row.distance
-			}км</i>, <i>${row.ascent}м</i>, тип заезда: <i>${row.type}</i>, <a href="${
-				row.link
-			}">Zwift</a>\n\n`;
+			const emoji = row.dateStart < new Date().getTime() ? '✅' : '❗';
+			const stageStr = row.number ? `Этап №${row.number}` : '';
+			const worldStr = row.world ? `Мир: <b>${row.world}</b>, ` : '';
+			const routeStr = row.route ? `<a href="${row.routeLink}">${row.route}</a>, ` : '';
+			const lapsStr = row.laps ? `кругов <b>${row.laps}</b>, ` : '';
+			const distanceStr = row.distance ? `дистанция <b>${row.distance}км</b>, ` : '';
+			const ascentStr = row.ascent ? `общий набор высоты <b>${row.ascent}м</b>, ` : '';
+			const typeStr = row.type ? `тип заезда: <b>${row.type}</b>, ` : '';
+			const linkStr = row.link ? `<a href="${row.link}">регистрация в Звифте</a>` : '';
+
+			body = `${body}${emoji} <u>${ternary(
+				row.dateStart
+			)} ${stageStr}</u>\n${worldStr}${routeStr}${lapsStr}${distanceStr}${ascentStr}${typeStr}${linkStr}\n\n`;
 		});
 		return `🏆 <b>${title}</b> 🏆\n\n${body}`;
 	} catch (error) {
