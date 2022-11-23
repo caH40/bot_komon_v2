@@ -28,7 +28,7 @@ export async function handler(ctx, cbqData) {
 		const messagesIdForDelete = ctx.session.data.messagesIdForDelete;
 		const length = messagesIdForDelete.length;
 		for (let index = 0; index < length; index++) {
-			await ctx.deleteMessage(messagesIdForDelete[index]);
+			await ctx.deleteMessage(messagesIdForDelete[index]).catch(e => true);
 		}
 		ctx.session.data.messagesIdForDelete = [];
 
