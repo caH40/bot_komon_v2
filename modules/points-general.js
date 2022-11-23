@@ -1,6 +1,7 @@
 //обновление очков для каждого результата
 import { Result } from '../Model/Result.js';
 import { Stage } from '../Model/Stage.js';
+import { getResultsWithPenalty } from '../preparation_data/results-penalty.js';
 import { points } from './points.js';
 
 export async function updatePointsGeneral(seriesId) {
@@ -12,6 +13,9 @@ export async function updatePointsGeneral(seriesId) {
 				stageId: stagesDB[i]._id,
 				// riderId: { $ne: undefined },
 			}).populate('riderId');
+
+			const hasPenalty = resultsDB.find(result => result.penalty.powerUp !== 0);
+			if (hasPenalty) resultsDB = getResultsWithPenalty(resultsDB);
 
 			//что делать если время одинаковое
 			resultsDB = resultsDB.sort((a, b) => a.time - b.time);

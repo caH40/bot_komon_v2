@@ -6,6 +6,7 @@ import { secondesToTime, secondesToTimeThousandths } from '../utility/date-conve
 import { gapValue } from '../utility/gap.js';
 import { filterThousandths } from '../utility/thousandths-seconds.js';
 import { maxValue } from '../utility/value-max.js';
+import { getResultsWithPenalty } from './results-penalty.js';
 
 export async function getResultsStage(request) {
 	try {
@@ -21,6 +22,10 @@ export async function getResultsStage(request) {
 		const resultsDB = await Result.find({ stageId }).populate('riderId');
 
 		let results = resultsDB.map(result => result.toObject());
+
+		const hasPenalty = results.find(result => result.penalty.powerUp !== 0);
+		if (hasPenalty) results = getResultsWithPenalty(results);
+
 		let resultFiltered = [];
 		if (category === 'T') {
 			const categories = ['A', 'B', 'C', 'W'];
