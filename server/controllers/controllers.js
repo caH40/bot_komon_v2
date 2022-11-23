@@ -153,6 +153,22 @@ export async function postStagePoints(req, res) {
 	}
 }
 
+export async function postStagePenalty(req, res) {
+	try {
+		const { newPenalty, resultId } = req.body;
+		const resultDB = await Result.findOneAndUpdate(
+			{ _id: resultId },
+			{ $set: { 'penalty.powerUp': newPenalty } }
+		);
+
+		if (!resultDB) return res.status(400).json({ message: `Не найден результат id: ${resultId}` });
+		let message = `Успех! Райдеру "${resultDB.name}" начислены штрафные баллы в количестве ${newPenalty}шт.`;
+		return res.status(200).json({ message });
+	} catch (error) {
+		console.log(error);
+	}
+}
+
 export async function getGeneralPoints(req, res) {
 	try {
 		const seriesId = req.query.seriesId;

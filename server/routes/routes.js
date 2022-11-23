@@ -9,6 +9,7 @@ import {
 	getGeneralPoints,
 	getMountainPoints,
 	getSprintPoints,
+	postStagePenalty,
 } from '../controllers/controllers.js';
 
 export const router = new Router();
@@ -19,6 +20,7 @@ router.post('/api/user/get-settings', getRiderSettings);
 router.post('/api/user/post-settings', postRiderSettings);
 router.post('/api/stage/post-edit', postStageEdit);
 router.post('/api/stage/points', postStagePoints);
+router.post('/api/stage/penalty', postStagePenalty);
 router.post('/api/results/general', getGeneralPoints);
 router.post('/api/results/mountain', getMountainPoints);
 router.post('/api/results/sprint', getSprintPoints);

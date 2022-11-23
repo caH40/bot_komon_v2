@@ -12,6 +12,7 @@ const resultSchema = new Schema({
 	wattPerKg: Number,
 	watt: Number,
 	time: Number,
+	penalty: { powerUp: { type: Number, default: 0 } },
 	category: String,
 	categoryCurrent: String,
 	teamCurrent: String,

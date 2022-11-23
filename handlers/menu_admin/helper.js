@@ -90,9 +90,10 @@ export async function pointsSeries(ctx) {
 export async function editDataSeries(ctx) {
 	try {
 		const seriesDB = await Series.find();
+		const seriesSorted = seriesDB.sort((a, b) => b.dateStart - a.dateStart);
 		return ctx.editMessageText(
 			'<b>🔧 Редактирование данных заезда. Выбор серии.</b>',
-			editDataSeriesKeyboard(seriesDB)
+			editDataSeriesKeyboard(seriesSorted)
 		);
 	} catch (error) {
 		console.log(error);
