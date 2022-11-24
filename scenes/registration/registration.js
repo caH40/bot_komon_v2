@@ -1,6 +1,6 @@
 import { Scenes } from 'telegraf';
 
-import { registrationToDB } from '../../controllersDB/registration-save.js';
+import { registrationToDB } from '../../controllersDB/registration/save.js';
 import { getTelegramId } from './telegramid.js';
 import textJson from '../../locales/ru.json' assert { type: 'json' };
 import { finalMessage, riderData } from '../../locales/template.js';

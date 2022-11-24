@@ -1,5 +1,5 @@
 import { Scenes } from 'telegraf';
-import { protocolToDB } from '../../controllersDB/protocol-save.js';
+import { protocolToDB } from '../../controllersDB/protocol/save.js';
 import { deleteFile } from '../../file-manager/file-delete.js';
 import { noticeGetResult } from '../../modules/notice.js';
 import textJson from '../../locales/ru.json' assert { type: 'json' };
