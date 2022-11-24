@@ -5,7 +5,7 @@ import { setCategory } from './category.js';
 export async function registrationToDB(data) {
 	try {
 		const riderDB = await Rider.findOne({ telegramId: data.telegramId });
-		const category = await setCategory(data.zwiftId);
+		const category = await setCategory(data.zwiftId, data.gender);
 		if (riderDB)
 			return await Rider.findOneAndUpdate(
 				{ telegramId: data.telegramId },
@@ -19,6 +19,7 @@ export async function registrationToDB(data) {
 						telegramUsername: data.telegramUsername,
 						cycleTrainer: data.cycleTrainer,
 						zwiftPower: data.zwiftPower,
+						category,
 						gender: data.gender,
 					},
 				}

@@ -2,7 +2,7 @@ import { Result } from '../../Model/Result.js';
 import { Series } from '../../Model/Series.js';
 import { Stage } from '../../Model/Stage.js';
 
-export async function setCategory(zwiftId) {
+export async function setCategory(zwiftId, gender) {
 	try {
 		let seriesDB = await Series.find();
 		seriesDB = seriesDB.sort((a, b) => b.dateStart - a.dateStart);
@@ -25,7 +25,8 @@ export async function setCategory(zwiftId) {
 			if (resultDb?.category) return resultDb.category;
 		}
 
-		return 'C';
+		if (gender === 'мужской') return 'C';
+		return 'W';
 	} catch (error) {
 		console.log(error);
 	}

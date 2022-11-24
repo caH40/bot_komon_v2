@@ -1,9 +1,9 @@
-import { Result } from '../Model/Result.js';
-import { Rider } from '../Model/Rider.js';
-import { Stage } from '../Model/Stage.js';
-import { updateCategoryDB } from '../modules/category-update.js';
-import { ruleCategory } from '../utility/category-rule.js';
-import { convertTime } from '../utility/date-convert.js';
+import { Result } from '../../Model/Result.js';
+import { Rider } from '../../Model/Rider.js';
+import { Stage } from '../../Model/Stage.js';
+import { updateCategoryDB } from './category.js';
+import { ruleCategory } from '../../utility/category-rule.js';
+import { convertTime } from '../../utility/date-convert.js';
 
 export async function protocolToDB(results, seriesId, stageId) {
 	try {
