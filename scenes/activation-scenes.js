@@ -15,7 +15,11 @@ import {
 	seventhSceneReg,
 	eighthSceneReg,
 } from '../scenes/registration/registration.js';
-import { firstSceneCreateTeam, secondSceneCreateTeam } from './team_create/team-create.js';
+import {
+	firstSceneCreateTeam,
+	secondSceneCreateTeam,
+	thirdSceneCreateTeam,
+} from './team_create/team-create.js';
 import { teamDescriptionScene } from './team-desc/description.js';
 import { pointsSprinterScene } from './sprinter/points-set.js';
 import { pointsMountainScene } from './mountain/points-set.js';
@@ -38,6 +42,7 @@ export function activationScenes() {
 			eighthSceneReg,
 			firstSceneCreateTeam,
 			secondSceneCreateTeam,
+			thirdSceneCreateTeam,
 			teamDescriptionScene(),
 			pointsSprinterScene(),
 			pointsMountainScene(),

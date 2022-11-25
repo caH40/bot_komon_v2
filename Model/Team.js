@@ -14,6 +14,7 @@ const teamSchema = new Schema({
 		},
 	],
 	description: String,
+	logoUrl: String,
 	groupName: String,
 	link: String,
 	isAllowed: { type: Boolean, default: false },

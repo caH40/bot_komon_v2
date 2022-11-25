@@ -2,7 +2,7 @@ import { Scenes } from 'telegraf';
 
 import { getTelegramId } from './telegramid.js';
 import { finalMessageTeamCr } from '../../locales/template.js';
-import { validationDescription, validationName } from './validation.js';
+import { validationDescription, validationNameTeam } from './validation.js';
 import { registrationToDB } from '../../controllersDB/team-save.js';
 import { sendMessageAdmin } from './message.js';
 import textJson from '../../locales/ru.json' assert { type: 'json' };
@@ -38,7 +38,7 @@ firstSceneCreateTeam.on('message', async ctx => {
 
 		const text = ctx.message.text;
 		ctx.session.data.messagesIdForDelete.push(ctx.message.message_id);
-		const isValid = validationName(text);
+		const isValid = validationNameTeam(text);
 		if (isValid) {
 			ctx.session.data.teamCreate.name = text;
 			return ctx.scene.enter('secondSceneCreateTeam');
@@ -52,8 +52,15 @@ firstSceneCreateTeam.on('message', async ctx => {
 export const secondSceneCreateTeam = new Scenes.BaseScene('secondSceneCreateTeam');
 secondSceneCreateTeam.enter(async ctx => {
 	try {
-		ctx.session.data.teamCreate.counter = 0;
 		await ctx.replyWithHTML(t.second.question);
+	} catch (error) {
+		console.log(error);
+	}
+});
+secondSceneCreateTeam.on('photo', async ctx => {
+	try {
+		ctx.session.data.teamCreate.logoUrl = ctx.update.message.photo[0].file_id;
+		return ctx.scene.enter('thirdSceneCreateTeam');
 	} catch (error) {
 		console.log(error);
 	}
@@ -66,23 +73,54 @@ secondSceneCreateTeam.command('/quit', async ctx => {
 		console.log(error);
 	}
 });
-secondSceneCreateTeam.command('save', async ctx => {
+secondSceneCreateTeam.on('message', async ctx => {
+	try {
+		ctx.session.data.teamCreate.counter++;
+		const isManyAttempts = await attempts(ctx, ctx.session.data.teamCreate.counter);
+		if (isManyAttempts) return await ctx.scene.leave();
+
+		if (!ctx.update.message.photo) {
+			await ctx.replyWithHTML(t.second.wrong);
+		}
+	} catch (error) {
+		console.log(error);
+	}
+});
+
+export const thirdSceneCreateTeam = new Scenes.BaseScene('thirdSceneCreateTeam');
+thirdSceneCreateTeam.enter(async ctx => {
+	try {
+		ctx.session.data.teamCreate.counter = 0;
+		await ctx.replyWithHTML(t.third.question);
+	} catch (error) {
+		console.log(error);
+	}
+});
+thirdSceneCreateTeam.command('/quit', async ctx => {
+	try {
+		await ctx.reply(t.quit);
+		return await ctx.scene.leave();
+	} catch (error) {
+		console.log(error);
+	}
+});
+thirdSceneCreateTeam.command('save', async ctx => {
 	try {
 		const response = await registrationToDB(ctx.session.data.teamCreate);
 		if (response) {
-			await ctx.reply(t.second.successfulDB);
+			await ctx.reply(t.third.successfulDB);
 			await sendMessageAdmin(ctx);
 		} else {
-			await ctx.reply(t.second.wrongDB);
+			await ctx.reply(t.third.wrongDB);
 		}
 		return await ctx.scene.leave();
 	} catch (error) {
 		console.log(error);
 	}
 });
-secondSceneCreateTeam.command('repeat', async ctx => await ctx.scene.enter('firstSceneCreateTeam'));
-secondSceneCreateTeam.command('quit', async ctx => await ctx.scene.leave());
-secondSceneCreateTeam.on('message', async ctx => {
+thirdSceneCreateTeam.command('repeat', async ctx => await ctx.scene.enter('firstSceneCreateTeam'));
+thirdSceneCreateTeam.command('quit', async ctx => await ctx.scene.leave());
+thirdSceneCreateTeam.on('message', async ctx => {
 	try {
 		ctx.session.data.teamCreate.counter++;
 		const isManyAttempts = await attempts(ctx, ctx.session.data.teamCreate.counter);
@@ -92,9 +130,12 @@ secondSceneCreateTeam.on('message', async ctx => {
 		const isValid = validationDescription(text);
 		if (isValid) {
 			ctx.session.data.teamCreate.description = text;
-			return await ctx.replyWithHTML(finalMessageTeamCr(ctx));
+			return await ctx.replyWithPhoto(ctx.session.data.teamCreate.logoUrl, {
+				parse_mode: 'html',
+				caption: finalMessageTeamCr(ctx),
+			});
 		}
-		await ctx.reply(t.second.wrong);
+		await ctx.reply(t.third.wrong);
 	} catch (error) {
 		console.log(error);
 	}
