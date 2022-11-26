@@ -7,6 +7,7 @@ import {
 	teamForApprovalKeyboard,
 } from '../../keyboard/keyboard.js';
 import { mainMenu } from '../../keyboard/main-menu.js';
+import { Result } from '../../Model/Result.js';
 import { Rider } from '../../Model/Rider.js';
 import { Series } from '../../Model/Series.js';
 import { Stage } from '../../Model/Stage.js';
@@ -43,7 +44,14 @@ export async function approvalTeam(ctx, cbqData) {
 		const teamId = cbqData.slice(15);
 
 		const teamDB = await Team.findOne({ _id: teamId }).populate('riders.rider');
-		if (action === 'Y') await Team.findOneAndUpdate({ _id: teamId }, { $set: { isAllowed: true } });
+		if (action === 'Y') {
+			const teamDB = await Team.findOneAndUpdate({ _id: teamId }, { $set: { isAllowed: true } });
+			const capitan = teamDB.riders[0];
+			const resultsDB = await Result.updateMany(
+				{ riderId: capitan.rider },
+				{ $set: { teamCurrent: teamDB._id } }
+			);
+		}
 		if (action === 'N') {
 			await Rider.findOneAndUpdate({ teamId }, { $unset: { teamId: 1 } });
 			await Team.findOneAndDelete({ _id: teamId });

@@ -15,7 +15,7 @@ const resultSchema = new Schema({
 	penalty: { powerUp: { type: Number, default: 0 } },
 	category: String,
 	categoryCurrent: String,
-	teamCurrent: String,
+	teamCurrent: { type: mongoose.Schema.Types.ObjectId, ref: 'Team' },
 	isNeedCount: { type: Boolean, default: true },
 	pointsStage: { type: Number, default: 0 },
 	pointsSprint: [
