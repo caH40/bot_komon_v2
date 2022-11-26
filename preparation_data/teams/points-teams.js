@@ -1,18 +1,12 @@
-import { Result } from '../../Model/Result.js';
-import { Stage } from '../../Model/Stage.js';
+import { filterResults } from './results-filter.js';
+import { getPoints } from './results-points.js';
 
 export async function getPointsTeams(seriesId) {
 	try {
-		const stagesDB = await Stage.find({ seriesId, hasResults: true });
+		const results = await filterResults(seriesId);
+		const resultsPoints = await getPoints(results);
 
-		let results = [];
-		for (let i = 0; i < stagesDB.length; i++) {
-			let resultsDB = await Result.find({ stageId: stagesDB[i]._id, teamCurrent: { $ne: null } })
-				.populate('stageId')
-				.populate('teamCurrent');
-			results.push(...resultsDB);
-		}
-		console.log(results.length);
+		return resultsPoints;
 	} catch (error) {
 		console.log(error);
 	}
