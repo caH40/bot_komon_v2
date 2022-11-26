@@ -1,3 +1,4 @@
+import { Result } from '../Model/Result.js';
 import { Rider } from '../Model/Rider.js';
 import { Team } from '../Model/Team.js';
 
@@ -17,6 +18,11 @@ export async function addRiderDB(ctx, candidateId) {
 			{ _id: candidateId },
 			{ $set: { teamId: teamDB._id } },
 			{ returnDocument: 'after' }
+		);
+
+		const resultsDB = await Result.updateMany(
+			{ riderId: candidateId, teamCurrent: null },
+			{ $set: { teamCurrent: teamDB._id } }
 		);
 
 		if (riderDB.teamId) {
