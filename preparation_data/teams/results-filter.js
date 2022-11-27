@@ -18,7 +18,7 @@ export async function filterResults(seriesId) {
 				}
 			)
 				.populate({ path: 'stageId', select: 'number' })
-				.populate({ path: 'teamCurrent', select: ['name', 'riders'] });
+				.populate({ path: 'teamCurrent', select: ['name', 'riders', 'logoBase64'] });
 
 			results.push(...resultsDB);
 		}

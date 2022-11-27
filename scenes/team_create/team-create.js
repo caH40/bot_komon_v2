@@ -1,4 +1,5 @@
 import { Scenes } from 'telegraf';
+import axios from 'axios';
 
 import { getTelegramId } from './telegramid.js';
 import { finalMessageTeamCr } from '../../locales/template.js';
@@ -59,7 +60,17 @@ secondSceneCreateTeam.enter(async ctx => {
 });
 secondSceneCreateTeam.on('photo', async ctx => {
 	try {
-		ctx.session.data.teamCreate.logoUrl = ctx.update.message.photo[0].file_id;
+		const fileId = ctx.update.message.photo[0].file_id;
+		ctx.session.data.teamCreate.logoUrl = fileId;
+
+		const fileInTelegram = await ctx.telegram.getFile(fileId);
+		const photoBuffer = await axios.get(
+			`https://api.telegram.org/file/bot${process.env.BOT_TOKEN}/${fileInTelegram.file_path}`,
+			{ responseType: 'arraybuffer' }
+		);
+		const logoBase64 = Buffer.from(photoBuffer.data, 'binary').toString('base64');
+		ctx.session.data.teamCreate.logoBase64 = logoBase64;
+
 		return ctx.scene.enter('thirdSceneCreateTeam');
 	} catch (error) {
 		console.log(error);

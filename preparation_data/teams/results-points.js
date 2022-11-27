@@ -19,8 +19,14 @@ export async function getPoints(results) {
 					.filter(result => result.teamCurrent?.name === name && stage === result.stageId.number)
 					.sort((a, b) => b.pointsStage - a.pointsStage)
 					.slice(0, 5);
+
 				team.forEach(stageResult => (points += stageResult.pointsStage));
-				teams.push({ name, stageNumber: stage, points });
+				teams.push({
+					name,
+					stageNumber: stage,
+					points,
+					logoBase64: team[0]?.teamCurrent?.logoBase64,
+				});
 			});
 		});
 
@@ -29,13 +35,18 @@ export async function getPoints(results) {
 			let pointsTotal = 0;
 			let teamFiltered = teams.filter(team => team.name === name);
 			teamFiltered = teamFiltered.sort((a, b) => a.stageNumber - b.stageNumber);
+			const teamName = teamFiltered[0]?.name;
+			const logoBase64 = teamFiltered[0]?.logoBase64;
 
-			teamFiltered.forEach(team => (pointsTotal += team.points));
-			teamsWithTotalPoints.push({ team: teamFiltered, pointsTotal });
+			teamFiltered.forEach(team => {
+				pointsTotal += team.points;
+				delete team.name;
+				delete team.logoBase64;
+			});
+			teamsWithTotalPoints.push({ team: teamFiltered, pointsTotal, teamName, logoBase64 });
 		});
 
 		teamsWithTotalPoints = teamsWithTotalPoints.sort((a, b) => b.pointsTotal - a.pointsTotal);
-
 		return teamsWithTotalPoints;
 	} catch (error) {
 		console.log(error);

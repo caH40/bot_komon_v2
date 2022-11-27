@@ -217,7 +217,9 @@ export async function getTeamsPoints(req, res) {
 		const seriesId = req.query.seriesId;
 		const pointsTeams = await getPointsTeams(seriesId);
 
-		return res.status(200).json({ message: `Данные получены` });
+		if (pointsTeams)
+			return res.status(200).json({ message: `Данные по командному зачету`, pointsTeams });
+		return res.status(400).json({ message: `Ошибка при получении данных командного зачета` });
 	} catch (error) {
 		console.log(error);
 	}
