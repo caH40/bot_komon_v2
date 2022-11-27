@@ -215,6 +215,7 @@ export async function teamRemoveRider(ctx) {
 }
 export async function teamRemove(ctx) {
 	try {
+		const monthInMilliseconds = 2592000000;
 		const userId = ctx.update.callback_query.from.id;
 		const riderDB = await Rider.findOne({ telegramId: userId }).populate('teamId');
 		const ridersDB = await Rider.find({ teamId: riderDB?.teamId._id });
@@ -222,11 +223,23 @@ export async function teamRemove(ctx) {
 		if (ridersDB.length > 1)
 			return await ctx
 				.reply(
-					'Вы не можите удалить команду, если в ней есть райдеры. Сначала необходимо удалить райдеров из команды.'
+					'Вы не можете удалить команду, если в ней есть райдеры. Сначала необходимо удалить райдеров из команды.'
 				)
 				.then(message => ctx.session.data.messagesIdForDelete.push(message.message_id));
 
-		await Team.findOneAndDelete({ _id: riderDB.teamId._id }).catch(error => console.log(error));
+		const teamDB = await Team.findOne({ _id: riderDB.teamId._id }).catch(error =>
+			console.log(error)
+		);
+
+		if (Date.now() - teamDB.riders[0].dateJoin > monthInMilliseconds) {
+			await Team.findOneAndUpdate(
+				{ _id: riderDB.teamId._id },
+				{ $set: { deleted: { isDeleted: true, date: Date.now() } } }
+			).catch(error => console.log(error));
+		} else {
+			await Team.findOneAndDelete({ _id: riderDB.teamId._id }).catch(error => console.log(error));
+		}
+
 		await Rider.findOneAndUpdate({ telegramId: userId }, { $unset: { teamId: 1 } }).catch(error =>
 			console.log(error)
 		);

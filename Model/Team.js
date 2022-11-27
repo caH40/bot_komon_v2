@@ -20,6 +20,7 @@ const teamSchema = new Schema({
 	link: String,
 	isAllowed: { type: Boolean, default: false },
 	requestRiders: { type: Array },
+	deleted: { isDeleted: { type: Boolean, default: false }, date: { type: Number } },
 });
 
 export const Team = model('Team', teamSchema);
