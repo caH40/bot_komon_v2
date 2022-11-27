@@ -1,11 +1,13 @@
 import 'dotenv/config';
 
 import { Markup } from 'telegraf';
+import { getEmojiSeason } from '../utility/seasons.js';
 import { accountButtons } from './button/account.js';
 import { buttonCatFromStageRiders } from './button/admin.js';
 import { mainBtn } from './button/main.js';
 import { resultSeriesBtn } from './button/schedule-btn.js';
 import { teamBtn, teamsBtn } from './button/team.js';
+
 // главное меню
 export async function mainMenuKeyboard(ctx) {
 	return { parse_mode: 'html', ...Markup.inlineKeyboard(await mainBtn(ctx)) };
@@ -54,7 +56,12 @@ export function seriesKeyboard(series) {
 	const keyboard = {
 		parse_mode: 'html',
 		...Markup.inlineKeyboard([
-			...series.map(elm => [Markup.button.callback(`${elm.name} 🚵‍♀️`, 'm_1_all__' + elm._id)]),
+			...series.map(elm => [
+				Markup.button.callback(
+					`${getEmojiSeason(elm.dateStart)} ${elm.name} 🚴🏻‍♀️`,
+					'm_1_all__' + elm._id
+				),
+			]),
 			[Markup.button.callback('Главное меню ❗️', 'main')],
 		]),
 	};
@@ -66,7 +73,12 @@ export function scheduleKeyboard(series) {
 		parse_mode: 'html',
 		...Markup.inlineKeyboard([
 			[Markup.button.callback('Еженедельные заезды 📌', 'm_2_V')],
-			...series.map(elm => [Markup.button.callback(`${elm.name} 🚵‍♀️`, 'm_2_all__' + elm._id)]),
+			...series.map(elm => [
+				Markup.button.callback(
+					`${getEmojiSeason(elm.dateStart)} ${elm.name} 🚴🏻‍♀️`,
+					'm_2_all__' + elm._id
+				),
+			]),
 			[Markup.button.callback('Главное меню ❗️', 'main')],
 		]),
 	};
