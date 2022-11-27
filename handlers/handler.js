@@ -24,7 +24,7 @@ export async function handler(ctx, cbqData) {
 			ctx.session.data = {};
 			ctx.session.data.messagesIdForDelete = [];
 		}
-		//console.log(cbqData); //FIXME:
+		// console.log(cbqData); //FIXME:
 		const messagesIdForDelete = ctx.session.data.messagesIdForDelete;
 		const length = messagesIdForDelete.length;
 		for (let index = 0; index < length; index++) {
@@ -33,7 +33,7 @@ export async function handler(ctx, cbqData) {
 		ctx.session.data.messagesIdForDelete = [];
 
 		if (cbqData === 'main') return await mainMenu(ctx);
-		if (cbqData.includes('m_1_all_3_E__')) return await resultsSeriesTeams(ctx, cbqData);
+		// if (cbqData.includes('m_1_all_3_E__')) return await resultsSeriesTeams(ctx, cbqData);FIXME: удалить функционал
 		if (cbqData.includes('m_3_2_E__')) return await listRiders(ctx, cbqData);
 		if (cbqData.includes('m_3_2_4_1_E--teamLeave_')) return await teamLeaveDB(ctx, cbqData);
 		if (cbqData.includes('m_3_2_2_all_E__teamJoin_')) return await teamChooseForJoin(ctx, cbqData);

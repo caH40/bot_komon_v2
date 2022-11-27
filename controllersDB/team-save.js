@@ -16,6 +16,7 @@ export async function registrationToDB(data) {
 			name: data.name,
 			description: data.description,
 			logoUrl: data.logoUrl,
+			logoBase64: data.logoBase64,
 			riders: [
 				{
 					rider: capitan._id,

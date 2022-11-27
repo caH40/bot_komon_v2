@@ -1,3 +1,6 @@
+import { Result } from '../Model/Result.js';
+import { Rider } from '../Model/Rider.js';
+
 export async function assignCategoryRiderFromStage(ctx, cbqData) {
 	try {
 		const stageId = cbqData.slice(11);

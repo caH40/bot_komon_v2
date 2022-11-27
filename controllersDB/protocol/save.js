@@ -32,12 +32,15 @@ export async function protocolToDB(results, seriesId, stageId) {
 			);
 
 			const newCategory = await updateCategoryDB(stageDB.seriesId, results[index], categoryCurrent);
+
 			let time =
 				typeof results[index].time === 'string'
 					? convertTime(results[index].time)
 					: results[index].time;
 
 			let riderId = await Rider.findOne({ zwiftId: results[index].zwiftId });
+			const teamCurrent = riderId?.teamId;
+
 			let result = new Result({
 				stageId,
 				riderId,
@@ -49,7 +52,7 @@ export async function protocolToDB(results, seriesId, stageId) {
 				time,
 				category: newCategory.category,
 				categoryCurrent,
-				teamCurrent: results[index].teamCurrent,
+				teamCurrent,
 				pointsStage: results[index].pointsStage,
 				pointsSprint,
 				pointsMountain,
