@@ -1,4 +1,5 @@
 import validator from 'validator';
+import { Rider } from '../../Model/Rider.js';
 
 export function validationNameRus(text) {
 	try {
@@ -50,6 +51,15 @@ export function validationLink(text) {
 			return true;
 		}
 		return false;
+	} catch (error) {
+		console.log(error);
+	}
+}
+export async function checkZwiftId(zwiftId) {
+	try {
+		const riderDB = await Rider.findOne({ zwiftId });
+		if (riderDB) return false;
+		return true;
 	} catch (error) {
 		console.log(error);
 	}

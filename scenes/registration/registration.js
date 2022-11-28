@@ -5,6 +5,7 @@ import { getTelegramId } from './telegramid.js';
 import textJson from '../../locales/ru.json' assert { type: 'json' };
 import { finalMessage, riderData } from '../../locales/template.js';
 import {
+	checkZwiftId,
 	validationGender,
 	validationLink,
 	validationNameEn,
@@ -276,17 +277,26 @@ eighthSceneReg.on('message', async ctx => {
 		const text = ctx.message.text;
 		const isValid = validationLink(text);
 		if (isValid) {
-			ctx.session.data.account.zwiftPower = text;
 			const regExp = /\d+/;
-			ctx.session.data.account.zwiftId = text.match(regExp)[0];
-			ctx.session.data.account.zwiftPower = text;
-			return await ctx.replyWithHTML(finalMessage(ctx), {
+			const telegramId = text.match(regExp)[0];
+			const isUniqueId = await checkZwiftId(telegramId);
+			if (isUniqueId) {
+				ctx.session.data.account.zwiftPower = text;
+				ctx.session.data.account.zwiftId = telegramId;
+				ctx.session.data.account.zwiftPower = text;
+				return await ctx.replyWithHTML(finalMessage(ctx), {
+					disable_web_page_preview: true,
+				});
+			} else {
+				await ctx.replyWithHTML(t.eighth.wrongZwiftId, {
+					disable_web_page_preview: true,
+				});
+			}
+		} else {
+			await ctx.replyWithHTML(t.eighth.wrong, {
 				disable_web_page_preview: true,
 			});
 		}
-		await ctx.replyWithHTML(t.eighth.wrong, {
-			disable_web_page_preview: true,
-		});
 	} catch (e) {
 		console.log(e);
 	}
