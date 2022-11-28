@@ -77,3 +77,17 @@ export async function noticePost(ctx, theme, message) {
 		console.log(error);
 	}
 }
+
+export async function noticeFromAdmin(ctx, message) {
+	try {
+		const users = await getUsersForSpam('botInfo');
+
+		users.forEach((telegramId, index) => {
+			setTimeout(async () => {
+				await ctx.telegram.sendMessage(telegramId, message).catch(error => true);
+			}, index * pauseInMilliseconds);
+		});
+	} catch (error) {
+		console.log(error);
+	}
+}
