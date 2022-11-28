@@ -7,10 +7,10 @@ export async function sendNotice(ctx) {
 		if (!message.includes('#forAll')) return;
 
 		const userId = ctx.message.from.id;
-		const adminDB = await Rights.findOne({ admin: [userId] });
+		const adminDB = await Rights.findOne({ admin: userId });
 		if (!adminDB) return;
 
-		const messageEdited = message.replace('#forAll', 'BotInfo:');
+		const messageEdited = message.replace('#forAll', `${new Date().toLocaleString()}, BotInfo:`);
 
 		await noticeFromAdmin(ctx, messageEdited);
 	} catch (error) {
