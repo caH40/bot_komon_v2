@@ -13,6 +13,7 @@ import {
 	getTeamsPoints,
 	postClick,
 	getStatisticsRiders,
+	getStatisticsStages,
 } from '../controllers/controllers.js';
 
 export const router = new Router();
@@ -30,3 +31,4 @@ router.post('/api/results/sprint', getSprintPoints);
 router.post('/api/results/teams', getTeamsPoints);
 router.post('/api/clicks', postClick);
 router.post('/api/statistics/riders', getStatisticsRiders);
+router.post('/api/statistics/stages', getStatisticsStages);

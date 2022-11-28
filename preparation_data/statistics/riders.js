@@ -22,7 +22,9 @@ export async function getStatRiders() {
 			resultsRider.forEach(result => {
 				if (result.imageSrc) rider.imageSrc = result.imageSrc;
 				timeTotal += result.time;
+				rider._id = result._id;
 			});
+
 			rider.name = resultsRider[0]?.name;
 			rider.stages = resultsRider.length;
 			rider.percentCompleted = Math.trunc((resultsRider.length / quantityStages) * 100);

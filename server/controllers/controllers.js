@@ -10,6 +10,7 @@ import { getPointsSM } from '../../preparation_data/points-sm/points-sm.js';
 import { getPointsTeams } from '../../preparation_data/teams/points-teams.js';
 import { Click } from '../../Model/Click.js';
 import { getStatRiders } from '../../preparation_data/statistics/riders.js';
+import { getStatStages } from '../../preparation_data/statistics/stages.js';
 
 const __dirname = path.resolve();
 
@@ -248,6 +249,16 @@ export async function getStatisticsRiders(req, res) {
 		if (statisticsRiders.length !== 0)
 			return res.status(200).json({ message: `Статистика по райдерам`, statisticsRiders });
 		return res.status(400).json({ message: `Ошибка при получении статистики по райдерам!` });
+	} catch (error) {
+		console.log(error);
+	}
+}
+export async function getStatisticsStages(req, res) {
+	try {
+		const statisticsStages = await getStatStages();
+		if (statisticsStages.length !== 0)
+			return res.status(200).json({ message: `Статистика по заездам`, statisticsStages });
+		return res.status(400).json({ message: `Ошибка при получении статистики по заездам!` });
 	} catch (error) {
 		console.log(error);
 	}
