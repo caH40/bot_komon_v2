@@ -41,6 +41,7 @@ export async function handlerStatistics(ctx) {
 			...Markup.inlineKeyboard([
 				[Markup.button.webApp('Riders 🤸🏽‍♂️', `${process.env.SERVER}/statistics/riders/`)],
 				[Markup.button.webApp('Stages 🏁', `${process.env.SERVER}/statistics/stages/`)],
+				[Markup.button.callback('Главное меню ❗️', 'main')],
 			]),
 			parse_mode: 'html',
 		});
