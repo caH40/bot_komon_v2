@@ -1,3 +1,4 @@
+import { Markup } from 'telegraf';
 import { scheduleBtn } from '../keyboard/button/schedule-btn.js';
 import { accountKeyboard } from '../keyboard/keyboard.js';
 import { Rider } from '../Model/Rider.js';
@@ -29,6 +30,20 @@ export async function account(ctx) {
 			`<b>🔑 Личный кабинет.</b>\n${name}`,
 			await accountKeyboard(ctx)
 		);
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+export async function handlerStatistics(ctx) {
+	try {
+		return await ctx.editMessageText('<b>📊 Статистика по заездам</b>', {
+			...Markup.inlineKeyboard([
+				[Markup.button.webApp('Riders 🤸🏽‍♂️', `${process.env.SERVER}/statistics/riders/`)],
+				[Markup.button.webApp('Stages 🏁', `${process.env.SERVER}/statistics/stages/`)],
+			]),
+			parse_mode: 'html',
+		});
 	} catch (error) {
 		console.log(error);
 	}
