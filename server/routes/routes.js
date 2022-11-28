@@ -11,6 +11,7 @@ import {
 	getSprintPoints,
 	postStagePenalty,
 	getTeamsPoints,
+	postClick,
 } from '../controllers/controllers.js';
 
 export const router = new Router();
@@ -26,3 +27,4 @@ router.post('/api/results/general', getGeneralPoints);
 router.post('/api/results/mountain', getMountainPoints);
 router.post('/api/results/sprint', getSprintPoints);
 router.post('/api/results/teams', getTeamsPoints);
+router.post('/api/clicks', postClick);

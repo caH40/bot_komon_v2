@@ -8,6 +8,7 @@ import { resultsSeriesGeneral } from '../../preparation_data/general/general-ser
 import { mountainTable, sprintTable } from '../../utility/points.js';
 import { getPointsSM } from '../../preparation_data/points-sm/points-sm.js';
 import { getPointsTeams } from '../../preparation_data/teams/points-teams.js';
+import { Click } from '../../Model/Click.js';
 
 const __dirname = path.resolve();
 
@@ -220,6 +221,22 @@ export async function getTeamsPoints(req, res) {
 		if (pointsTeams)
 			return res.status(200).json({ message: `Данные по командному зачету`, pointsTeams });
 		return res.status(400).json({ message: `Ошибка при получении данных командного зачета` });
+	} catch (error) {
+		console.log(error);
+	}
+}
+export async function postClick(req, res) {
+	try {
+		const { telegramId } = req.body;
+
+		if (telegramId == process.env.DEVELOPER_ID)
+			return res.status(200).json({ message: `Подсчет кликов разработчиков не производится!` });
+		if (!telegramId)
+			return res.status(200).json({ message: `Запрос с вебинтерфейса при разработке` });
+
+		const click = await Click.findOneAndUpdate({ 'user.id': telegramId }, { $inc: { clicks: 1 } });
+		if (click) return res.status(200).json({ message: `Клик подсчитан!` });
+		return res.status(400).json({ message: `Ошибка при подсчете клика!` });
 	} catch (error) {
 		console.log(error);
 	}
