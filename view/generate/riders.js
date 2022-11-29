@@ -5,9 +5,7 @@ export function generateView(riders) {
 
 		riders.forEach(rider => {
 			let name = `${rider.lastName} ${rider.firstName}`;
-			body = `${body}${rider.sequence}. ${name}${rider.capitan ? '(A)' : ''}, старты: <u>${
-				rider.quantityResults
-			}</u>;\n`;
+			body = `${body}${rider.sequence}. ${name}, старты: <u>${rider.quantityResults}</u>;\n`;
 		});
 		return `${title}\n${body}`;
 	} catch (error) {
