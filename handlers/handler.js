@@ -7,7 +7,7 @@ import { listRiders } from '../view/team/riders-view.js';
 
 import { handlerResults } from './menu-results/handler-results.js';
 import { handlerTeam } from './menu-team/handler-menu.js';
-import { teamChooseForJoin } from './menu-team/helper.js';
+import { handlerTeams, teamChooseForJoin } from './menu-team/helper.js';
 import { handlerAdmin } from './menu_admin/handler-menu.js';
 import { account, getSchedule, handlerStatistics } from './helper-main.js';
 import { getScheduleWeekly } from '../modules/schedule-weekle.js';
@@ -49,6 +49,7 @@ export async function handler(ctx, cbqData) {
 		if (cbqData.includes('m_4_')) return await handlerDescription(ctx, cbqData);
 		if (cbqData.includes('m_5_')) return await handlerAdmin(ctx, cbqData);
 		if (cbqData.includes('m_6_')) return await handlerStatistics(ctx);
+		if (cbqData.includes('m_7_')) return await handlerTeams(ctx);
 		if (cbqData === 'account_registration') return await ctx.scene.enter('firstSceneReg');
 
 		const isCompleted = await handlerResults(ctx, cbqData);

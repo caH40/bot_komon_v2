@@ -1,5 +1,6 @@
 import { addRiderDB, notAddRiderDB } from '../../controllersDB/team-add-rider.js';
 import {
+	clearCharts,
 	teamAddRiderKeyboard,
 	teamKeyboard,
 	teamLeaveKeyboard,
@@ -265,6 +266,40 @@ export async function teamWait(ctx) {
 export async function teamDescription(ctx) {
 	try {
 		await ctx.scene.enter('teamDescription');
+	} catch (error) {
+		console.log(error);
+	}
+}
+export async function handlerTeams(ctx) {
+	try {
+		const teamsDB = await Team.find({ 'deleted.isDeleted': false, isAllowed: true }).populate({
+			path: 'riders',
+			populate: { path: `rider` },
+		});
+		if (teamsDB.length === 0) {
+			return await ctx
+				.reply('Нет зарегистрированных команд!')
+				.then(message => ctx.session.data.messagesIdForDelete.push(message.message_id));
+		}
+		teamsDB.forEach(async team => {
+			let listRiders = '';
+			team.riders.forEach((rider, index) => {
+				if (rider.dateLeave) return;
+				listRiders += `${index + 1}. ${rider.rider.firstName} ${rider.rider.lastName} ${
+					index === 0 ? ' (К)' : ''
+				};\n`;
+			});
+			const name = team.name;
+			const description = team.description;
+			const logoUrl = team.logoUrl;
+
+			const caption = `<b>${name}</b>\n${description}\n${listRiders}`;
+			await ctx
+				.replyWithPhoto(logoUrl, { parse_mode: 'html', caption })
+				// .replyWithPhoto(logoUrl, { ...clearCharts, caption })
+				.then(message => ctx.session.data.messagesIdForDelete.push(message.message_id))
+				.catch(e => console.log(e));
+		});
 	} catch (error) {
 		console.log(error);
 	}

@@ -60,7 +60,7 @@ secondSceneCreateTeam.enter(async ctx => {
 });
 secondSceneCreateTeam.on('photo', async ctx => {
 	try {
-		const fileId = ctx.update.message.photo[0].file_id;
+		const fileId = ctx.update.message.photo[1]?.file_id;
 		ctx.session.data.teamCreate.logoUrl = fileId;
 
 		const fileInTelegram = await ctx.telegram.getFile(fileId);

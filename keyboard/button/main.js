@@ -11,6 +11,7 @@ export async function mainBtn(ctx) {
 			[Markup.button.callback('Личный кабинет 🔑', 'm_3_')],
 			[Markup.button.callback('Полезная информация ⚠️', 'm_4_')],
 			[Markup.button.callback('Статистика 📊', 'm_6_')],
+			[Markup.button.callback('Команды ⭐', 'm_7_')],
 			isAdmin || isRoot ? [Markup.button.callback('Админ кабинет 🛠️', 'm_5_')] : [],
 		];
 	} catch (error) {
