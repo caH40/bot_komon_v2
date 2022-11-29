@@ -6,6 +6,7 @@ import {
 	teamDescription,
 	teamJoin,
 	teamLeave,
+	teamLogo,
 	teamMain,
 	teamManagement,
 	teamRemove,
@@ -27,7 +28,8 @@ export async function handlerTeam(ctx, cbqData) {
 		if (cbqData === 'm_3_2_5_3_') return await teamDescription(ctx);
 		if (cbqData.includes('m_3_2_5_1_add_')) return await teamApprovalRider(ctx, cbqData);
 		if (cbqData.includes('m_3_2_5_2_E_')) return await teamRemoveRiderDB(ctx, cbqData);
-		if (cbqData === 'm_3_2_5_4_E') return await teamRemove(ctx, cbqData);
+		if (cbqData === 'm_3_2_5_4_') return await teamLogo(ctx);
+		if (cbqData === 'm_3_2_5_5_E') return await teamRemove(ctx, cbqData);
 		if (cbqData === 'm_3_2_0_wait') return await teamWait(ctx, cbqData);
 	} catch (error) {
 		console.log(error);

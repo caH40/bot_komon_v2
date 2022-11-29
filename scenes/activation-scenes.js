@@ -23,6 +23,7 @@ import {
 import { teamDescriptionScene } from './team-desc/description.js';
 import { pointsSprinterScene } from './sprinter/points-set.js';
 import { pointsMountainScene } from './mountain/points-set.js';
+import { sceneTeamLogo } from './team-logo/logo.js';
 
 export function activationScenes() {
 	try {
@@ -43,6 +44,7 @@ export function activationScenes() {
 			firstSceneCreateTeam,
 			secondSceneCreateTeam,
 			thirdSceneCreateTeam,
+			sceneTeamLogo,
 			teamDescriptionScene(),
 			pointsSprinterScene(),
 			pointsMountainScene(),
