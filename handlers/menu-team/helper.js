@@ -35,22 +35,22 @@ export async function teamChooseForJoin(ctx, cbqData) {
 
 		const riderDB = await Rider.findOne({ telegramId: userId });
 
-		const monthAndHalfInMilliseconds = 45 * 24 * 3600000;
-		const today = new Date().getTime();
+		// const monthAndHalfInMilliseconds = 45 * 24 * 3600000;
+		// const today = new Date().getTime();
 
 		const exTeam = await Team.findOne({ riders: { $elemMatch: { rider: riderDB._id } } });
 		if (exTeam) {
-			const riderForCheck = exTeam.riders.find(
-				rider => rider.rider.toString() === riderDB._id.toString()
-			);
-			if (today - riderForCheck.dateLeave < monthAndHalfInMilliseconds)
-				return await ctx.reply(
-					`Вы выходили из команды ${exTeam.name} ${new Date(
-						riderForCheck.dateLeave
-					).toLocaleString()}. Трансферное окно закрыто до ${new Date(
-						monthAndHalfInMilliseconds + riderForCheck.dateLeave
-					).toLocaleString()}.`
-				);
+			// const riderForCheck = exTeam.riders.find(
+			// 	rider => rider.rider.toString() === riderDB._id.toString()
+			// );
+			// if (today - riderForCheck.dateLeave < monthAndHalfInMilliseconds)
+			// 	return await ctx.reply(
+			// 		`Вы выходили из команды ${exTeam.name} ${new Date(
+			// 			riderForCheck.dateLeave
+			// 		).toLocaleString()}. Трансферное окно закрыто до ${new Date(
+			// 			monthAndHalfInMilliseconds + riderForCheck.dateLeave
+			// 		).toLocaleString()}.`
+			// 	);
 			const response = await Team.findOneAndUpdate(
 				{ _id: exTeam._id },
 				{ $pull: { riders: { rider: riderDB._id } } }
@@ -69,12 +69,10 @@ export async function teamChooseForJoin(ctx, cbqData) {
 			await ctx.telegram.sendMessage(
 				capitan.telegramId,
 				`
-		${time}. Поступила заявка от райдера ${riderDB.lastName} ${riderDB.firstName} на присоединение к Вашей команде. Для рассмотрение заявок:
-		Личный кабинет >>
-		Команда >>
-		Управление командой >>
-		Заявки на вступление в команду >>
-		`
+		${time}. Поступила заявка от райдера <b>${riderDB.firstNameZwift} ${riderDB.lastNameZwift} (${riderDB.firstName} ${riderDB.lastName})</b> на присоединение к Вашей команде.\n<i>Позже можно рассмотреть заявки на присоединение к команде в личном кабинете.</i>
+		
+		`,
+				teamAddRiderKeyboard(riderDB._id)
 			);
 			await ctx
 				.reply(
