@@ -270,6 +270,13 @@ export async function teamDescription(ctx) {
 		console.log(error);
 	}
 }
+export async function teamLogo(ctx) {
+	try {
+		await ctx.scene.enter('teamLogo');
+	} catch (error) {
+		console.log(error);
+	}
+}
 export async function handlerTeams(ctx) {
 	try {
 		const teamsDB = await Team.find({ 'deleted.isDeleted': false, isAllowed: true }).populate({
