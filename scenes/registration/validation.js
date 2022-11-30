@@ -55,9 +55,10 @@ export function validationLink(text) {
 		console.log(error);
 	}
 }
-export async function checkZwiftId(zwiftId) {
+export async function checkZwiftId(zwiftId, zwiftIdRiderWithUpdating) {
 	try {
 		const riderDB = await Rider.findOne({ zwiftId });
+		if (riderDB.zwiftId === zwiftIdRiderWithUpdating) return true;
 		if (riderDB) return false;
 		return true;
 	} catch (error) {

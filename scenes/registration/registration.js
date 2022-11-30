@@ -24,6 +24,7 @@ firstSceneReg.enter(async ctx => {
 		// показать данные райдера, если уже зарегистрирован
 		const riderDB = await Rider.findOne({ telegramId: ctx.session.data.account.telegramId });
 		if (riderDB) {
+			ctx.session.data.account.zwiftIdRiderWithUpdating = riderDB.zwiftId;
 			const message = riderData(riderDB);
 			await ctx.replyWithHTML(message, { disable_web_page_preview: true });
 			await ctx.replyWithHTML(t.first.question);
@@ -279,11 +280,11 @@ eighthSceneReg.on('message', async ctx => {
 		if (isValid) {
 			const regExp = /\d+/;
 			const telegramId = text.match(regExp)[0];
-			const isUniqueId = await checkZwiftId(telegramId);
+			const zwiftIdRiderWithUpdating = ctx.session.data.account.zwiftIdRiderWithUpdating;
+			const isUniqueId = await checkZwiftId(telegramId, zwiftIdRiderWithUpdating);
 			if (isUniqueId) {
 				ctx.session.data.account.zwiftPower = text;
 				ctx.session.data.account.zwiftId = telegramId;
-				ctx.session.data.account.zwiftPower = text;
 				return await ctx.replyWithHTML(finalMessage(ctx), {
 					disable_web_page_preview: true,
 				});
