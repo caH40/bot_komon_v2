@@ -11,6 +11,7 @@ import { getPointsTeams } from '../../preparation_data/teams/points-teams.js';
 import { Click } from '../../Model/Click.js';
 import { getStatRiders } from '../../preparation_data/statistics/riders.js';
 import { getStatStages } from '../../preparation_data/statistics/stages.js';
+import { Feedback } from '../../Model/Feedback.js';
 
 const __dirname = path.resolve();
 
@@ -230,7 +231,7 @@ export async function getTeamsPoints(req, res) {
 export async function postClick(req, res) {
 	try {
 		const { telegramId } = req.body;
-
+		console.log('click');
 		if (telegramId == process.env.DEVELOPER_ID)
 			return res.status(200).json({ message: `Подсчет кликов разработчиков не производится!` });
 		if (!telegramId)
@@ -259,6 +260,40 @@ export async function getStatisticsStages(req, res) {
 		if (statisticsStages.length !== 0)
 			return res.status(200).json({ message: `Статистика по заездам`, statisticsStages });
 		return res.status(400).json({ message: `Ошибка при получении статистики по заездам!` });
+	} catch (error) {
+		console.log(error);
+	}
+}
+export async function getFeedback(req, res) {
+	try {
+		const feedbackDB = await Feedback.find();
+
+		return res.status(200).json({ message: 'Данные по обратной связи', feedbackDB });
+		return res.status(400).json({ message: `Ошибка при получении данных по обратной связи!` });
+	} catch (error) {
+		console.log(error);
+	}
+}
+export async function postFeedback(req, res) {
+	try {
+		const { telegramId, query, date } = req.body;
+		const feedbackDB = await Feedback.findOne({ text: query });
+		if (feedbackDB)
+			return res
+				.status(400)
+				.json({ message: `Сообщение обратной связи с таким текстом уже существует` });
+
+		const feedback = new Feedback({
+			telegramId,
+			text: query,
+			date,
+		});
+
+		const savedFeedBack = await feedback.save().catch(e => console.log('error', e));
+
+		if (!savedFeedBack)
+			res.status(400).json({ message: `Ошибка при сохранении данных обратной связи!` });
+		res.status(200).json({ message: 'Данные по обратной связи сохранены!', savedFeedBack });
 	} catch (error) {
 		console.log(error);
 	}
