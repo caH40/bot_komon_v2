@@ -279,12 +279,12 @@ eighthSceneReg.on('message', async ctx => {
 		const isValid = validationLink(text);
 		if (isValid) {
 			const regExp = /\d+/;
-			const telegramId = text.match(regExp)[0];
+			const zwiftId = text.match(regExp)[0];
 			const zwiftIdRiderWithUpdating = ctx.session.data.account.zwiftIdRiderWithUpdating;
-			const isUniqueId = await checkZwiftId(telegramId, zwiftIdRiderWithUpdating);
+			const isUniqueId = await checkZwiftId(zwiftId, zwiftIdRiderWithUpdating);
 			if (isUniqueId) {
 				ctx.session.data.account.zwiftPower = text;
-				ctx.session.data.account.zwiftId = telegramId;
+				ctx.session.data.account.zwiftId = zwiftId;
 				return await ctx.replyWithHTML(finalMessage(ctx), {
 					disable_web_page_preview: true,
 				});
