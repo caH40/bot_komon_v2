@@ -20,6 +20,7 @@ export async function accountButtons(ctx) {
 						),
 				  ]
 				: [],
+			riderDB ? [Markup.button.webApp('Обратная связь 💬', `${process.env.SERVER}/feedback/`)] : [],
 			[Markup.button.callback('Главное меню ❗️', 'main')],
 		];
 	} catch (error) {
