@@ -3,6 +3,7 @@ import { verifyRoot, verifyAdmin } from '../../modules/verify-user.js';
 
 export async function mainBtn(ctx) {
 	try {
+		console.log(`${process.env.SERVER}/teams/}`);
 		const isAdmin = await verifyAdmin(ctx);
 		const isRoot = await verifyRoot(ctx);
 		return [
@@ -11,7 +12,8 @@ export async function mainBtn(ctx) {
 			[Markup.button.callback('Личный кабинет 🔑', 'm_3_')],
 			[Markup.button.callback('Полезная информация ⚠️', 'm_4_')],
 			[Markup.button.callback('Статистика 📊', 'm_6_')],
-			[Markup.button.callback('Команды ⭐', 'm_7_')],
+			[Markup.button.webApp('Команды ⭐', `${process.env.SERVER}/teams`)],
+			// [Markup.button.callback('Команды ⭐', 'm_7_')],
 			isAdmin || isRoot ? [Markup.button.callback('Админ кабинет 🛠️', 'm_5_')] : [],
 		];
 	} catch (error) {

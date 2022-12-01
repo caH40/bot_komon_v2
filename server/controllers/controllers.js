@@ -12,6 +12,7 @@ import { Click } from '../../Model/Click.js';
 import { getStatRiders } from '../../preparation_data/statistics/riders.js';
 import { getStatStages } from '../../preparation_data/statistics/stages.js';
 import { Feedback } from '../../Model/Feedback.js';
+import { Team } from '../../Model/Team.js';
 
 const __dirname = path.resolve();
 
@@ -294,6 +295,24 @@ export async function postFeedback(req, res) {
 		if (!savedFeedBack)
 			res.status(400).json({ message: `Ошибка при сохранении данных обратной связи!` });
 		res.status(200).json({ message: 'Данные по обратной связи сохранены!', savedFeedBack });
+	} catch (error) {
+		console.log(error);
+	}
+}
+export async function getTeams(req, res) {
+	try {
+		let teamsDB = await Team.find({ 'deleted.isDeleted': false }).populate({
+			path: 'riders.rider',
+		});
+
+		for (let i = teamsDB.length - 1; i > 0; i--) {
+			let j = Math.floor(Math.random() * (i + 1));
+			[teamsDB[i], teamsDB[j]] = [teamsDB[j], teamsDB[i]];
+		}
+
+		if (!teamsDB)
+			res.status(400).json({ message: `Ошибка получении данных по зарегистрированным командам` });
+		res.status(200).json({ message: 'Данные по зарегистрированным командам!', teamsDB });
 	} catch (error) {
 		console.log(error);
 	}
