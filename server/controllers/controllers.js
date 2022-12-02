@@ -13,6 +13,7 @@ import { getStatRiders } from '../../preparation_data/statistics/riders.js';
 import { getStatStages } from '../../preparation_data/statistics/stages.js';
 import { Feedback } from '../../Model/Feedback.js';
 import { Team } from '../../Model/Team.js';
+import { setTimeout } from 'timers/promises';
 
 const __dirname = path.resolve();
 
@@ -308,9 +309,12 @@ export async function getTeams(req, res) {
 			let j = Math.floor(Math.random() * (i + 1));
 			[teamsDB[i], teamsDB[j]] = [teamsDB[j], teamsDB[i]];
 		}
-
+		for (let i = 0; i < 1000000000; i++) {
+			i += 1;
+		}
 		if (!teamsDB)
 			res.status(400).json({ message: `Ошибка получении данных по зарегистрированным командам` });
+
 		res.status(200).json({ message: 'Данные по зарегистрированным командам!', teamsDB });
 	} catch (error) {
 		console.log(error);
