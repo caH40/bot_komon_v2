@@ -3,7 +3,10 @@ import { Rider } from '../../Model/Rider.js';
 
 export function validationNameRus(text) {
 	try {
-		if (validator.isAlpha(text, 'ru-RU') && validator.isLength(text, { min: 2, max: 10 })) {
+		if (
+			validator.isAlpha(text, 'ru-RU', { ignore: '-' }) &&
+			validator.isLength(text, { min: 2, max: 36 })
+		) {
 			return true;
 		}
 		return false;
