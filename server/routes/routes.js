@@ -17,6 +17,7 @@ import {
 	getFeedback,
 	postFeedback,
 	getTeams,
+	getRiders,
 } from '../controllers/controllers.js';
 
 export const router = new Router();
@@ -38,3 +39,4 @@ router.post('/api/statistics/stages', getStatisticsStages);
 router.post('/api/feedback', getFeedback);
 router.post('/api/post-feedback', postFeedback);
 router.post('/api/teams', getTeams);
+router.post('/api/riders', getRiders);

@@ -15,6 +15,7 @@ import { Feedback } from '../../Model/Feedback.js';
 import { Team } from '../../Model/Team.js';
 import { setTimeout } from 'timers/promises';
 import { getTeamWithRiders } from '../../preparation_data/teams/riders-team.js';
+import { Rights } from '../../Model/Rights.js';
 
 const __dirname = path.resolve();
 
@@ -308,6 +309,24 @@ export async function getTeams(req, res) {
 			res.status(400).json({ message: `Ошибка получении данных по зарегистрированным командам` });
 
 		res.status(200).json({ message: 'Данные по зарегистрированным командам!', teamsDB: teams });
+	} catch (error) {
+		console.log(error);
+	}
+}
+export async function getRiders(req, res) {
+	try {
+		const telegramId = req.body.telegramId;
+		const rightsDB = await Rights.findOne();
+
+		if (!rightsDB.admin.includes(telegramId))
+			return res.status(403).json({ message: `Доступ запрещен!` });
+
+		const ridersDB = await Rider.find().populate('teamId');
+
+		if (!ridersDB)
+			res.status(400).json({ message: `Ошибка получении данных по зарегистрированным райдерам` });
+
+		res.status(200).json({ message: 'Данные по зарегистрированным райдерам!', ridersDB });
 	} catch (error) {
 		console.log(error);
 	}
