@@ -232,7 +232,6 @@ export async function getTeamsPoints(req, res) {
 export async function postClick(req, res) {
 	try {
 		const { telegramId } = req.body;
-		console.log('click');
 		if (telegramId == process.env.DEVELOPER_ID)
 			return res.status(200).json({ message: `Подсчет кликов разработчиков не производится!` });
 		if (!telegramId)

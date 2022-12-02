@@ -3,7 +3,6 @@ import { verifyRoot, verifyAdmin } from '../../modules/verify-user.js';
 
 export async function mainBtn(ctx) {
 	try {
-		console.log(`${process.env.SERVER}/teams/}`);
 		const isAdmin = await verifyAdmin(ctx);
 		const isRoot = await verifyRoot(ctx);
 		return [
