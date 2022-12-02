@@ -14,6 +14,7 @@ import { getStatStages } from '../../preparation_data/statistics/stages.js';
 import { Feedback } from '../../Model/Feedback.js';
 import { Team } from '../../Model/Team.js';
 import { setTimeout } from 'timers/promises';
+import { getTeamWithRiders } from '../../preparation_data/teams/riders-team.js';
 
 const __dirname = path.resolve();
 
@@ -301,19 +302,12 @@ export async function postFeedback(req, res) {
 }
 export async function getTeams(req, res) {
 	try {
-		let teamsDB = await Team.find({ 'deleted.isDeleted': false }).populate({
-			path: 'riders.rider',
-		});
+		const teams = await getTeamWithRiders();
 
-		for (let i = teamsDB.length - 1; i > 0; i--) {
-			let j = Math.floor(Math.random() * (i + 1));
-			[teamsDB[i], teamsDB[j]] = [teamsDB[j], teamsDB[i]];
-		}
-
-		if (!teamsDB)
+		if (!teams)
 			res.status(400).json({ message: `Ошибка получении данных по зарегистрированным командам` });
 
-		res.status(200).json({ message: 'Данные по зарегистрированным командам!', teamsDB });
+		res.status(200).json({ message: 'Данные по зарегистрированным командам!', teamsDB: teams });
 	} catch (error) {
 		console.log(error);
 	}
