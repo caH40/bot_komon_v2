@@ -23,7 +23,9 @@ export async function getResultsStage(request) {
 
 		let results = resultsDB.map(result => result.toObject());
 
-		const hasPenalty = results.find(result => result.penalty.powerUp !== 0);
+		const hasPenalty = results.find(
+			result => result.penalty.powerUp !== 0 || result.isDisqualification === true
+		);
 		if (hasPenalty) results = getResultsWithPenalty(results);
 
 		let resultFiltered = [];
@@ -60,9 +62,16 @@ export async function getResultsStage(request) {
 		const title = `${name}, Этап ${seriesNumber}, ${seriesType}, ${categoryStr}`;
 
 		resultFiltered.forEach((result, index) => {
-			result.gap = secondesToTime(result.gap);
-			result.time = secondesToTimeThousandths(result.time);
-			result.gapPrev = secondesToTime(result.gapPrev);
+			if (result.time === 99999999) {
+				result.time = 'DQ';
+				result.gapPrev = 0;
+				result.gap = 0;
+			} else {
+				result.time = secondesToTimeThousandths(result.time);
+				result.gapPrev = secondesToTime(result.gapPrev);
+				result.gap = secondesToTime(result.gap);
+			}
+
 			result.weightInGrams = Math.round(result.weightInGrams / 10) / 100;
 			result.title = title;
 		});

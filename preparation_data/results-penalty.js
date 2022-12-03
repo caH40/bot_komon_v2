@@ -8,6 +8,9 @@ export function getResultsWithPenalty(results) {
 			if (result.penalty.powerUp !== 0) {
 				result.time += timePenalty * result.penalty.powerUp;
 			}
+			if (result.isDisqualification === true) {
+				result.time = 99999999;
+			}
 		});
 		const resultsSorted = results.sort((a, b) => a.time - b.time);
 		resultsSorted.forEach((result, index) => (result.placeAbsolute = index + 1));
