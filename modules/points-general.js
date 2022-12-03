@@ -14,7 +14,9 @@ export async function updatePointsGeneral(seriesId) {
 				// riderId: { $ne: undefined },
 			}).populate('riderId');
 
-			const hasPenalty = resultsDB.find(result => result.penalty.powerUp !== 0);
+			const hasPenalty = resultsDB.find(
+				result => result.penalty.powerUp !== 0 || result.isDisqualification === true
+			);
 			if (hasPenalty) resultsDB = getResultsWithPenalty(resultsDB);
 
 			//что делать если время одинаковое
