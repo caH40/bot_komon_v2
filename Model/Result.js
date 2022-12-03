@@ -13,6 +13,7 @@ const resultSchema = new Schema({
 	watt: Number,
 	time: Number,
 	penalty: { powerUp: { type: Number, default: 0 } },
+	isDisqualification: { type: Boolean, default: false },
 	category: String,
 	categoryCurrent: String,
 	teamCurrent: { type: mongoose.Schema.Types.ObjectId, ref: 'Team' },

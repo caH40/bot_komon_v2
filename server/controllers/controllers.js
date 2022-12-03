@@ -295,7 +295,7 @@ export async function postFeedback(req, res) {
 		const savedFeedBack = await feedback.save().catch(e => console.log('error', e));
 
 		if (!savedFeedBack)
-			res.status(400).json({ message: `Ошибка при сохранении данных обратной связи!` });
+			return res.status(400).json({ message: `Ошибка при сохранении данных обратной связи!` });
 		res.status(200).json({ message: 'Данные по обратной связи сохранены!', savedFeedBack });
 	} catch (error) {
 		console.log(error);
@@ -306,7 +306,9 @@ export async function getTeams(req, res) {
 		const teams = await getTeamWithRiders();
 
 		if (!teams)
-			res.status(400).json({ message: `Ошибка получении данных по зарегистрированным командам` });
+			return res
+				.status(400)
+				.json({ message: `Ошибка получении данных по зарегистрированным командам` });
 
 		res.status(200).json({ message: 'Данные по зарегистрированным командам!', teamsDB: teams });
 	} catch (error) {
@@ -324,9 +326,31 @@ export async function getRiders(req, res) {
 		const ridersDB = await Rider.find().populate('teamId');
 
 		if (!ridersDB)
-			res.status(400).json({ message: `Ошибка получении данных по зарегистрированным райдерам` });
+			return res
+				.status(400)
+				.json({ message: `Ошибка получении данных по зарегистрированным райдерам` });
 
 		res.status(200).json({ message: 'Данные по зарегистрированным райдерам!', ridersDB });
+	} catch (error) {
+		console.log(error);
+	}
+}
+export async function postDisqualification(req, res) {
+	try {
+		const { isDisqualification, resultId } = req.body;
+
+		const resultDB = await Result.findOneAndUpdate(
+			{ _id: resultId },
+			{ $set: { isDisqualification } }
+		);
+
+		const message = `Райдер "${resultDB.name}" ${
+			isDisqualification ? 'дисквалифицирован!' : 'оправдан, с него снята дисквалификация!'
+		}`;
+
+		if (!resultDB) return res.status(400).json({ message: `Не найден райдер для дисквалификации` });
+
+		return res.status(200).json({ message });
 	} catch (error) {
 		console.log(error);
 	}
