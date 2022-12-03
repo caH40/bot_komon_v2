@@ -21,7 +21,9 @@ export async function filterRiders(seriesIdAndCategory, seriesId, category) {
 		ridersTelegram.forEach(zwiftRiderId => {
 			const riderResults = results.filter(result => result.zwiftRiderId === zwiftRiderId);
 			//массив с результатами одного райдера zwiftRiderId
+
 			riderResults.forEach(result => {
+				rider.isDisqualification = result.isDisqualification;
 				rider.name = result.name;
 				rider.zwiftRiderId = zwiftRiderId;
 				rider.imageSrc = result.imageSrc ? result.imageSrc : '';
@@ -34,7 +36,9 @@ export async function filterRiders(seriesIdAndCategory, seriesId, category) {
 					points: result.pointsStage,
 				});
 			});
-			ridersWithPoints.push(rider);
+
+			if (!rider.isDisqualification) ridersWithPoints.push(rider);
+
 			rider = { pointsStage: [] };
 		});
 
