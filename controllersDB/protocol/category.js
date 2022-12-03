@@ -19,6 +19,11 @@ export async function updateCategoryDB(seriesId, result, categoryCurrent) {
 		// 	if (riderZwiftIdDB) return { category: riderZwiftIdDB.category };
 		// }
 
+		const riderDB = await Rider.findOneAndUpdate(
+			{ zwiftId: result.zwiftId },
+			{ $set: { category: categoryCurrent } }
+		);
+
 		return { category: categoryCurrent };
 	} catch (error) {
 		console.log(error);
