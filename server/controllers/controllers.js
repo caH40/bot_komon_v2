@@ -96,10 +96,10 @@ export async function postStageEdit(req, res) {
 		);
 		// if (!riderDB) return res.status(400).json({ message: `Райдер не найден в БД` });
 
-		const seriesDB = await Series.findOne({ stageId: data.stageId });
-		if (!seriesDB) return res.status(400).json({ message: `Не найдена серия заездов` });
+		const stageDB = await Stage.findOne({ _id: data.stageId });
+		if (!stageDB) return res.status(400).json({ message: `Не найдена серия заездов` });
 
-		const stagesDB = await Stage.find({ seriesId: seriesDB._id });
+		const stagesDB = await Stage.find({ seriesId: stageDB.seriesId, hasResults: true });
 		if (stagesDB.length === 0)
 			return res.status(400).json({ message: `Не найден ни один этап серии` });
 
