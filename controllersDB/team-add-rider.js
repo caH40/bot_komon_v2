@@ -14,6 +14,8 @@ export async function addRiderDB(ctx, candidateId) {
 			}
 		);
 
+		if (!teamDB) return await ctx.reply('Окно рассмотрения заявки не активно...');
+
 		const riderDB = await Rider.findOneAndUpdate(
 			{ _id: candidateId },
 			{ $set: { teamId: teamDB._id } },
@@ -52,6 +54,8 @@ export async function notAddRiderDB(ctx, candidateId) {
 			{ requestRiders: candidateId },
 			{ $pull: { requestRiders: candidateId } }
 		);
+
+		if (!teamDB) return await ctx.reply('Окно рассмотрения заявки не активно...');
 
 		const riderDB = await Rider.findOne({ _id: candidateId });
 
