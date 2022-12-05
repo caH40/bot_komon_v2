@@ -41,11 +41,7 @@ export async function getResultsStage(request) {
 			const categories = ['A', 'B', 'C', 'W', 'WA', 'WB'];
 			for (let i = 0; i < categories.length; i++) {
 				let res = results
-					.filter(result =>
-						result.riderId?.category
-							? result.riderId?.category === categories[i]
-							: result.category === categories[i]
-					)
+					.filter(result => result.category === categories[i])
 					.sort((a, b) => a.placeAbsolute - b.placeAbsolute);
 
 				res.forEach((result, index) => (result.placeCategory = index + 1));
@@ -54,11 +50,7 @@ export async function getResultsStage(request) {
 			resultFiltered = resultFiltered.sort((a, b) => a.placeAbsolute - b.placeAbsolute);
 		} else {
 			resultFiltered = results
-				.filter(result =>
-					result.riderId?.category
-						? result.riderId?.category === category
-						: result.category === category
-				)
+				.filter(result => result.category === category)
 				.sort((a, b) => a.placeAbsolute - b.placeAbsolute);
 
 			resultFiltered.forEach((result, index) => (result.placeCategory = index + 1));
