@@ -49,3 +49,10 @@ export async function handlerStatistics(ctx) {
 		console.log(error);
 	}
 }
+export async function passwordForAdmin(ctx) {
+	try {
+		await ctx.scene.enter('passwordForAdmin');
+	} catch (error) {
+		console.log(error);
+	}
+}

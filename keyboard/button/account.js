@@ -1,8 +1,11 @@
 import { Markup } from 'telegraf';
 import { Rider } from '../../Model/Rider.js';
+import { verifyRoot, verifyAdmin } from '../../modules/verify-user.js';
 
 export async function accountButtons(ctx) {
 	try {
+		const isAdmin = await verifyAdmin(ctx);
+		const isRoot = await verifyRoot(ctx);
 		const telegramId = ctx.update.callback_query.from.id;
 		const riderDB = await Rider.findOne({ telegramId });
 
@@ -21,6 +24,7 @@ export async function accountButtons(ctx) {
 				  ]
 				: [],
 			riderDB ? [Markup.button.webApp('Обратная связь 💬', `${process.env.SERVER}/feedback/`)] : [],
+			isAdmin || isRoot ? [Markup.button.callback('Админ пароль 🗝️', 'm_3_6_E')] : [],
 			[Markup.button.callback('Главное меню ❗️', 'main')],
 		];
 	} catch (error) {

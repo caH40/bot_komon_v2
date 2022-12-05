@@ -24,6 +24,7 @@ import { teamDescriptionScene } from './team-desc/description.js';
 import { pointsSprinterScene } from './sprinter/points-set.js';
 import { pointsMountainScene } from './mountain/points-set.js';
 import { sceneTeamLogo } from './team-logo/logo.js';
+import { passwordForAdminScene } from './password/password.js';
 
 export function activationScenes() {
 	try {
@@ -45,6 +46,7 @@ export function activationScenes() {
 			secondSceneCreateTeam,
 			thirdSceneCreateTeam,
 			sceneTeamLogo,
+			passwordForAdminScene,
 			teamDescriptionScene(),
 			pointsSprinterScene(),
 			pointsMountainScene(),
