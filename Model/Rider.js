@@ -25,6 +25,7 @@ const riderSchema = new Schema({
 			training: { type: Boolean, default: true },
 		},
 	},
+	password: String,
 });
 
 export const Rider = model('Rider', riderSchema);

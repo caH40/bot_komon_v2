@@ -9,7 +9,7 @@ import { handlerResults } from './menu-results/handler-results.js';
 import { handlerTeam } from './menu-team/handler-menu.js';
 import { handlerTeams, teamChooseForJoin } from './menu-team/helper.js';
 import { handlerAdmin } from './menu_admin/handler-menu.js';
-import { account, getSchedule, handlerStatistics } from './helper-main.js';
+import { account, getSchedule, handlerStatistics, passwordForAdmin } from './helper-main.js';
 import { getScheduleWeekly } from '../modules/schedule-weekle.js';
 import { resultsSeriesTeams } from '../view/result-teams/teams.js';
 import { seriesBtn } from '../keyboard/button/schedule-btn.js';
@@ -46,6 +46,7 @@ export async function handler(ctx, cbqData) {
 		if (cbqData.includes('m_1_all__')) return await resultSeries(ctx, cbqData);
 		if (cbqData.includes('m_1_all_2__')) return await resultGeneral(ctx, cbqData);
 		if (cbqData.includes('m_3_2')) return await handlerTeam(ctx, cbqData);
+		if (cbqData.includes('m_3_6_')) return await passwordForAdmin(ctx, cbqData);
 		if (cbqData.includes('m_4_')) return await handlerDescription(ctx, cbqData);
 		if (cbqData.includes('m_5_')) return await handlerAdmin(ctx, cbqData);
 		if (cbqData.includes('m_6_')) return await handlerStatistics(ctx);
