@@ -1,6 +1,5 @@
 export function filterThousandths(results) {
 	try {
-		console.log(results[0]);
 		const lengthArr = results.length;
 
 		if (results[0].time.split('.')[0] !== results[1].time.split('.')[0])

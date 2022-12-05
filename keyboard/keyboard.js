@@ -125,13 +125,13 @@ export function resultStageCatKeyboard(stageId, seriesId, quantityWomenCategory)
 				[Markup.button.webApp('Группа "C" ✌️', `${process.env.SERVER}/results/stage/C${stageId}`)],
 				[
 					Markup.button.webApp(
-						'Группа "WA" 👍',
+						'Группа "A (W)" 👍',
 						`${process.env.SERVER}/results/stage/WA${stageId}`
 					),
 				],
 				[
 					Markup.button.webApp(
-						'Группа "WB" 🤟',
+						'Группа "B (W)" 💪',
 						`${process.env.SERVER}/results/stage/WB${stageId}`
 					),
 				],
@@ -165,18 +165,77 @@ export function teamManagementKeyboard(userId) {
 		]),
 	};
 }
-export function resultSeriesGeneralKeyboard(seriesId) {
-	return {
-		parse_mode: 'html',
-		...Markup.inlineKeyboard([
-			[Markup.button.webApp('Группа "A" 💪', `${process.env.SERVER}/results/general/A${seriesId}`)],
-			[Markup.button.webApp('Группа "B" 👊', `${process.env.SERVER}/results/general/B${seriesId}`)],
-			[Markup.button.webApp('Группа "C" ✌️', `${process.env.SERVER}/results/general/C${seriesId}`)],
-			[Markup.button.webApp('Группа "W" 👍', `${process.env.SERVER}/results/general/W${seriesId}`)],
-			[Markup.button.callback('<< назад >>', `m_1_all__${seriesId}`)],
-			[Markup.button.callback('Главное меню ❗️', 'main')],
-		]),
-	};
+export function resultSeriesGeneralKeyboard(seriesId, quantityWomenCategory) {
+	if (quantityWomenCategory === 1)
+		return {
+			parse_mode: 'html',
+			...Markup.inlineKeyboard([
+				[
+					Markup.button.webApp(
+						'Группа "A" 💪',
+						`${process.env.SERVER}/results/general/A${seriesId}`
+					),
+				],
+				[
+					Markup.button.webApp(
+						'Группа "B" 👊',
+						`${process.env.SERVER}/results/general/B${seriesId}`
+					),
+				],
+				[
+					Markup.button.webApp(
+						'Группа "C" ✌️',
+						`${process.env.SERVER}/results/general/C${seriesId}`
+					),
+				],
+				[
+					Markup.button.webApp(
+						'Группа "W" 👍',
+						`${process.env.SERVER}/results/general/W${seriesId}`
+					),
+				],
+				[Markup.button.callback('<< назад >>', `m_1_all__${seriesId}`)],
+				[Markup.button.callback('Главное меню ❗️', 'main')],
+			]),
+		};
+	if (quantityWomenCategory === 2)
+		return {
+			parse_mode: 'html',
+			...Markup.inlineKeyboard([
+				[
+					Markup.button.webApp(
+						'Группа "A" 💪',
+						`${process.env.SERVER}/results/general/A${seriesId}`
+					),
+				],
+				[
+					Markup.button.webApp(
+						'Группа "B" 👊',
+						`${process.env.SERVER}/results/general/B${seriesId}`
+					),
+				],
+				[
+					Markup.button.webApp(
+						'Группа "C" ✌️',
+						`${process.env.SERVER}/results/general/C${seriesId}`
+					),
+				],
+				[
+					Markup.button.webApp(
+						'Группа "A (W)" 👍',
+						`${process.env.SERVER}/results/general/WA${seriesId}`
+					),
+				],
+				[
+					Markup.button.webApp(
+						'Группа "B (W)" 💪',
+						`${process.env.SERVER}/results/general/WB${seriesId}`
+					),
+				],
+				[Markup.button.callback('<< назад >>', `m_1_all__${seriesId}`)],
+				[Markup.button.callback('Главное меню ❗️', 'main')],
+			]),
+		};
 }
 // меню выбора админ кабинета
 export const adminKeyboard = {

@@ -41,6 +41,7 @@ export async function resultStage(ctx, cbqData) {
 		const stageId = cbqData.slice(6);
 		const { number, seriesId } = await Stage.findOne({ _id: stageId });
 		const { name, dateStart } = await Series.findOne({ _id: seriesId });
+
 		let quantityWomenCategory = 2;
 		if (name === 'Autumn Race series 2022') quantityWomenCategory = 1;
 
@@ -57,9 +58,12 @@ export async function resultGeneral(ctx, cbqData) {
 		const _id = cbqData.slice(11);
 		const { name, dateStart } = await Series.findOne({ _id });
 
+		let quantityWomenCategory = 2;
+		if (name === 'Autumn Race series 2022') quantityWomenCategory = 1;
+
 		return await ctx.editMessageText(
 			`<b>👑 Генеральный зачет серии "${name}" ${getEmojiSeason(dateStart)}</b>`,
-			resultSeriesGeneralKeyboard(_id)
+			resultSeriesGeneralKeyboard(_id, quantityWomenCategory)
 		);
 	} catch (error) {
 		console.log(error);

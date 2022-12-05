@@ -33,7 +33,7 @@ export async function updateRequiredTypes(seriesId) {
 					let resultRider = resultsOnlyOneType.filter(
 						result => result.riderId.toString === ridersDB._id.toString()
 					);
-					console.log(resultRider);
+
 					//меньшему результату ставлю false в документе результат
 					if (resultRider.length > 1) {
 						if (resultRider[0].pointsStage > resultRider[1].pointsStage) {
