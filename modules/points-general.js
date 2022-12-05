@@ -25,7 +25,8 @@ export async function updatePointsGeneral(seriesId) {
 			let placeA = 0;
 			let placeB = 0;
 			let placeC = 0;
-			let placeW = 0;
+			let placeWA = 0;
+			let placeWB = 0;
 
 			for (let j = 0; j < resultsDB.length; j++) {
 				if (resultsDB[j].category === 'A') {
@@ -43,7 +44,6 @@ export async function updatePointsGeneral(seriesId) {
 						{ $set: { pointsStage: points[placeB] ? points[placeB] : 0 } },
 						{ returnDocument: 'after' }
 					);
-					// console.log(resp.category, resp.name, resp.pointsStage, 'placeB-', placeB);
 				}
 				if (resultsDB[j].category === 'C') {
 					placeC++;
@@ -52,32 +52,39 @@ export async function updatePointsGeneral(seriesId) {
 						{ $set: { pointsStage: points[placeC] ? points[placeC] : 0 } }
 					);
 				}
-				if (resultsDB[j].category === 'W') {
-					placeW++;
+				if (resultsDB[j].category === 'WA') {
+					placeWA++;
 					await Result.findByIdAndUpdate(
 						{ _id: resultsDB[j]._id },
-						{ $set: { pointsStage: points[placeW] ? points[placeW] : 0 } }
+						{ $set: { pointsStage: points[placeWA] ? points[placeWA] : 0 } }
+					);
+				}
+				if (resultsDB[j].category === 'WB') {
+					placeWB++;
+					await Result.findByIdAndUpdate(
+						{ _id: resultsDB[j]._id },
+						{ $set: { pointsStage: points[placeWB] ? points[placeWB] : 0 } }
 					);
 				}
 			}
 		}
-		//костыль, пока не все девушки зарегистрировались
-		for (let i = 0; i < stagesDB.length; i++) {
-			let resultsDB = await Result.find({
-				stageId: stagesDB[i]._id,
-				categoryCurrent: 'W',
-			}).populate('riderId');
+		// //костыль, пока не все девушки зарегистрировались
+		// for (let i = 0; i < stagesDB.length; i++) {
+		// 	let resultsDB = await Result.find({
+		// 		stageId: stagesDB[i]._id,
+		// 		categoryCurrent: 'W',
+		// 	}).populate('riderId');
 
-			resultsDB = resultsDB.sort((a, b) => a.time - b.time);
-			let placeW = 0;
-			for (let j = 0; j < resultsDB.length; j++) {
-				placeW++;
-				await Result.findByIdAndUpdate(
-					{ _id: resultsDB[j]._id },
-					{ $set: { pointsStage: points[placeW] } }
-				);
-			}
-		}
+		// 	resultsDB = resultsDB.sort((a, b) => a.time - b.time);
+		// 	let placeW = 0;
+		// 	for (let j = 0; j < resultsDB.length; j++) {
+		// 		placeW++;
+		// 		await Result.findByIdAndUpdate(
+		// 			{ _id: resultsDB[j]._id },
+		// 			{ $set: { pointsStage: points[placeW] } }
+		// 		);
+		// 	}
+		// }
 		return true;
 	} catch (error) {
 		console.log(error);

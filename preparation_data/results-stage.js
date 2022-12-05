@@ -10,8 +10,15 @@ import { getResultsWithPenalty } from './results-penalty.js';
 
 export async function getResultsStage(request) {
 	try {
-		const category = request.slice(0, 1);
-		const stageId = request.slice(1);
+		let category = '';
+		let stageId = '';
+		if (request?.includes('WA') || request?.includes('WB')) {
+			category = request.slice(0, 2);
+			stageId = request.slice(2);
+		} else {
+			category = request.slice(0, 1);
+			stageId = request.slice(1);
+		}
 
 		const stagesDB = await Stage.find({ _id: stageId });
 		const seriesId = stagesDB[0].seriesId;
@@ -29,8 +36,9 @@ export async function getResultsStage(request) {
 		if (hasPenalty) results = getResultsWithPenalty(results);
 
 		let resultFiltered = [];
+
 		if (category === 'T') {
-			const categories = ['A', 'B', 'C', 'W'];
+			const categories = ['A', 'B', 'C', 'W', 'WA', 'WB'];
 			for (let i = 0; i < categories.length; i++) {
 				let res = results
 					.filter(result =>
@@ -52,6 +60,7 @@ export async function getResultsStage(request) {
 						: result.category === category
 				)
 				.sort((a, b) => a.placeAbsolute - b.placeAbsolute);
+
 			resultFiltered.forEach((result, index) => (result.placeCategory = index + 1));
 			resultFiltered.sort((a, b) => a.placeCategory - b.placeCategory);
 		}

@@ -5,8 +5,15 @@ import { stagesCheck } from './stages-check.js';
 
 export async function resultsSeriesGeneral(seriesIdAndCategory) {
 	try {
-		const seriesId = seriesIdAndCategory.slice(1);
-		const category = seriesIdAndCategory.slice(0, 1);
+		let seriesId = '';
+		let category = '';
+		if (seriesIdAndCategory.includes('WA') || seriesIdAndCategory.includes('WB')) {
+			seriesId = seriesIdAndCategory.slice(2);
+			category = seriesIdAndCategory.slice(0, 2);
+		} else {
+			seriesId = seriesIdAndCategory.slice(1);
+			category = seriesIdAndCategory.slice(0, 1);
+		}
 
 		const ridersWithPoints = await filterRiders(seriesIdAndCategory, seriesId, category);
 		const ridersChecked = await stagesCheck(ridersWithPoints, seriesId);
