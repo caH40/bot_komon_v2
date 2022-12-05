@@ -135,8 +135,11 @@ export async function postStageEdit(req, res) {
 
 export async function postStagePoints(req, res) {
 	try {
-		const { nameElement, name, place, resultId } = req.body;
+		const { nameElement, name, place, resultId, telegramId, password } = req.body;
 		const numberElementPoints = +name.slice(-1) - 1;
+
+		const hash = await checkAdminWithHash(password, telegramId);
+		if (!hash) return res.status(401).json({ message: 'Неверный логин или пароль!' });
 
 		let pointsTable = {};
 		if (nameElement === 'pointsMountain') pointsTable = mountainTable;
@@ -177,7 +180,11 @@ export async function postStagePoints(req, res) {
 
 export async function postStagePenalty(req, res) {
 	try {
-		const { newPenalty, resultId } = req.body;
+		const { newPenalty, resultId, telegramId, password } = req.body;
+
+		const hash = await checkAdminWithHash(password, telegramId);
+		if (!hash) return res.status(401).json({ message: 'Неверный логин или пароль!' });
+
 		const resultDB = await Result.findOneAndUpdate(
 			{ _id: resultId },
 			{ $set: { 'penalty.powerUp': newPenalty } }
@@ -350,7 +357,10 @@ export async function getRiders(req, res) {
 }
 export async function postDisqualification(req, res) {
 	try {
-		const { isDisqualification, resultId } = req.body;
+		const { isDisqualification, resultId, password, telegramId } = req.body;
+
+		const hash = await checkAdminWithHash(password, telegramId);
+		if (!hash) return res.status(401).json({ message: 'Неверный логин или пароль!' });
 
 		const resultDB = await Result.findOneAndUpdate(
 			{ _id: resultId },

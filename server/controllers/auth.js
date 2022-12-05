@@ -6,7 +6,7 @@ import { Rights } from '../../Model/Rights.js';
 export async function checkAdmin(password, telegramId) {
 	try {
 		const adminDB = await Rights.findOne({ admin: { $in: telegramId } });
-		if (!adminDB) return res.status(401).json({ message: 'Неверный логин или пароль!' });
+		if (!adminDB) return false;
 
 		const riderDB = await Rider.findOne({ telegramId });
 		const hash = riderDB.password;
@@ -21,7 +21,7 @@ export async function checkAdmin(password, telegramId) {
 export async function checkAdminWithHash(hashFromFront, telegramId) {
 	try {
 		const adminDB = await Rights.findOne({ admin: { $in: telegramId } });
-		if (!adminDB) return res.status(401).json({ message: 'Неверный логин или пароль!' });
+		if (!adminDB) return false;
 
 		const riderDB = await Rider.findOne({ telegramId });
 		const hash = riderDB.password;
