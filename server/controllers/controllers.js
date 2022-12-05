@@ -1,8 +1,8 @@
-import { getResultsStage } from '../../preparation_data/results-stage.js';
 import path from 'path';
+
+import { getResultsStage } from '../../preparation_data/results-stage.js';
 import { Rider } from '../../Model/Rider.js';
 import { Result } from '../../Model/Result.js';
-import { Series } from '../../Model/Series.js';
 import { Stage } from '../../Model/Stage.js';
 import { resultsSeriesGeneral } from '../../preparation_data/general/general-series.js';
 import { mountainTable, sprintTable } from '../../utility/points.js';
@@ -12,13 +12,23 @@ import { Click } from '../../Model/Click.js';
 import { getStatRiders } from '../../preparation_data/statistics/riders.js';
 import { getStatStages } from '../../preparation_data/statistics/stages.js';
 import { Feedback } from '../../Model/Feedback.js';
-import { Team } from '../../Model/Team.js';
-import { setTimeout } from 'timers/promises';
 import { getTeamWithRiders } from '../../preparation_data/teams/riders-team.js';
 import { Rights } from '../../Model/Rights.js';
+import { checkAdmin, checkAdminWithHash } from './auth.js';
 
 const __dirname = path.resolve();
 
+export async function authenticate(req, res) {
+	try {
+		const { password, telegramId } = req.body;
+		const hash = await checkAdmin(password, telegramId);
+
+		if (hash) return res.status(200).json({ password: hash });
+		return res.status(401).json({ message: 'Неверный логин или пароль!' });
+	} catch (error) {
+		console.log(error);
+	}
+}
 export function mainPage(req, res) {
 	try {
 		res.status(200);
@@ -88,31 +98,34 @@ export async function postRiderSettings(req, res) {
 
 export async function postStageEdit(req, res) {
 	try {
-		const data = req.body;
+		const { newCategory, zwiftId, stageId, telegramId, password } = req.body;
+
+		const hash = await checkAdminWithHash(password, telegramId);
+		if (!hash) return res.status(401).json({ message: 'Неверный логин или пароль!' });
 
 		const riderDB = await Rider.findOneAndUpdate(
-			{ zwiftId: data.zwiftId },
-			{ $set: { category: data.newCategory } }
+			{ zwiftId: zwiftId },
+			{ $set: { category: newCategory } }
 		);
 		// if (!riderDB) return res.status(400).json({ message: `Райдер не найден в БД` });
 
-		const stageDB = await Stage.findOne({ _id: data.stageId });
+		const stageDB = await Stage.findOne({ _id: stageId });
 		if (!stageDB) return res.status(400).json({ message: `Не найдена серия заездов` });
 
 		const stagesDB = await Stage.find({ seriesId: stageDB.seriesId, hasResults: true });
 		if (stagesDB.length === 0)
 			return res.status(400).json({ message: `Не найден ни один этап серии` });
 
-		const resultDB = await Result.findOne({ zwiftRiderId: data.zwiftId });
+		const resultDB = await Result.findOne({ zwiftRiderId: zwiftId });
 
 		for (let i = 0; i < stagesDB.length; i++) {
 			let response = await Result.updateMany(
-				{ stageId: stagesDB[i]._id, zwiftRiderId: data.zwiftId },
-				{ $set: { category: data.newCategory } }
+				{ stageId: stagesDB[i]._id, zwiftRiderId: zwiftId },
+				{ $set: { category: newCategory } }
 			);
 		}
 
-		const message = `Успех! Райдеру "${resultDB.name}" изменена категория с "${resultDB.category}" на "${data.newCategory}"`;
+		const message = `Успех! Райдеру "${resultDB.name}" изменена категория с "${resultDB.category}" на "${newCategory}"`;
 
 		return res.status(200).json({ message });
 	} catch (error) {
