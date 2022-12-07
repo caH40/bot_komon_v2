@@ -1,15 +1,16 @@
 import { Result } from '../../Model/Result.js';
 import { Stage } from '../../Model/Stage.js';
 
-export async function filterRiders(seriesId, category) {
+export async function filterRidersOldW(seriesId, category) {
 	try {
 		const stagesDB = await Stage.find({ seriesId, hasResults: true });
 
 		let results = [];
 		for (let i = 0; i < stagesDB.length; i++) {
-			let resultsDB = await Result.find({ stageId: stagesDB[i]._id, category }).populate(
-				'stageId'
-			);
+			let resultsDB = await Result.find({
+				stageId: stagesDB[i]._id,
+				pointsStageOldW: { $ne: undefined },
+			}).populate('stageId');
 			results.push(...resultsDB);
 		}
 
@@ -35,7 +36,7 @@ export async function filterRiders(seriesId, category) {
 				rider.pointsStage.push({
 					type: result.stageId.type,
 					number: result.stageId.number,
-					points: result.pointsStage,
+					points: result.pointsStageOldW,
 				});
 			});
 

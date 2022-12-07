@@ -88,7 +88,8 @@ export async function postRiderSettings(req, res) {
 				response = `${messages[key]} ${messages[notice[key]]}`;
 		});
 
-		if (riderDB) return res.status(200).json({ message: `Обновлены настройки оповещения`, response });
+		if (riderDB)
+			return res.status(200).json({ message: `Обновлены настройки оповещения`, response });
 		return res.status(400).json({ message: `Райдер не найден в БД` });
 	} catch (error) {
 		console.log(error);
@@ -164,7 +165,8 @@ export async function postStagePoints(req, res) {
 			{ $set: { [elementPlace]: place, [elementPoints]: points } }
 		);
 
-		if (!resultDB) return res.status(400).json({ message: `Не найден результат id: ${resultId}` });
+		if (!resultDB)
+			return res.status(400).json({ message: `Не найден результат id: ${resultId}` });
 		let message = '';
 		if (place === 'none') {
 			message = `Успех! Райдеру "${resultDB.name}" установленно "${place}" в "${name}"`;
@@ -189,7 +191,8 @@ export async function postStagePenalty(req, res) {
 			{ $set: { 'penalty.powerUp': newPenalty } }
 		);
 
-		if (!resultDB) return res.status(400).json({ message: `Не найден результат id: ${resultId}` });
+		if (!resultDB)
+			return res.status(400).json({ message: `Не найден результат id: ${resultId}` });
 		let message = `Успех! Райдеру "${resultDB.name}" начислены штрафные баллы в количестве ${newPenalty}шт.`;
 		return res.status(200).json({ message });
 	} catch (error) {
@@ -201,6 +204,7 @@ export async function getGeneralPoints(req, res) {
 	try {
 		const seriesId = req.query.seriesId;
 		const generalPoints = await resultsSeriesGeneral(seriesId);
+
 		if (generalPoints)
 			return res
 				.status(200)
@@ -259,7 +263,10 @@ export async function postClick(req, res) {
 		if (!telegramId)
 			return res.status(200).json({ message: `Запрос с вебинтерфейса при разработке` });
 
-		const click = await Click.findOneAndUpdate({ 'user.id': telegramId }, { $inc: { clicks: 1 } });
+		const click = await Click.findOneAndUpdate(
+			{ 'user.id': telegramId },
+			{ $inc: { clicks: 1 } }
+		);
 		if (click) return res.status(200).json({ message: `Клик подсчитан!` });
 		return res.status(400).json({ message: `Ошибка при подсчете клика!` });
 	} catch (error) {
@@ -370,7 +377,8 @@ export async function postDisqualification(req, res) {
 			isDisqualification ? 'дисквалифицирован!' : 'оправдан, с него снята дисквалификация!'
 		}`;
 
-		if (!resultDB) return res.status(400).json({ message: `Не найден райдер для дисквалификации` });
+		if (!resultDB)
+			return res.status(400).json({ message: `Не найден райдер для дисквалификации` });
 
 		return res.status(200).json({ message });
 	} catch (error) {
@@ -384,7 +392,10 @@ export async function postUnderChecking(req, res) {
 		const hash = await checkAdminWithHash(password, telegramId);
 		if (!hash) return res.status(401).json({ message: 'Неверный логин или пароль!' });
 
-		const resultDB = await Result.findOneAndUpdate({ _id: resultId }, { $set: { isUnderChecking } });
+		const resultDB = await Result.findOneAndUpdate(
+			{ _id: resultId },
+			{ $set: { isUnderChecking } }
+		);
 
 		const message = `Райдер "${resultDB.name}" ${
 			isUnderChecking

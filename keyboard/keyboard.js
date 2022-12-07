@@ -222,14 +222,20 @@ export function resultSeriesGeneralKeyboard(seriesId, quantityWomenCategory) {
 				],
 				[
 					Markup.button.webApp(
-						'Группа "A (W)" 👍',
+						'Группа "A (W) Личный зачет" 👍',
 						`${process.env.SERVER}/results/general/WA${seriesId}`
 					),
 				],
 				[
 					Markup.button.webApp(
-						'Группа "B (W)" 💪',
+						'Группа "B (W) Личный зачет" 💪',
 						`${process.env.SERVER}/results/general/WB${seriesId}`
+					),
+				],
+				[
+					Markup.button.webApp(
+						'Группа "W Командный зачет" 🤝',
+						`${process.env.SERVER}/results/general/WT${seriesId}`
 					),
 				],
 				[Markup.button.callback('<< назад >>', `m_1_all__${seriesId}`)],

@@ -27,6 +27,7 @@ export async function updatePointsGeneral(seriesId) {
 			let placeC = 0;
 			let placeWA = 0;
 			let placeWB = 0;
+			let placeW = 0;
 
 			for (let j = 0; j < resultsDB.length; j++) {
 				if (resultsDB[j].category === 'A') {
@@ -64,6 +65,14 @@ export async function updatePointsGeneral(seriesId) {
 					await Result.findByIdAndUpdate(
 						{ _id: resultsDB[j]._id },
 						{ $set: { pointsStage: points[placeWB] ? points[placeWB] : 0 } }
+					);
+				}
+				//WT очки, учитываемые в командном зачете
+				if (resultsDB[j].category.includes('W')) {
+					placeW++;
+					await Result.findByIdAndUpdate(
+						{ _id: resultsDB[j]._id },
+						{ $set: { pointsStageOldW: points[placeW] ? points[placeW] : 0 } }
 					);
 				}
 			}
