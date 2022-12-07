@@ -37,7 +37,7 @@ const resultSchema = new Schema({
 			_id: false,
 		},
 	],
-	isUnderChecking: { type: String, default: false },
+	isUnderChecking: { type: Boolean, default: false },
 	comment: String,
 	weightInGrams: Number,
 	heightInCentimeters: Number,

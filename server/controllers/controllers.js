@@ -88,8 +88,7 @@ export async function postRiderSettings(req, res) {
 				response = `${messages[key]} ${messages[notice[key]]}`;
 		});
 
-		if (riderDB)
-			return res.status(200).json({ message: `Обновлены настройки оповещения`, response });
+		if (riderDB) return res.status(200).json({ message: `Обновлены настройки оповещения`, response });
 		return res.status(400).json({ message: `Райдер не найден в БД` });
 	} catch (error) {
 		console.log(error);
@@ -372,6 +371,28 @@ export async function postDisqualification(req, res) {
 		}`;
 
 		if (!resultDB) return res.status(400).json({ message: `Не найден райдер для дисквалификации` });
+
+		return res.status(200).json({ message });
+	} catch (error) {
+		console.log(error);
+	}
+}
+export async function postUnderChecking(req, res) {
+	try {
+		const { isUnderChecking, resultId, password, telegramId } = req.body;
+
+		const hash = await checkAdminWithHash(password, telegramId);
+		if (!hash) return res.status(401).json({ message: 'Неверный логин или пароль!' });
+
+		const resultDB = await Result.findOneAndUpdate({ _id: resultId }, { $set: { isUnderChecking } });
+
+		const message = `Райдер "${resultDB.name}" ${
+			isUnderChecking
+				? 'один раз превысил показатели своей категории!'
+				: 'оправдан, с него сняты подозрения о превышении показателей текущей категории!'
+		}`;
+
+		if (!resultDB) return res.status(400).json({ message: `Не найден райдер` });
 
 		return res.status(200).json({ message });
 	} catch (error) {
