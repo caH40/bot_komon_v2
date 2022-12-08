@@ -1,5 +1,14 @@
+import { googleDocsKeyboard } from '../../keyboard/keyboard-desc.js';
 import { clearCharts } from '../../keyboard/keyboard.js';
 import { Description } from '../../Model/Description.js';
+
+export async function linksGoogleDocs(ctx) {
+	try {
+		return await ctx.editMessageText('📈 Результаты в GoogleDocs', googleDocsKeyboard());
+	} catch (error) {
+		console.log(error);
+	}
+}
 
 export async function ruleSeries(ctx) {
 	try {
