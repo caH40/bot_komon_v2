@@ -15,6 +15,9 @@ export async function getPoints(results) {
 		stageNumbers.forEach(stage => {
 			teamNames.forEach(name => {
 				let points = 0;
+				results.forEach(result => {
+					if (result.pointsStageOldW) result.pointsStage = result.pointsStageOldW;
+				});
 				const team = results
 					.filter(result => result.teamCurrent?.name === name && stage === result.stageId.number)
 					.sort((a, b) => b.pointsStage - a.pointsStage)

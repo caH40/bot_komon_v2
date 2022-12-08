@@ -222,19 +222,19 @@ export function resultSeriesGeneralKeyboard(seriesId, quantityWomenCategory) {
 				],
 				[
 					Markup.button.webApp(
-						'Группа "A (W) Личный зачет" 👍',
+						'Группа "A (W)" 👍',
 						`${process.env.SERVER}/results/general/WA${seriesId}`
 					),
 				],
 				[
 					Markup.button.webApp(
-						'Группа "B (W) Личный зачет" 💪',
+						'Группа "B (W)" 💪',
 						`${process.env.SERVER}/results/general/WB${seriesId}`
 					),
 				],
 				[
 					Markup.button.webApp(
-						'Группа "W Командный зачет" 🤝',
+						'Группа "W" (Очки для командного зачета)',
 						`${process.env.SERVER}/results/general/WT${seriesId}`
 					),
 				],

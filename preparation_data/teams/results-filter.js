@@ -14,7 +14,9 @@ export async function filterResults(seriesId) {
 					zwiftRiderId: true,
 					name: true,
 					pointsStage: true,
+					pointsStage: true,
 					teamCurrent: true,
+					pointsStageOldW: true,
 				}
 			)
 				.populate({ path: 'stageId', select: 'number' })

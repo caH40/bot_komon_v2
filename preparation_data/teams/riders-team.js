@@ -2,7 +2,7 @@ import { Team } from '../../Model/Team.js';
 
 export async function getTeamWithRiders() {
 	try {
-		let teamsDB = await Team.find({ 'deleted.isDeleted': false }).populate({
+		let teamsDB = await Team.find({ 'deleted.isDeleted': false, isAllowed: true }).populate({
 			path: 'riders.rider',
 		});
 
