@@ -26,7 +26,7 @@ export async function setCategory(zwiftId, gender) {
 		}
 
 		if (gender === 'мужской') return 'C';
-		return 'W';
+		return 'WB';
 	} catch (error) {
 		console.log(error);
 	}
