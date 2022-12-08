@@ -85,7 +85,7 @@ export async function categoryRiderFromStage(ctx) {
 
 export async function pointsSeries(ctx) {
 	try {
-		const seriesDB = await Series.find();
+		const seriesDB = await Series.find({ isFinished: false });
 		return ctx.editMessageText(
 			'<b>🔄 Обновление генеральных зачетов.\nВыберите серию в которой необходимо обновить очки в генеральной, спринтерской горной номинациях.</b>',
 			adminPointsSeriesKeyboard(seriesDB)
