@@ -19,7 +19,7 @@ const resultSchema = new Schema({
 	teamCurrent: { type: mongoose.Schema.Types.ObjectId, ref: 'Team' },
 	isNeedCount: { type: Boolean, default: true },
 	pointsStage: { type: Number, default: 0 },
-	pointsStageOldW: { type: Number, default: 0 },
+	pointsStageOldW: { type: Number },
 	pointsSprint: [
 		{
 			stageNumber: { type: Number },

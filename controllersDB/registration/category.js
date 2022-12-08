@@ -7,7 +7,10 @@ export async function setCategory(zwiftId, gender) {
 		let seriesDB = await Series.find();
 		seriesDB = seriesDB.sort((a, b) => b.dateStart - a.dateStart);
 
-		if (seriesDB.length === 0) return;
+		if (!seriesDB.length) {
+			if (gender === 'мужской') return 'C';
+			return 'WB';
+		}
 
 		let stageDB = await Stage.find({ seriesId: seriesDB[0]._id });
 
