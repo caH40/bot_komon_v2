@@ -14,6 +14,7 @@ import { nodeSchedule } from './modules/node-schedule.js';
 import { serverExpress } from './server/server.js';
 import { readChannelPosts } from './modules/channel.js';
 import { sendNotice } from './controllers/notice-post.js';
+import { test } from './controllers/test.js';
 
 await mongoose
 	.connect(process.env.MONGODB)
@@ -35,6 +36,10 @@ bot.command('start', async ctx => await start(ctx));
 bot.command('help', async ctx => await help(ctx));
 bot.command('main', async ctx => await mainMenu(ctx));
 bot.command('click', async ctx => await getClicks(ctx));
+bot.command('test', async ctx => {
+	await test(ctx);
+	await ctx.replyWithPhoto({ source: './out.png' });
+});
 bot.on('callback_query', async ctx => await callbackQuery(ctx));
 bot.on('channel_post', async ctx => await readChannelPosts(ctx, ctx.update.channel_post));
 bot.on('message', async ctx => await sendNotice(ctx));
