@@ -6,6 +6,7 @@ const __dirname = path.resolve();
 
 export async function getClicks(ctx) {
 	try {
+		await ctx.deleteMessage(ctx.message.message_id).catch(e => true);
 		const telegramId = ctx.message.from.id;
 
 		const clicksDB = await Click.find();
@@ -106,9 +107,11 @@ async function getImage(label, labels, data, ctx, telegramId) {
 		const pathSrc = path.resolve(__dirname, './src/images', `click-${telegramId}.png`);
 
 		fs.writeFileSync(pathSrc, base64Data, 'base64');
-		await ctx.replyWithPhoto({
-			source: pathSrc,
-		});
+		await ctx
+			.replyWithPhoto({
+				source: pathSrc,
+			})
+			.then(message => ctx.session.data?.messagesIdForDelete.push(message.message_id));
 	} catch (error) {
 		console.log(error);
 	}
