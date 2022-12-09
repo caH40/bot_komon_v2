@@ -1,13 +1,14 @@
-import fs from 'fs';
-import { ChartJSNodeCanvas } from 'chartjs-node-canvas';
+import { getChartClicks } from '../charts/clicks.js';
+import { clearCharts } from '../keyboard/keyboard.js';
 import { Click } from '../Model/Click.js';
-import path from 'path';
-const __dirname = path.resolve();
 
 export async function getClicks(ctx) {
 	try {
+		if (!ctx.session.data) {
+			ctx.session.data = {};
+			ctx.session.data.messagesIdForDelete = [];
+		}
 		await ctx.deleteMessage(ctx.message.message_id).catch(e => true);
-		const telegramId = ctx.message.from.id;
 
 		const clicksDB = await Click.find();
 
@@ -35,82 +36,29 @@ export async function getClicks(ctx) {
 			data.push(clicksInDay);
 		});
 
-		let label = 'Количество кликов за день:\n';
+		let label = 'Количество кликов за день';
 
 		labels.forEach(
 			(day, index) => (day = labels[index] = new Date(day).toLocaleDateString()?.slice(0, 5))
 		);
 
-		getImage(label, labels, data, ctx, telegramId);
+		const base64Image = await getChartClicks(label, labels, data);
+		await sendMessage(ctx, base64Image);
 	} catch (error) {
 		console.log(error);
 	}
 }
 
-async function getImage(label, labels, data, ctx, telegramId) {
+async function sendMessage(ctx, base64Image) {
 	try {
-		const width = 600;
-		const height = 300;
-		const backgroundColour = '#FFFFFF';
-		const chartJSNodeCanvas = new ChartJSNodeCanvas({
-			width,
-			height,
-			backgroundColour,
-		});
-
-		const configuration = {
-			type: 'bar',
-			data: {
-				labels,
-				datasets: [
-					{
-						label,
-						data,
-						backgroundColor: 'teal',
-						barThickness: 15,
-						borderWidth: 1,
-					},
-				],
-			},
-			options: {
-				scales: {
-					y: {
-						beginAtZero: true,
-					},
-				},
-				plugins: {
-					title: {
-						display: true,
-						text: 'Активность в боте ZwiftRaceInfo_bot',
-						font: {
-							size: 14,
-							family: 'sans-serif',
-						},
-					},
-					legend: {
-						labels: {
-							font: {
-								size: 14,
-								family: 'sans-serif',
-							},
-						},
-					},
-				},
-			},
-		};
-
-		const dataUrl = await chartJSNodeCanvas.renderToDataURL(configuration);
-		const base64Image = dataUrl;
-
 		var base64Data = base64Image.replace(/^data:image\/png;base64,/, '');
-
-		const pathSrc = path.resolve(__dirname, './src/images', `click-${telegramId}.png`);
-
-		fs.writeFileSync(pathSrc, base64Data, 'base64');
 		await ctx
-			.replyWithPhoto({
-				source: pathSrc,
-			})
+			.replyWithPhoto(
+				{
+					source: Buffer.from(base64Data, 'base64'),
+				},
+				clearCharts
+			)
 			.then(message => ctx.session.data?.messagesIdForDelete.push(message.message_id));
 	} catch (error) {
 		console.log(error);
