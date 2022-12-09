@@ -263,14 +263,27 @@ export async function postClick(req, res) {
 		if (!telegramId)
 			return res.status(200).json({ message: `Запрос с вебинтерфейса при разработке` });
 
+		const today = new Date().setHours(0, 0, 0, 0);
+
 		const click = await Click.findOneAndUpdate(
-			{ 'user.id': telegramId },
-			{ $inc: { clicks: 1 } }
+			{ 'user.id': telegramId, 'clicksPerDay.date': today },
+			{ $inc: { 'clicksPerDay.$[elem].clicks': 1 } },
+			{ arrayFilters: [{ 'elem.date': today }] }
 		);
+
+		if (!click) {
+			const updatedRider = await Click.findOneAndUpdate(
+				{ 'user.id': telegramId },
+				{ $push: { clicksPerDay: { date: today, clicks: 1 } } },
+				{ returnDocument: 'after' }
+			);
+		}
+
 		if (click) return res.status(200).json({ message: `Клик подсчитан!` });
 		return res.status(400).json({ message: `Ошибка при подсчете клика!` });
 	} catch (error) {
 		console.log(error);
+		return res.status(400).json({ message: `Ошибка при подсчете клика!` });
 	}
 }
 export async function getStatisticsRiders(req, res) {

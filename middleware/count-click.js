@@ -7,18 +7,29 @@ export async function countClick(ctx, next) {
 
 			if (user.id == process.env.DEVELOPER_ID) return next();
 
-			const click = await Click.findOneAndUpdate({ 'user.id': user.id }, { $inc: { clicks: 1 } });
+			const today = new Date().setHours(0, 0, 0, 0);
+
+			const click = await Click.findOneAndUpdate(
+				{ 'user.id': user.id, 'clicksPerDay.date': today },
+				{ $inc: { 'clicksPerDay.$[elem].clicks': 1 } },
+				{ arrayFilters: [{ 'elem.date': today }] }
+			);
 
 			if (!click) {
-				const click = Click({
-					user,
-					clicks: 1,
-					dateStart: new Date().getTime(),
-				});
-				await click.save();
-			}
+				const updatedRider = await Click.findOneAndUpdate(
+					{ 'user.id': user.id },
+					{ $push: { clicksPerDay: { date: today, clicks: 1 } } },
+					{ returnDocument: 'after' }
+				);
+				if (!updatedRider) {
+					const click = Click({
+						user,
 
-			return next();
+						clicksPerDay: [{ date: new Date().setHours(0, 0, 0, 0), clicks: 1 }],
+					});
+					await click.save();
+				}
+			}
 		}
 
 		return next();

@@ -1,51 +1,114 @@
+import fs from 'fs';
+import { ChartJSNodeCanvas } from 'chartjs-node-canvas';
 import { Click } from '../Model/Click.js';
+import path from 'path';
+const __dirname = path.resolve();
 
 export async function getClicks(ctx) {
 	try {
-		// let clicksTotalDB = await Click.aggregate([
-		// 	{
-		// 		$group: {
-		// 			_id: 'totalClicks',
-		// 			clicks: { $sum: '$clicks' },
-		// 		},
-		// 	},
-		// ]);
+		const telegramId = ctx.message.from.id;
 
 		const clicksDB = await Click.find();
 
 		const millisecondsInDay = 84000000;
 
-		let dayForTotal = new Date().getTime() - millisecondsInDay;
-		const total = {};
+		let day = new Date().setHours(0, 0, 0, 0);
+		let labels = [];
 
-		for (let i = 0; i < 7; i++) {
-			total[new Date(dayForTotal).toLocaleDateString()] = 0;
-			dayForTotal -= millisecondsInDay;
+		for (let i = 0; i < 20; i++) {
+			labels.push(new Date(day).setHours(0, 0, 0, 0));
+			day -= millisecondsInDay;
 		}
+		const data = [];
+		// labels = labels.reverse();
 
-		clicksDB.forEach(user => {
-			user.clicksPerDay.forEach(clicks => {
-				let day = new Date().getTime() - millisecondsInDay;
-				for (let i = 0; i < 7; i++) {
-					if (new Date(clicks.date).toLocaleDateString() === new Date(day).toLocaleDateString()) {
-						total[new Date(clicks.date).toLocaleDateString()] += clicks.clicks;
+		labels.forEach(day => {
+			let clicksInDay = 0;
+			clicksDB.forEach(user => {
+				user.clicksPerDay.forEach(clicks => {
+					if (day === clicks.date) {
+						clicksInDay += clicks.clicks;
 					}
-					day -= millisecondsInDay;
-				}
+				});
 			});
+			data.push(clicksInDay);
 		});
 
-		let totalStr = 'Количество кликов в меню:\n';
-		const keys = Object.keys(total);
+		let label = 'Количество кликов за день:\n';
 
-		keys.forEach(day => {
-			let emoji = '🧊';
-			if (total[day] > 99 && total[day] < 199) emoji = '🌡️';
-			if (total[day] > 199 && total[day] < 300) emoji = '🔥';
-			if (total[day] > 299) emoji = '🧨';
-			totalStr += `${emoji} ${day} - <u>${total[day] ? total[day] : 0}</u>;\n`;
+		labels.forEach(
+			(day, index) => (day = labels[index] = new Date(day).toLocaleDateString()?.slice(0, 5))
+		);
+
+		getImage(label, labels, data, ctx, telegramId);
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+async function getImage(label, labels, data, ctx, telegramId) {
+	try {
+		const width = 600;
+		const height = 300;
+		const backgroundColour = '#FFFFFF';
+		const chartJSNodeCanvas = new ChartJSNodeCanvas({
+			width,
+			height,
+			backgroundColour,
 		});
-		await ctx.replyWithHTML(totalStr);
+
+		const configuration = {
+			type: 'bar',
+			data: {
+				labels,
+				datasets: [
+					{
+						label,
+						data,
+						backgroundColor: 'teal',
+						barThickness: 15,
+						borderWidth: 1,
+					},
+				],
+			},
+			options: {
+				scales: {
+					y: {
+						beginAtZero: true,
+					},
+				},
+				plugins: {
+					title: {
+						display: true,
+						text: 'Активность в боте ZwiftRaceInfo_bot',
+						font: {
+							size: 14,
+							family: 'sans-serif',
+						},
+					},
+					legend: {
+						labels: {
+							font: {
+								size: 14,
+								family: 'sans-serif',
+							},
+						},
+					},
+				},
+			},
+		};
+
+		const dataUrl = await chartJSNodeCanvas.renderToDataURL(configuration);
+		const base64Image = dataUrl;
+
+		var base64Data = base64Image.replace(/^data:image\/png;base64,/, '');
+
+		const pathSrc = path.resolve(__dirname, './src/images', `click-${telegramId}.png`);
+
+		fs.writeFileSync(pathSrc, base64Data, 'base64');
+		await ctx.replyWithPhoto({
+			source: pathSrc,
+		});
 	} catch (error) {
 		console.log(error);
 	}
