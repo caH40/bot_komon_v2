@@ -27,7 +27,7 @@ export async function test() {
 				}
 			});
 		});
-		console.log(total);
+
 		let label = 'Количество кликов за день:\n';
 		const labels = Object.keys(total);
 		const data = [];

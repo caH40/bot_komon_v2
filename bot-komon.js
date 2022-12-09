@@ -15,6 +15,7 @@ import { serverExpress } from './server/server.js';
 import { readChannelPosts } from './modules/channel.js';
 import { sendNotice } from './controllers/notice-post.js';
 import { test } from './controllers/test.js';
+import { countClicksPerDay } from './modules/clicksperday.js';
 
 await mongoose
 	.connect(process.env.MONGODB)
@@ -37,6 +38,7 @@ bot.command('help', async ctx => await help(ctx));
 bot.command('main', async ctx => await mainMenu(ctx));
 bot.command('click', async ctx => await getClicks(ctx));
 bot.command('test', async ctx => {
+	countClicksPerDay();
 	await test(ctx);
 	await ctx.replyWithPhoto({ source: './out.png' });
 });
@@ -44,7 +46,7 @@ bot.on('callback_query', async ctx => await callbackQuery(ctx));
 bot.on('channel_post', async ctx => await readChannelPosts(ctx, ctx.update.channel_post));
 bot.on('message', async ctx => await sendNotice(ctx));
 
-bot.launch().then(nodeSchedule());
+bot.launch();
 
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
