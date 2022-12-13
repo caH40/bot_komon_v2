@@ -14,6 +14,7 @@ const resultSchema = new Schema({
 	time: Number,
 	penalty: { powerUp: { type: Number, default: 0 } },
 	isDisqualification: { type: Boolean, default: false },
+	isDidNotFinish: { type: Boolean, default: false },
 	category: String,
 	categoryCurrent: String,
 	teamCurrent: { type: mongoose.Schema.Types.ObjectId, ref: 'Team' },
