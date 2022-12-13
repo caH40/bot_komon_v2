@@ -11,7 +11,7 @@ export async function saveResult(result) {
 		if (searchDuplicate)
 			return {
 				response: false,
-				message: `Ошибка. Результат данного райдера ${result.name} zwiftId:${result.zwiftId} уже есть в протоколе`,
+				message: `Ошибка. Результат данного райдера ${result.name} zwiftId:${result.zwiftId} уже есть в протоколе!`,
 			};
 
 		const placeAbsolute = (await Result.find({ stageId: result.stageId })).length + 1;
@@ -38,7 +38,7 @@ export async function saveResult(result) {
 			name,
 			zwiftRiderId: result.zwiftId,
 			riderId: result.riderId,
-			teamCurrent: result.teamId,
+			teamCurrent: result.teamCurrent,
 			time: result.time,
 			weightInGrams: result.weightInGrams,
 			watt: result.watt,

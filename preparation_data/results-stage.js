@@ -62,6 +62,11 @@ export async function getResultsStage(request) {
 		const title = `${name}, Этап ${seriesNumber}, ${seriesType}, ${categoryStr}`;
 
 		resultFiltered.forEach((result, index) => {
+			if (result.time === 999999999) {
+				result.time = 'DNF';
+				result.gapPrev = 0;
+				result.gap = 0;
+			}
 			if (result.time === 99999999) {
 				result.time = 'DQ';
 				result.gapPrev = 0;
