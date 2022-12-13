@@ -3,7 +3,7 @@ import { Stage } from '../../Model/Stage.js';
 
 export async function getStatStages() {
 	try {
-		const resultsDB = await Result.find();
+		const resultsDB = await Result.find({ isDidNotFinish: false });
 		const stagesDB = await Stage.find({ hasResults: true }).populate('seriesId');
 
 		let statistics = [];
