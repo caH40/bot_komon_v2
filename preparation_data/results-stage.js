@@ -30,11 +30,11 @@ export async function getResultsStage(request) {
 
 		let results = resultsDB.map(result => result.toObject());
 
-		const hasPenalty = results.find(
-			result => result.penalty.powerUp !== 0 || result.isDisqualification === true
-		);
-		if (hasPenalty) results = getResultsWithPenalty(results);
-
+		// const hasPenalty = results.find(
+		// 	result => result.penalty.powerUp !== 0 || result.isDisqualification === true
+		// );
+		// if (hasPenalty) results = getResultsWithPenalty(results);
+		results = getResultsWithPenalty(results);
 		let resultFiltered = [];
 
 		if (category === 'T') {
@@ -54,7 +54,6 @@ export async function getResultsStage(request) {
 				.sort((a, b) => a.placeAbsolute - b.placeAbsolute);
 
 			resultFiltered.forEach((result, index) => (result.placeCategory = index + 1));
-			resultFiltered.sort((a, b) => a.placeCategory - b.placeCategory);
 		}
 
 		resultFiltered = await gapValue(resultFiltered);
