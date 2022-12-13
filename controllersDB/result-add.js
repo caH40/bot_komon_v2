@@ -40,10 +40,11 @@ export async function saveResult(result) {
 
 		for (let i = 0; i < stagesDB.length; i++) {
 			let resultDB = await Result.findOne({ zwiftRiderId: result.zwiftId });
+			console.log(resultDB);
 			if (resultDB) {
 				name = resultDB.name;
 				category = resultDB.category;
-				imageSrc = resultDB.imageSrc;
+				imageSrc = imageSrc ? imageSrc : resultDB.imageSrc;
 				break;
 			}
 		}
