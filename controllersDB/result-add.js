@@ -14,6 +14,21 @@ export async function saveResult(result) {
 				message: `Ошибка. Результат данного райдера ${result.name} zwiftId:${result.zwiftId} уже есть в протоколе!`,
 			};
 
+		const stageDB = await Stage.findOne({ _id: result.stageId });
+
+		const pointsSprint = [];
+		const pointsMountain = [];
+		for (let i = 1; i < stageDB.quantitySprints + 1; i++)
+			pointsSprint.push({
+				sprint: i,
+				place: 'none',
+			});
+		for (let i = 1; i < stageDB.quantityMountains + 1; i++)
+			pointsMountain.push({
+				mountain: i,
+				place: 'none',
+			});
+
 		const placeAbsolute = (await Result.find({ stageId: result.stageId })).length + 1;
 
 		const { _id } = await Series.findOne({ stageId: result.stageId });
@@ -51,6 +66,8 @@ export async function saveResult(result) {
 			isDidNotFinish: result.DNF.toLowerCase() === 'да' ? true : false,
 			gender: result.gender,
 			placeAbsolute,
+			pointsSprint,
+			pointsMountain,
 		});
 
 		const savedResult = await newResult.save();
