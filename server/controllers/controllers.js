@@ -15,6 +15,7 @@ import { Feedback } from '../../Model/Feedback.js';
 import { getTeamWithRiders } from '../../preparation_data/teams/riders-team.js';
 import { Rights } from '../../Model/Rights.js';
 import { checkAdmin, checkAdminWithHash } from './auth.js';
+import { saveResult } from '../../controllersDB/result-add.js';
 
 const __dirname = path.resolve();
 
@@ -197,6 +198,18 @@ export async function postStagePenalty(req, res) {
 		return res.status(200).json({ message });
 	} catch (error) {
 		console.log(error);
+	}
+}
+
+export async function postAddResult(req, res) {
+	try {
+		const result = req.body;
+		const { response, message } = await saveResult(result);
+		if (response) return res.status(200).json({ message: 'Новый результат сохранен в БД' });
+		return res.status(400).json({ message });
+	} catch (error) {
+		console.log(error);
+		res.status(400).json({ message: `Ошибка при сохранении нового результата` });
 	}
 }
 

@@ -11,6 +11,9 @@ export function getResultsWithPenalty(results) {
 			if (result.isDisqualification === true) {
 				result.time = 99999999;
 			}
+			if (result.isDidNotFinish === true) {
+				result.time = 999999999;
+			}
 		});
 		const resultsSorted = results.sort((a, b) => a.time - b.time);
 		resultsSorted.forEach((result, index) => (result.placeAbsolute = index + 1));

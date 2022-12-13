@@ -10,6 +10,7 @@ import {
 	getMountainPoints,
 	getSprintPoints,
 	postStagePenalty,
+	postAddResult,
 	getTeamsPoints,
 	postClick,
 	getStatisticsRiders,
@@ -33,6 +34,7 @@ router.post('/api/user/post-settings', postRiderSettings);
 router.post('/api/stage/post-edit', postStageEdit);
 router.post('/api/stage/points', postStagePoints);
 router.post('/api/stage/penalty', postStagePenalty);
+router.post('/api/stage/add-result', postAddResult);
 router.post('/api/results/general', getGeneralPoints);
 router.post('/api/results/mountain', getMountainPoints);
 router.post('/api/results/sprint', getSprintPoints);
