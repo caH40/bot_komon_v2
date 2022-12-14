@@ -12,7 +12,7 @@ export function buttonCatFromStageRiders(stages) {
 				),
 			]),
 
-			[Markup.button.callback('<< назад >>', `m_5_4_`)],
+			[Markup.button.callback('Назад 🔙 ', `m_5_4_`)],
 			[Markup.button.callback('Главное меню ❗️', 'main')],
 		];
 	} catch (error) {

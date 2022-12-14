@@ -25,7 +25,7 @@ export function googleDocsKeyboard() {
 		...Markup.inlineKeyboard([
 			[Markup.button.url('Winter Race series 2022" ⛄️', urlGDocsWinter)],
 			[Markup.button.url('Autumn Race series 2022" 🍂', urlGDocsAutumn)],
-			[Markup.button.callback('<< назад >>', `m_4_`)],
+			[Markup.button.callback('Назад 🔙 ', `m_4_`)],
 			[Markup.button.callback('Главное меню ❗️', 'main')],
 		]),
 	};

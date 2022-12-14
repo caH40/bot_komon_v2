@@ -106,7 +106,7 @@ export function resultStageCatKeyboard(stageId, seriesId, quantityWomenCategory)
 				[Markup.button.webApp('Группа "B" 👊', `${process.env.SERVER}/results/stage/B${stageId}`)],
 				[Markup.button.webApp('Группа "C" ✌️', `${process.env.SERVER}/results/stage/C${stageId}`)],
 				[Markup.button.webApp('Группа "W" 👍', `${process.env.SERVER}/results/stage/W${stageId}`)],
-				[Markup.button.callback('<< назад >>', `result_Stages_${seriesId}`)],
+				[Markup.button.callback('Назад 🔙 ', `result_Stages_${seriesId}`)],
 				[Markup.button.callback('Главное меню ❗️', 'main')],
 			]),
 		};
@@ -135,7 +135,7 @@ export function resultStageCatKeyboard(stageId, seriesId, quantityWomenCategory)
 						`${process.env.SERVER}/results/stage/WB${stageId}`
 					),
 				],
-				[Markup.button.callback('<< назад >>', `result_Stages_${seriesId}`)],
+				[Markup.button.callback('Назад 🔙 ', `result_Stages_${seriesId}`)],
 				[Markup.button.callback('Главное меню ❗️', 'main')],
 			]),
 		};
@@ -145,7 +145,7 @@ export function teamLeaveKeyboard(userId) {
 		parse_mode: 'html',
 		...Markup.inlineKeyboard([
 			[Markup.button.callback('Да, хочу выйти из команды ❌', `m_3_2_4_1_E--teamLeave_${userId}`)],
-			[Markup.button.callback('<< назад >>', `m_3_2_`)],
+			[Markup.button.callback('Назад 🔙 ', `m_3_2_`)],
 
 			[Markup.button.callback('Главное меню ❗️', 'main')],
 		]),
@@ -160,7 +160,7 @@ export function teamManagementKeyboard(userId) {
 			[Markup.button.callback('Изменить описание 📝', `m_3_2_5_3_`)],
 			[Markup.button.callback('Изменить логотип команды ♻️', `m_3_2_5_4_`)],
 			[Markup.button.callback('Удаление команды ❌❌', `m_3_2_5_5_E`)],
-			[Markup.button.callback('<< назад >>', `m_3_2_`)],
+			[Markup.button.callback('Назад 🔙 ', `m_3_2_`)],
 			[Markup.button.callback('Главное меню ❗️', 'main')],
 		]),
 	};
@@ -194,7 +194,7 @@ export function resultSeriesGeneralKeyboard(seriesId, quantityWomenCategory) {
 						`${process.env.SERVER}/results/general/W${seriesId}`
 					),
 				],
-				[Markup.button.callback('<< назад >>', `m_1_all__${seriesId}`)],
+				[Markup.button.callback('Назад 🔙 ', `m_1_all__${seriesId}`)],
 				[Markup.button.callback('Главное меню ❗️', 'main')],
 			]),
 		};
@@ -238,7 +238,7 @@ export function resultSeriesGeneralKeyboard(seriesId, quantityWomenCategory) {
 						`${process.env.SERVER}/results/general/WT${seriesId}`
 					),
 				],
-				[Markup.button.callback('<< назад >>', `m_1_all__${seriesId}`)],
+				[Markup.button.callback('Назад 🔙 ', `m_1_all__${seriesId}`)],
 				[Markup.button.callback('Главное меню ❗️', 'main')],
 			]),
 		};
@@ -320,7 +320,7 @@ export function pointsSMboard(stageId) {
 		...Markup.inlineKeyboard([
 			[Markup.button.callback('Распределить спринтерские очки', `m_5_6_all_all_1__${stageId}`)],
 			[Markup.button.callback('Распределить горные очки', `m_5_6_all_all_2__${stageId}`)],
-			[Markup.button.callback('<< назад >>', `m_5_6_`)],
+			[Markup.button.callback('Назад 🔙 ', `m_5_6_`)],
 			[Markup.button.callback('Главное меню ❗️', 'main')],
 		]),
 	};
@@ -339,7 +339,7 @@ export function resultStagesKeyboard(stages, seriesId) {
 					`stage_${stage._id}`
 				),
 			]),
-			[Markup.button.callback('<< назад >>', `m_1_all__${seriesId}`)],
+			[Markup.button.callback('Назад 🔙 ', `m_1_all__${seriesId}`)],
 			[Markup.button.callback('Главное меню ❗️', 'main')],
 		]),
 	};
