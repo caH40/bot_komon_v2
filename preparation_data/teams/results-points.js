@@ -30,7 +30,9 @@ export async function getPoints(results) {
 					.sort((a, b) => b.pointsStage - a.pointsStage)
 					.slice(0, 5);
 
-				team.forEach(stageResult => (points += stageResult.pointsStage));
+				team.forEach(stageResult => {
+					points += stageResult.pointsStage;
+				});
 				teams.push({
 					name,
 					stageNumber: stage,
