@@ -1,11 +1,18 @@
+import { getRidersWithPoints } from './riders-team.js';
+
 export async function getPoints(results) {
 	try {
 		const teamNames = new Set();
 		const stageNumbersSet = new Set();
+		let ridersSet = new Set();
+
 		results.forEach(result => {
 			if (result.teamCurrent) teamNames.add(result.teamCurrent.name);
 			if (result.stageId) stageNumbersSet.add(result.stageId.number);
+			ridersSet.add(result.zwiftRiderId);
 		});
+
+		const ridersWithPoints = await getRidersWithPoints(results, ridersSet, teamNames);
 
 		let stageNumbers = [...stageNumbersSet];
 		stageNumbers = stageNumbers.sort((a, b) => a - b);
@@ -40,13 +47,20 @@ export async function getPoints(results) {
 			teamFiltered = teamFiltered.sort((a, b) => a.stageNumber - b.stageNumber);
 			const teamName = teamFiltered[0]?.name;
 			const logoBase64 = teamFiltered[0]?.logoBase64;
+			const riders = ridersWithPoints.find(element => element.teamName === name);
 
 			teamFiltered.forEach(team => {
 				pointsTotal += team.points;
 				delete team.name;
 				delete team.logoBase64;
 			});
-			teamsWithTotalPoints.push({ team: teamFiltered, pointsTotal, teamName, logoBase64 });
+			teamsWithTotalPoints.push({
+				team: teamFiltered,
+				riders: riders.riders,
+				pointsTotal,
+				teamName,
+				logoBase64,
+			});
 		});
 
 		teamsWithTotalPoints = teamsWithTotalPoints.sort((a, b) => b.pointsTotal - a.pointsTotal);
