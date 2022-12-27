@@ -1,3 +1,5 @@
+import { Series } from '../../Model/Series.js';
+import { Stage } from '../../Model/Stage.js';
 import { Team } from '../../Model/Team.js';
 
 export async function getTeamWithRiders() {
@@ -23,6 +25,12 @@ export async function getTeamWithRiders() {
 
 export async function getRidersWithPoints(results, ridersSet, teamNames) {
 	try {
+		if (!results[0]) return console.log('Нет результатов в серии');
+
+		const stageDB = await Stage.findOne({ _id: results[0].stageId });
+		const stagesDB = await Stage.find({ seriesId: stageDB.seriesId, hasResults: true });
+		const quantityStages = stagesDB.length;
+
 		const ridersInTeam = [];
 
 		let rider = {};
@@ -30,8 +38,6 @@ export async function getRidersWithPoints(results, ridersSet, teamNames) {
 
 		ridersSet.forEach(riderZId => {
 			let resultsRider = results.filter(result => result.zwiftRiderId === riderZId);
-
-			resultsRider = resultsRider.sort((a, b) => a.stageId.number - b.stageId.number);
 
 			resultsRider.forEach(result => {
 				rider.teamName = result.teamCurrent.name;
@@ -51,6 +57,16 @@ export async function getRidersWithPoints(results, ridersSet, teamNames) {
 		teamNames.forEach(teamName => {
 			const teamWithRiders = ridersInTeam.filter(rider => rider.teamName === teamName);
 			ridersWithPoints.push({ teamName, riders: teamWithRiders });
+		});
+
+		ridersWithPoints.forEach(team => {
+			team.riders.forEach(rider => {
+				for (let i = 0; i < quantityStages; i++) {
+					if (!rider.stages.find(stage => stage.stageNumber === i + 1))
+						rider.stages.push({ stageNumber: i + 1, points: '-' });
+				}
+				rider.stages = rider.stages.sort((a, b) => a.stageNumber - b.stageNumber);
+			});
 		});
 
 		return ridersWithPoints;
