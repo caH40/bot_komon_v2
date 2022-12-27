@@ -60,6 +60,8 @@ export async function getRidersWithPoints(results, ridersSet, teamNames) {
 		});
 
 		ridersWithPoints.forEach(team => {
+			team.riders = team.riders.sort((a, b) => a.riderName.localeCompare(b.riderName));
+
 			team.riders.forEach(rider => {
 				for (let i = 0; i < quantityStages; i++) {
 					if (!rider.stages.find(stage => stage.stageNumber === i + 1))
