@@ -16,6 +16,7 @@ import { getTeamWithRiders } from '../../preparation_data/teams/riders-team.js';
 import { Rights } from '../../Model/Rights.js';
 import { checkAdmin, checkAdminWithHash } from './auth.js';
 import { saveResult } from '../../controllersDB/result-add.js';
+import { resultsTourGeneral } from '../../preparation_data/tour/tour.js';
 
 const __dirname = path.resolve();
 
@@ -225,6 +226,22 @@ export async function getGeneralPoints(req, res) {
 		return res.status(400).json({ message: `Ошибка при получении данных генерального зачета` });
 	} catch (error) {
 		console.log(error);
+	}
+}
+
+export async function getGeneralTour(req, res) {
+	try {
+		const seriesId = req.query.seriesId;
+		const resultsTour = await resultsTourGeneral(seriesId);
+
+		if (resultsTour)
+			return res
+				.status(200)
+				.json({ message: `Данные по генеральному зачету получены`, resultsTour });
+		return res.status(400).json({ message: `Ошибка при получении данных генерального зачета` });
+	} catch (error) {
+		console.log(error);
+		res.status(400).json({ message: `Ошибка при получении данных генерального зачета` });
 	}
 }
 

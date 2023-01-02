@@ -243,6 +243,39 @@ export function resultSeriesGeneralKeyboard(seriesId, quantityWomenCategory) {
 			]),
 		};
 }
+export function resultTourGeneralKeyboard(seriesId) {
+	return {
+		parse_mode: 'html',
+		...Markup.inlineKeyboard([
+			[
+				Markup.button.webApp(
+					'Группа "A" 💪',
+					`${process.env.SERVER}/results/general-tour/A${seriesId}`
+				),
+			],
+			[
+				Markup.button.webApp(
+					'Группа "B" 👊',
+					`${process.env.SERVER}/results/general-tour/B${seriesId}`
+				),
+			],
+			[
+				Markup.button.webApp(
+					'Группа "A (W)" 👍',
+					`${process.env.SERVER}/results/general-tour/WA${seriesId}`
+				),
+			],
+			[
+				Markup.button.webApp(
+					'Группа "B (W)" 💪',
+					`${process.env.SERVER}/results/general-tour/WB${seriesId}`
+				),
+			],
+			[Markup.button.callback('Назад 🔙 ', `m_1_all__${seriesId}`)],
+			[Markup.button.callback('Главное меню ❗️', 'main')],
+		]),
+	};
+}
 // меню выбора админ кабинета
 export const adminKeyboard = {
 	parse_mode: 'html',

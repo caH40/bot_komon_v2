@@ -4,6 +4,7 @@ import { Stage } from '../../Model/Stage.js';
 import { updateCategoryDB } from './category.js';
 import { ruleCategory } from '../../utility/category-rule.js';
 import { convertTime } from '../../utility/date-convert.js';
+import { Series } from '../../Model/Series.js';
 
 export async function protocolToDB(results, seriesId, stageId) {
 	try {
@@ -23,15 +24,23 @@ export async function protocolToDB(results, seriesId, stageId) {
 				place: 'none',
 			});
 
+		const { type } = await Series.findOne({ _id: seriesId });
+
 		const length = results.length;
 		for (let index = 0; index < length; index++) {
 			let categoryCurrent = ruleCategory(
 				results[index].watt,
 				results[index].wattPerKg,
-				results[index].gender
+				results[index].gender,
+				type
 			);
 
-			const newCategory = await updateCategoryDB(stageDB.seriesId, results[index], categoryCurrent);
+			const newCategory = await updateCategoryDB(
+				stageDB.seriesId,
+				results[index],
+				categoryCurrent,
+				type
+			);
 
 			let time =
 				typeof results[index].time === 'string'
