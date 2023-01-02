@@ -1,3 +1,6 @@
+import { secondesToTime, secondesToTimeThousandths } from '../../utility/date-convert.js';
+import { gapValueTour } from '../../utility/gap.js';
+
 export async function getResultsForView(results) {
 	try {
 		let zwiftIdsSet = new Set();
@@ -29,6 +32,7 @@ export async function getResultsForView(results) {
 
 			if (resultsRider.length !== stages.length) isDisqualification = true;
 			resultsForView.push({
+				id: resultsRider[0]?._id,
 				name: resultsRider[0]?.name,
 				imageSrc: resultsRider[0]?.imageSrc,
 				timeTotal,
@@ -40,6 +44,14 @@ export async function getResultsForView(results) {
 		resultsForView = resultsForView
 			.filter(result => result.isDisqualification === false)
 			.sort((a, b) => a.timeTotal - b.timeTotal);
+
+		resultsForView = gapValueTour(resultsForView);
+
+		resultsForView.forEach((result, index) => {
+			result.timeTotal = secondesToTimeThousandths(result.timeTotal);
+			result.gapPrev = secondesToTime(result.gapPrev);
+			result.gap = secondesToTime(result.gap);
+		});
 
 		return resultsForView;
 	} catch (error) {
