@@ -16,6 +16,7 @@ const riderSchema = new Schema({
 	zwiftPower: String,
 	yearBirth: String,
 	category: String,
+	categoryTour: String,
 	gender: String,
 	settings: {
 		notice: {
