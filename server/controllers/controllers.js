@@ -237,7 +237,7 @@ export async function getGeneralTour(req, res) {
 		if (resultsTour)
 			return res
 				.status(200)
-				.json({ message: `Данные по генеральному зачету получены`, generalPoints });
+				.json({ message: `Данные по генеральному зачету получены`, resultsTour });
 		return res.status(400).json({ message: `Ошибка при получении данных генерального зачета` });
 	} catch (error) {
 		console.log(error);

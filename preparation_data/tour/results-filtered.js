@@ -17,7 +17,10 @@ export async function getFilterResults(seriesIdAndCategory) {
 
 		let results = [];
 		for (let i = 0; i < stagesDB.length; i++) {
-			let resultsDB = await Result.find({ stageId: stagesDB[i]?._id, category });
+			let resultsDB = await Result.find({ stageId: stagesDB[i]?._id, category }).populate({
+				path: 'stageId',
+				select: 'number',
+			});
 			results = [...results, ...resultsDB];
 		}
 
