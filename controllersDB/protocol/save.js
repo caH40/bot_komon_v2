@@ -38,7 +38,8 @@ export async function protocolToDB(results, seriesId, stageId) {
 			const newCategory = await updateCategoryDB(
 				stageDB.seriesId,
 				results[index],
-				categoryCurrent
+				categoryCurrent,
+				type
 			);
 
 			let time =
