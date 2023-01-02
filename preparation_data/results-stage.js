@@ -21,7 +21,7 @@ export async function getResultsStage(request) {
 		}
 
 		const stagesDB = await Stage.find({ _id: stageId });
-		console.log(stagesDB);
+
 		const seriesId = stagesDB[0].seriesId;
 		const seriesNumber = stagesDB[0].number;
 		const seriesType = stagesDB[0].type;

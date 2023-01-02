@@ -20,8 +20,8 @@ const stageSchema = new Schema({
 	quantityMountains: { type: Number, default: 0 },
 	registeredRider: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Rider' }],
 	protocol: { type: String },
-	hasResults: { type: Boolean, hasResults: false },
-	needCount: { type: Boolean, hasResults: true },
+	hasResults: { type: Boolean, default: false },
+	needCount: { type: Boolean, default: true },
 });
 
 export const Stage = model('Stage', stageSchema);

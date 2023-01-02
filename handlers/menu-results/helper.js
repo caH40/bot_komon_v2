@@ -41,14 +41,14 @@ export async function resultStage(ctx, cbqData) {
 	try {
 		const stageId = cbqData.slice(6);
 		const { number, seriesId } = await Stage.findOne({ _id: stageId });
-		const { name, dateStart } = await Series.findOne({ _id: seriesId });
+		const { name, dateStart, type } = await Series.findOne({ _id: seriesId });
 
 		let quantityWomenCategory = 2;
 		if (name === 'Autumn Race series 2022') quantityWomenCategory = 1;
 
 		return await ctx.editMessageText(
 			`<b>📝 Результаты этапа №${number} "${name}" ${getEmojiSeason(dateStart)}</b>`,
-			resultStageCatKeyboard(stageId, seriesId, quantityWomenCategory)
+			resultStageCatKeyboard(stageId, seriesId, quantityWomenCategory, type)
 		);
 	} catch (error) {
 		console.log(error);

@@ -91,7 +91,7 @@ export async function resultSeriesKeyboard(cbqData) {
 		...Markup.inlineKeyboard(await resultSeriesBtn(cbqData)),
 	};
 }
-export function resultStageCatKeyboard(stageId, seriesId, quantityWomenCategory) {
+export function resultStageCatKeyboard(stageId, seriesId, quantityWomenCategory, type) {
 	if (quantityWomenCategory === 1)
 		return {
 			parse_mode: 'html',
@@ -122,7 +122,11 @@ export function resultStageCatKeyboard(stageId, seriesId, quantityWomenCategory)
 				],
 				[Markup.button.webApp('Группа "A" 💪', `${process.env.SERVER}/results/stage/A${stageId}`)],
 				[Markup.button.webApp('Группа "B" 👊', `${process.env.SERVER}/results/stage/B${stageId}`)],
-				[Markup.button.webApp('Группа "C" ✌️', `${process.env.SERVER}/results/stage/C${stageId}`)],
+				type === 'tour'
+					? []
+					: [
+							Markup.button.webApp('Группа "C" ✌️', `${process.env.SERVER}/results/stage/C${stageId}`),
+					  ],
 				[
 					Markup.button.webApp(
 						'Группа "A (W)" 👍',
