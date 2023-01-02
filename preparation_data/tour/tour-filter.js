@@ -1,7 +1,7 @@
 import { Result } from '../../Model/Result.js';
 import { Stage } from '../../Model/Stage.js';
 
-export async function filterResults(seriesIdAndCategory) {
+export async function getFilterResults(seriesIdAndCategory) {
 	try {
 		let category = '';
 		let seriesId = '';
