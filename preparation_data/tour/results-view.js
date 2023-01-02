@@ -1,3 +1,5 @@
+import { Series } from '../../Model/Series.js';
+import { Stage } from '../../Model/Stage.js';
 import { secondesToTime, secondesToTimeThousandths } from '../../utility/date-convert.js';
 import { gapValueTour } from '../../utility/gap.js';
 
@@ -9,6 +11,9 @@ export async function getResultsForView(results) {
 			zwiftIdsSet.add(results[i].zwiftRiderId);
 			stagesSet.add(results[i].stageId.number);
 		}
+
+		const stageDB = await Stage.findOne({ _id: results[0].stageId });
+		const seriesDB = await Series.findOne({ _id: stageDB.seriesId });
 
 		const stages = Array.from(stagesSet);
 
@@ -37,6 +42,7 @@ export async function getResultsForView(results) {
 				imageSrc: resultsRider[0]?.imageSrc,
 				timeTotal,
 				isDisqualification,
+				seriesName: seriesDB.name,
 				time,
 			});
 		});
