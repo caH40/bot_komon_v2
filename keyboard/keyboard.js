@@ -275,6 +275,12 @@ export function resultTourGeneralKeyboard(seriesId) {
 					`${process.env.SERVER}/results/general-tour/WB${seriesId}`
 				),
 			],
+			[
+				Markup.button.webApp(
+					'Общая таблица 🤝',
+					`${process.env.SERVER}/results/general-tour/T${seriesId}`
+				),
+			],
 			[Markup.button.callback('Назад 🔙 ', `m_1_all__${seriesId}`)],
 			[Markup.button.callback('Главное меню ❗️', 'main')],
 		]),

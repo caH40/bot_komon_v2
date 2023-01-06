@@ -14,17 +14,34 @@ export async function getFilterResults(seriesIdAndCategory) {
 		}
 
 		const stagesDB = await Stage.find({ seriesId, hasResults: true, needCount: true });
+		let categorySearch = {};
 
-		let results = [];
-		for (let i = 0; i < stagesDB.length; i++) {
-			let resultsDB = await Result.find({ stageId: stagesDB[i]?._id, category }).populate({
-				path: 'stageId',
-				select: 'number',
-			});
-			results = [...results, ...resultsDB];
+		if (category === 'T') {
+			categorySearch = undefined;
+		} else {
+			categorySearch = { category };
 		}
 
-		return results;
+		let results = [];
+		if (category === 'T') {
+			for (let i = 0; i < stagesDB.length; i++) {
+				let resultsDB = await Result.find({ stageId: stagesDB[i]?._id }).populate({
+					path: 'stageId',
+					select: 'number',
+				});
+				results = [...results, ...resultsDB];
+			}
+			return results;
+		} else {
+			for (let i = 0; i < stagesDB.length; i++) {
+				let resultsDB = await Result.find({ stageId: stagesDB[i]?._id, category }).populate({
+					path: 'stageId',
+					select: 'number',
+				});
+				results = [...results, ...resultsDB];
+			}
+			return results;
+		}
 	} catch (error) {
 		console.log(error);
 	}
