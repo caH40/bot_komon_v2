@@ -23,6 +23,7 @@ import {
 	authenticate,
 	postUnderChecking,
 	getGeneralTour,
+	postProfile,
 } from '../controllers/controllers.js';
 
 export const router = new Router();
@@ -50,3 +51,4 @@ router.post('/api/teams', getTeams);
 router.post('/api/riders', getRiders);
 router.post('/api/disqualification', postDisqualification);
 router.post('/api/underchecking', postUnderChecking);
+router.post('/api/profile', postProfile);

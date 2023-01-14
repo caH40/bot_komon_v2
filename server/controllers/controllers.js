@@ -17,6 +17,7 @@ import { Rights } from '../../Model/Rights.js';
 import { checkAdmin, checkAdminWithHash } from './auth.js';
 import { saveResult } from '../../controllersDB/result-add.js';
 import { resultsTourGeneral } from '../../preparation_data/tour/tour.js';
+import { getProfile } from '../../preparation_data/profile/profile.js';
 
 const __dirname = path.resolve();
 
@@ -449,6 +450,16 @@ export async function postUnderChecking(req, res) {
 		if (!resultDB) return res.status(400).json({ message: `Не найден райдер` });
 
 		return res.status(200).json({ message });
+	} catch (error) {
+		console.log(error);
+	}
+}
+export async function postProfile(req, res) {
+	try {
+		const { zwiftId } = req.body;
+		const profile = await getProfile(zwiftId);
+		const message = `Данные Райдера ${zwiftId} получены`;
+		return res.status(200).json({ profile, message });
 	} catch (error) {
 		console.log(error);
 	}
