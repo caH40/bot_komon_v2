@@ -10,7 +10,12 @@ export async function accountButtons(ctx) {
 		const riderDB = await Rider.findOne({ telegramId });
 
 		return [
-			[Markup.button.callback('Мои результаты 🏅', 'm_3_1_E')],
+			[
+				Markup.button.webApp(
+					'Мои результаты 🏅',
+					`${process.env.SERVER}/profile/${riderDB.zwiftId}/close`
+				),
+			],
 			riderDB
 				? [Markup.button.callback('Обновить данные регистрации 🔄', 'account_registration')]
 				: [Markup.button.callback('Регистрация 🆔', 'account_registration')],
@@ -23,7 +28,9 @@ export async function accountButtons(ctx) {
 						),
 				  ]
 				: [],
-			riderDB ? [Markup.button.webApp('Обратная связь 💬', `${process.env.SERVER}/feedback/`)] : [],
+			riderDB
+				? [Markup.button.webApp('Обратная связь 💬', `${process.env.SERVER}/feedback/`)]
+				: [],
 			isAdmin || isRoot ? [Markup.button.callback('Админ пароль 🗝️', 'm_3_6_E')] : [],
 			[Markup.button.callback('Главное меню ❗️', 'main')],
 		];

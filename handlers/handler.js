@@ -1,6 +1,5 @@
 import { teamLeaveDB } from '../controllersDB/team-leave.js';
 import { beingDeveloped } from '../modules/beingDeveloped.js';
-import { myResults } from '../view/myresults/myresults-view.js';
 
 import { scheduleView } from '../view/schedule/schedule-view.js';
 import { listRiders } from '../view/team/riders-view.js';
@@ -35,7 +34,8 @@ export async function handler(ctx, cbqData) {
 		// if (cbqData.includes('m_1_all_3_E__')) return await resultsSeriesTeams(ctx, cbqData);FIXME: удалить функционал
 		if (cbqData.includes('m_3_2_E__')) return await listRiders(ctx, cbqData);
 		if (cbqData.includes('m_3_2_4_1_E--teamLeave_')) return await teamLeaveDB(ctx, cbqData);
-		if (cbqData.includes('m_3_2_2_all_E__teamJoin_')) return await teamChooseForJoin(ctx, cbqData);
+		if (cbqData.includes('m_3_2_2_all_E__teamJoin_'))
+			return await teamChooseForJoin(ctx, cbqData);
 
 		if (cbqData === 'm_1_')
 			return ctx.editMessageText(
@@ -60,7 +60,6 @@ export async function handler(ctx, cbqData) {
 		if (cbqData.includes('m_2_all__')) return await scheduleView(ctx, cbqData);
 		if (cbqData === 'm_2_V') return await getScheduleWeekly(ctx);
 		if (cbqData === 'm_3_') return await account(ctx);
-		if (cbqData === 'm_3_1_E') return await myResults(ctx, cbqData);
 
 		if (cbqData === 'admin_getProtocol') return await ctx.scene.enter('getProtocol');
 		if (cbqData === 'admin_getSchedule') return await ctx.scene.enter('downloadSchedule');
