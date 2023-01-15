@@ -35,7 +35,7 @@ export async function getProfile(zwiftRiderId) {
 				time: secondesToTime(result.time),
 				weightInGrams: Math.round(result.weightInGrams / 10) / 100,
 				stageId: result.stageId._id,
-				date: result.stageId.dateStart,
+				date: new Date(result.stageId.dateStart).toLocaleDateString(),
 				route: result.stageId.route,
 				series: result.stageId.seriesId.name,
 			});
