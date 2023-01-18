@@ -4,6 +4,7 @@ import { getResultsStage } from '../../preparation_data/results-stage.js';
 import { setDisqualification } from '../service/disqualification.js';
 import { getSeries } from '../service/series.js';
 import { getStages } from '../service/stages.js';
+import { setUnderChecking } from '../service/underchecking.js';
 
 const __dirname = path.resolve();
 
@@ -51,5 +52,20 @@ export async function postZpDisqualification(req, res) {
 	} catch (error) {
 		console.log(error);
 		return res.status(400).json({ message: `Ошибка при дисквалификации` });
+	}
+}
+
+export async function postZpUnderChecking(req, res) {
+	try {
+		const { isUnderChecking, resultId } = req.body;
+
+		const underChecking = await setUnderChecking(isUnderChecking, resultId);
+
+		return res.status(200).json({ message: underChecking.message });
+	} catch (error) {
+		console.log(error);
+		return res
+			.status(400)
+			.json({ message: `Ошибка при постановке под наблюдение за превышение категории!` });
 	}
 }
