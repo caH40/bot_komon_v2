@@ -25,6 +25,12 @@ import {
 	getGeneralTour,
 	postProfile,
 } from '../controllers/controllers.js';
+import {
+	postSeries,
+	postStages,
+	postStage,
+	postZpDisqualification,
+} from '../controllers/zwift-power.js';
 
 export const router = new Router();
 
@@ -52,3 +58,8 @@ router.post('/api/riders', getRiders);
 router.post('/api/disqualification', postDisqualification);
 router.post('/api/underchecking', postUnderChecking);
 router.post('/api/profile', postProfile);
+
+router.post('/api/series', postSeries);
+router.post('/api/stages', postStages);
+router.post('/api/stage', postStage);
+router.post('/api/zp/disqualification', postZpDisqualification);
