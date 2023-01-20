@@ -1,6 +1,7 @@
 import path from 'path';
 
 import { getResultsStage } from '../../preparation_data/results-stage.js';
+import { changeCategory } from '../service/category.js';
 import { setDisqualification } from '../service/disqualification.js';
 import { setPenalty } from '../service/penalty.js';
 import { getSeries } from '../service/series.js';
@@ -81,5 +82,22 @@ export async function postZpPenalty(req, res) {
 	} catch (error) {
 		console.log(error);
 		return res.status(400).json({ message: `Ошибка при начислении штрафных балов` });
+	}
+}
+
+export async function postZpCategory(req, res) {
+	try {
+		const { newCategory, zwiftId, stageId } = req.body;
+
+		const changedCategory = await changeCategory(newCategory, zwiftId, stageId);
+
+		if (changedCategory.status) throw changedCategory.message;
+
+		return res.status(201).json({ message: changedCategory.message });
+	} catch (error) {
+		console.log(error);
+		return res
+			.status(400)
+			.json({ message: typeof error !== 'string' ? 'Непредвиденная ошибка на сервере' : error });
 	}
 }

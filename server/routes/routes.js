@@ -32,6 +32,7 @@ import {
 	postZpDisqualification,
 	postZpUnderChecking,
 	postZpPenalty,
+	postZpCategory,
 } from '../controllers/zwift-power.js';
 
 export const router = new Router();
@@ -67,3 +68,4 @@ router.post('/api/stage', postStage);
 router.post('/api/zp/disqualification', postZpDisqualification);
 router.post('/api/zp/underchecking', postZpUnderChecking);
 router.post('/api/zp/stage/penalty', postZpPenalty);
+router.post('/api/zp/stage/change-category', postZpCategory);
