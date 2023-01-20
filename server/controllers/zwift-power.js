@@ -49,7 +49,7 @@ export async function postZpDisqualification(req, res) {
 
 		const disqualification = await setDisqualification(isDisqualification, resultId);
 
-		return res.status(200).json({ message: disqualification.message });
+		return res.status(201).json({ message: disqualification.message });
 	} catch (error) {
 		console.log(error);
 		return res.status(400).json({ message: `Ошибка при дисквалификации` });
@@ -62,7 +62,7 @@ export async function postZpUnderChecking(req, res) {
 
 		const underChecking = await setUnderChecking(isUnderChecking, resultId);
 
-		return res.status(200).json({ message: underChecking.message });
+		return res.status(201).json({ message: underChecking.message });
 	} catch (error) {
 		console.log(error);
 		return res
@@ -77,7 +77,7 @@ export async function postZpPenalty(req, res) {
 
 		const penalty = await setPenalty(newPenalty, resultId);
 
-		return res.status(200).json({ message: penalty.message });
+		return res.status(201).json({ message: penalty.message });
 	} catch (error) {
 		console.log(error);
 		return res.status(400).json({ message: `Ошибка при начислении штрафных балов` });
