@@ -2,6 +2,7 @@ import path from 'path';
 
 import { getResultsStage } from '../../preparation_data/results-stage.js';
 import { setDisqualification } from '../service/disqualification.js';
+import { setPenalty } from '../service/penalty.js';
 import { getSeries } from '../service/series.js';
 import { getStages } from '../service/stages.js';
 import { setUnderChecking } from '../service/underchecking.js';
@@ -67,5 +68,18 @@ export async function postZpUnderChecking(req, res) {
 		return res
 			.status(400)
 			.json({ message: `Ошибка при постановке под наблюдение за превышение категории!` });
+	}
+}
+
+export async function postZpPenalty(req, res) {
+	try {
+		const { newPenalty, resultId } = req.body;
+
+		const penalty = await setPenalty(newPenalty, resultId);
+
+		return res.status(200).json({ message: penalty.message });
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json({ message: `Ошибка при начислении штрафных балов` });
 	}
 }
