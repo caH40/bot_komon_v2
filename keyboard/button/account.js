@@ -10,12 +10,14 @@ export async function accountButtons(ctx) {
 		const riderDB = await Rider.findOne({ telegramId });
 
 		return [
-			[
-				Markup.button.webApp(
-					'Мои результаты 🏅',
-					`${process.env.SERVER}/profile/${riderDB.zwiftId}/close`
-				),
-			],
+			riderDB
+				? [
+						Markup.button.webApp(
+							'Мои результаты 🏅',
+							`${process.env.SERVER}/profile/${riderDB.zwiftId}/close`
+						),
+				  ]
+				: [],
 			riderDB
 				? [Markup.button.callback('Обновить данные регистрации 🔄', 'account_registration')]
 				: [Markup.button.callback('Регистрация 🆔', 'account_registration')],
