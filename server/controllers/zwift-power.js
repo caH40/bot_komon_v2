@@ -4,6 +4,7 @@ import { getResultsStage } from '../../preparation_data/results-stage.js';
 import { changeCategory } from '../service/category.js';
 import { setDisqualification } from '../service/disqualification.js';
 import { setPenalty } from '../service/penalty.js';
+import { setPoints } from '../service/points.js';
 import { getSeries } from '../service/series.js';
 import { getStages } from '../service/stages.js';
 import { setUnderChecking } from '../service/underchecking.js';
@@ -94,6 +95,19 @@ export async function postZpCategory(req, res) {
 		if (changedCategory.status) throw changedCategory.message;
 
 		return res.status(201).json({ message: changedCategory.message });
+	} catch (error) {
+		console.log(error);
+		return res
+			.status(400)
+			.json({ message: typeof error !== 'string' ? 'Непредвиденная ошибка на сервере' : error });
+	}
+}
+export async function postZpPoints(req, res) {
+	try {
+		const { pointsType, sequenceNumber, place, resultId, multiplier } = req.body;
+		const points = await setPoints(pointsType, sequenceNumber, place, resultId, multiplier);
+		if (points.status) throw points.message;
+		return res.status(201).json({ message: points.message });
 	} catch (error) {
 		console.log(error);
 		return res
