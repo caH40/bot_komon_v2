@@ -11,3 +11,13 @@ export async function getStages(series) {
 		console.log(err);
 	}
 }
+
+export async function getStage(stageId) {
+	try {
+		const stageDB = await Stage.findOne({ _id: stageId });
+		return { message: `Получены данные по этапу №${stageDB.number}`, data: stageDB };
+	} catch (error) {
+		console.log(error);
+		throw 'Непредвиденная ошибка на сервере';
+	}
+}

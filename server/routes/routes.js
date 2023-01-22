@@ -36,6 +36,7 @@ import {
 	postZpCategory,
 	postZpPoints,
 	postZpSeriesChanged,
+	postZpStage,
 } from '../controllers/zwift-power.js';
 
 export const router = new Router();
@@ -75,3 +76,4 @@ router.post('/api/zp/stage/penalty', postZpPenalty);
 router.post('/api/zp/stage/change-category', postZpCategory);
 router.post('/api/zp/stage/points', postZpPoints);
 router.post('/api/zp/series-changed', postZpSeriesChanged);
+router.post('/api/zp/stage', postZpStage);
