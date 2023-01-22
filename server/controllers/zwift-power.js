@@ -5,7 +5,7 @@ import { changeCategory } from '../service/category.js';
 import { setDisqualification } from '../service/disqualification.js';
 import { setPenalty } from '../service/penalty.js';
 import { setPoints } from '../service/points.js';
-import { getSeries } from '../service/series.js';
+import { changeSeries, getSeries, getSeriesOne } from '../service/series.js';
 import { getStages } from '../service/stages.js';
 import { setUnderChecking } from '../service/underchecking.js';
 
@@ -17,6 +17,17 @@ export async function postSeries(req, res) {
 		return res.status(200).json({ message: `Данные серий заездов`, series });
 	} catch (error) {
 		res.status(400).json({ message: `Ошибка при получении данных серий` });
+		console.log(error);
+	}
+}
+
+export async function postSeriesOne(req, res) {
+	try {
+		const { seriesId } = req.body;
+		const series = await getSeriesOne(seriesId);
+		return res.status(200).json({ message: `Данные серии`, series });
+	} catch (error) {
+		res.status(400).json({ message: `Ошибка при получении данных серии` });
 		console.log(error);
 	}
 }
@@ -108,6 +119,20 @@ export async function postZpPoints(req, res) {
 		const points = await setPoints(pointsType, sequenceNumber, place, resultId, multiplier);
 		if (points.status) throw points.message;
 		return res.status(201).json({ message: points.message });
+	} catch (error) {
+		console.log(error);
+		return res
+			.status(400)
+			.json({ message: typeof error !== 'string' ? 'Непредвиденная ошибка на сервере' : error });
+	}
+}
+
+export async function postZpSeriesChanged(req, res) {
+	try {
+		const { seriesChanged } = req.body;
+		const series = await changeSeries(seriesChanged);
+		if (series.status) throw series.message;
+		return res.status(201).json({ message: series.message });
 	} catch (error) {
 		console.log(error);
 		return res
