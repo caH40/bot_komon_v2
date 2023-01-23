@@ -21,3 +21,55 @@ export async function getStage(stageId) {
 		throw 'Непредвиденная ошибка на сервере';
 	}
 }
+
+export async function postStageChanged({
+	_id,
+	number,
+	type,
+	dateStart,
+	timeStart,
+	world,
+	route,
+	routeLink,
+	distance,
+	ascent,
+	laps,
+	link,
+	quantitySprints,
+	quantityMountains,
+	registeredRider,
+	protocol,
+	hasResults,
+	needCount,
+}) {
+	try {
+		const stageDB = await Stage.findOneAndUpdate(
+			{ _id },
+			{
+				$set: {
+					number,
+					type,
+					dateStart,
+					timeStart,
+					world,
+					route,
+					routeLink,
+					distance,
+					ascent,
+					laps,
+					link,
+					quantitySprints,
+					quantityMountains,
+					registeredRider,
+					protocol,
+					hasResults,
+					needCount,
+				},
+			}
+		);
+		return { message: `Изменения в ${number} этапе сохранены!`, data: stageDB };
+	} catch (error) {
+		console.log(error);
+		throw 'Непредвиденная ошибка на сервере';
+	}
+}

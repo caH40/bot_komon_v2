@@ -6,7 +6,7 @@ import { setDisqualification } from '../service/disqualification.js';
 import { setPenalty } from '../service/penalty.js';
 import { setPoints } from '../service/points.js';
 import { changeSeries, getSeries, getSeriesOne } from '../service/series.js';
-import { getStage, getStages } from '../service/stages.js';
+import { getStage, getStages, postStageChanged } from '../service/stages.js';
 import { setUnderChecking } from '../service/underchecking.js';
 
 const __dirname = path.resolve();
@@ -147,6 +147,20 @@ export async function postZpStage(req, res) {
 		const stage = await getStage(stageId);
 		if (stage.status) throw stage.message;
 		return res.status(201).json({ ...stage });
+	} catch (error) {
+		console.log(error);
+		return res
+			.status(400)
+			.json({ message: typeof error !== 'string' ? 'Непредвиденная ошибка на сервере' : error });
+	}
+}
+
+export async function postZpStageChanged(req, res) {
+	try {
+		const { stageChanged } = req.body;
+		const responseStage = await postStageChanged(stageChanged);
+		if (responseStage.status) throw responseStage.message;
+		return res.status(201).json({ message: responseStage.message });
 	} catch (error) {
 		console.log(error);
 		return res
