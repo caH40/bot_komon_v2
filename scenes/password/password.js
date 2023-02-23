@@ -10,8 +10,8 @@ export const passwordForAdminScene = new Scenes.BaseScene('passwordForAdmin');
 passwordForAdminScene.enter(async ctx => {
 	ctx.session.data.passwordAdmin = {};
 	ctx.session.data.passwordAdmin.counter = 0;
-	const nameTg = ctx.session.data.passwordAdmin.first_name;
 	getTelegramId(ctx);
+	const nameTg = ctx.session.data.passwordAdmin.first_name;
 	await ctx.replyWithHTML(t.welcome1 + nameTg + t.welcome2);
 	await ctx.replyWithHTML(t.question);
 });
