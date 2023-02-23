@@ -68,7 +68,7 @@ export async function updatePointsGeneral(seriesId) {
 					);
 				}
 				//WT очки, учитываемые в командном зачете
-				if (resultsDB[j].category.includes('W')) {
+				if (resultsDB[j].category?.includes('W')) {
 					placeW++;
 					await Result.findByIdAndUpdate(
 						{ _id: resultsDB[j]._id },
