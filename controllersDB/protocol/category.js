@@ -7,7 +7,8 @@ export async function updateCategoryDB(seriesId, result, categoryCurrent, type) 
 		if (type === 'tour') {
 			const riderDB = await Rider.findOne({ zwiftId: result.zwiftId });
 			//если аккаунт существует, то выход
-			if (riderDB?.categoryTour) return { category: riderDB.categoryTour };
+			// if (riderDB?.categoryTour) return { category: riderDB.categoryTour }; //
+
 			if (riderDB) {
 				riderDB.categoryTour = riderDB.category;
 				await riderDB.save();

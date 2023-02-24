@@ -4,7 +4,7 @@ import { noticeFromAdmin } from '../modules/notice.js';
 export async function sendNotice(ctx) {
 	try {
 		const message = ctx.message.text;
-		if (!message.includes('#forAll')) return;
+		if (!message?.includes('#forAll')) return;
 
 		const userId = ctx.message.from.id;
 		const adminDB = await Rights.findOne({ admin: userId });

@@ -108,7 +108,7 @@ export async function postStageEdit(req, res) {
 
 		const riderDB = await Rider.findOneAndUpdate(
 			{ zwiftId: zwiftId },
-			{ $set: { category: newCategory } }
+			{ $set: { category: newCategory, categoryTour: newCategory } }
 		);
 		// if (!riderDB) return res.status(400).json({ message: `Райдер не найден в БД` });
 
