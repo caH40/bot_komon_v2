@@ -25,20 +25,6 @@ import {
 	getGeneralTour,
 	postProfile,
 } from '../controllers/controllers.js';
-import {
-	postSeries,
-	postSeriesOne,
-	postStages,
-	postStage,
-	postZpDisqualification,
-	postZpUnderChecking,
-	postZpPenalty,
-	postZpCategory,
-	postZpPoints,
-	postZpSeriesChanged,
-	postZpStage,
-	postZpStageChanged,
-} from '../controllers/zwift-power.js';
 
 export const router = new Router();
 
@@ -66,16 +52,3 @@ router.post('/api/riders', getRiders);
 router.post('/api/disqualification', postDisqualification);
 router.post('/api/underchecking', postUnderChecking);
 router.post('/api/profile', postProfile);
-
-router.post('/api/series', postSeries);
-router.post('/api/seriesone', postSeriesOne);
-router.post('/api/stages', postStages);
-router.post('/api/stage', postStage);
-router.post('/api/zp/disqualification', postZpDisqualification);
-router.post('/api/zp/underchecking', postZpUnderChecking);
-router.post('/api/zp/stage/penalty', postZpPenalty);
-router.post('/api/zp/stage/change-category', postZpCategory);
-router.post('/api/zp/stage/points', postZpPoints);
-router.post('/api/zp/series-changed', postZpSeriesChanged);
-router.post('/api/zp/stage', postZpStage);
-router.post('/api/zp/stage-changed', postZpStageChanged);

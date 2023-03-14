@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 
 import { routerAuth } from './routes/authentication.js';
 import { router } from './routes/routes.js';
+import { routerZP } from './routes/routesZP.js';
 
 const __dirname = path.resolve();
 
@@ -25,6 +26,7 @@ export async function serverExpress() {
 	app.use(express.static(path.resolve(__dirname, 'build')));
 
 	app.use(router);
+	app.use(routerZP);
 	app.use('/api/auth', routerAuth);
 	app.listen(PORT, () => console.log('server started on PORT=' + PORT));
 }

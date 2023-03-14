@@ -23,6 +23,7 @@ export async function authModerator(req, res, next) {
 export async function authAdmin(req, res, next) {
 	try {
 		const { authorization } = req.headers;
+
 		if (!authorization) return res.status(401).json({ message: 'Нет Authorization' });
 		const accessToken = authorization?.split(' ')[1];
 
