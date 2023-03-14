@@ -8,10 +8,10 @@ export async function authorizationService(username, password, refreshToken) {
 		const userDB = await User.findOne({ username });
 
 		const wrongAuth = { message: `Неверный Логин или Пароль`, status: 'wrong' };
-		if (!userDB) return wrongAuth;
+		if (!userDB) throw wrongAuth;
 
 		const isValidPassword = await bcrypt.compare(password, userDB.password);
-		if (!isValidPassword) return wrongAuth;
+		if (!isValidPassword) throw wrongAuth;
 
 		await removeToken(refreshToken);
 
@@ -36,7 +36,6 @@ export async function authorizationService(username, password, refreshToken) {
 			},
 		};
 	} catch (error) {
-		console.log(error);
 		throw error;
 	}
 }

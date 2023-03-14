@@ -38,8 +38,7 @@ export async function authorization(req, res) {
 		});
 		res.status(201).json({ ...response, refreshToken: undefined });
 	} catch (error) {
-		console.log(error);
-		res.status(401).json('Непредвиденная ошибка');
+		res.status(401).json(error);
 	}
 }
 
