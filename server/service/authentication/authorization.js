@@ -1,11 +1,11 @@
 import bcrypt from 'bcrypt';
-import { Rider } from '../../../Model/Rider.js';
 
+import { User } from '../../ModelServer/User.js';
 import { generateToken, removeToken, saveToken } from './token.js';
 
 export async function authorizationService(username, password, refreshToken) {
 	try {
-		const userDB = await Rider.findOne({ username });
+		const userDB = await User.findOne({ username });
 
 		const wrongAuth = { message: `Неверный Логин или Пароль`, status: 'wrong' };
 		if (!userDB) return wrongAuth;

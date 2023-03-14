@@ -1,15 +1,12 @@
-import { UserConfirm } from '../../../Model/User-confirm.js';
-import { Rider } from '../../../Model/Rider.js';
+import { UserConfirm } from '../../ModelServer/User-confirm.js';
+import { User } from '../../ModelServer/User.js';
 
 export async function confirmEmailService(activationToken) {
 	try {
 		const userConfirmDB = await UserConfirm.findOneAndDelete({ activationToken });
 
 		if (userConfirmDB) {
-			await Rider.findOneAndUpdate(
-				{ _id: userConfirmDB.userId },
-				{ $set: { emailConfirm: true } }
-			);
+			await User.findOneAndUpdate({ _id: userConfirmDB.userId }, { $set: { emailConfirm: true } });
 			return { message: `Email подтверждён, аккаунт активирован!` };
 		}
 

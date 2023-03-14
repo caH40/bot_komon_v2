@@ -1,6 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
-
-import { PasswordReset } from '../../../Model/Password-reset.js';
+import { PasswordReset } from '../../ModelServer/Password-reset.js';
 
 export async function checkRequestPasswordService(tokenReset) {
 	try {

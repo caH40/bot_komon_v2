@@ -1,22 +1,21 @@
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
-import { UserConfirm } from '../../../Model/User-confirm.js';
+import { UserConfirm } from '../../ModelServer/User-confirm.js';
 
-import { Rider } from '../../../Model/Rider.js';
+import { User } from '../../ModelServer/User.js';
 import { mailService } from './nodemailer.js';
 import { generateToken, saveToken } from './token.js';
 
 export async function registrationService(username, email, password) {
 	try {
-		const checkUsername = await Rider.findOne({ username });
-		if (checkUsername) return { message: `Username "${username}" уже занят`, status: 'wrong' };
-		const checkEmail = await Rider.findOne({ email });
-		if (checkEmail)
-			return { message: `Пользователь с "${email}" уже существует`, status: 'wrong' };
+		const checkUsername = await User.findOne({ username });
+		if (checkUsername) throw { message: `Username "${username}" уже занят` };
+		const checkEmail = await User.findOne({ email });
+		if (checkEmail) throw { message: `Пользователь с "${email}" уже существует` };
 
 		const hashPassword = await bcrypt.hash(password, 10);
 		const activationToken = uuidv4();
-		const { _id: id, role } = await Rider.create({
+		const { _id: id, role } = await User.create({
 			username,
 			email,
 			password: hashPassword,
@@ -40,7 +39,6 @@ export async function registrationService(username, email, password) {
 		const message = 'Регистрация прошла успешно';
 		return { ...tokens, message, user: { username, email, id, role } };
 	} catch (error) {
-		console.log(error);
 		throw error;
 	}
 }

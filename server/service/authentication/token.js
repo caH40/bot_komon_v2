@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import 'dotenv/config';
-import { Token } from '../../../Model/Token.js';
+import { Token } from '../../ModelServer/Token.js';
 
 const { JWT_ACCESS_SECRET, JWT_REFRESH_SECRET } = process.env;
 

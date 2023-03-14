@@ -1,12 +1,12 @@
 import bcrypt from 'bcrypt';
 
-import { Rider } from '../../../Model/Rider.js';
+import { User } from '../../ModelServer/User.js';
 import { mailService } from './nodemailer.js';
 
 export async function newPasswordService(userId, newPassword) {
 	try {
 		const hashPassword = await bcrypt.hash(newPassword, 10);
-		const userDB = await Rider.findOneAndUpdate(
+		const userDB = await User.findOneAndUpdate(
 			{ _id: userId },
 			{ $set: { password: hashPassword } }
 		);

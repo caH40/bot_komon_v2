@@ -26,12 +26,7 @@ const riderSchema = new Schema({
 			training: { type: Boolean, default: true },
 		},
 	},
-	username: { type: String, unique: true },
 	password: String,
-	role: { type: String },
-	photoProfile: { type: String },
-	email: { type: String, unique: true, required: true },
-	emailConfirm: { type: Boolean, default: false },
 });
 
 export const Rider = model('Rider', riderSchema);

@@ -1,12 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { PasswordReset } from '../../../Model/Password-reset.js';
-import { Rider } from '../../../Model/Rider.js';
+import { PasswordReset } from '../../ModelServer/Password-reset.js';
+import { User } from '../../ModelServer/User.js';
 import { mailService } from './nodemailer.js';
 
 export async function resetPasswordService(email) {
 	try {
-		const userDB = await Rider.findOne({ email });
+		const userDB = await User.findOne({ email });
 		if (!userDB) throw { message: 'e-mail не найден' };
 
 		const tokenReset = uuidv4();
