@@ -1,5 +1,5 @@
 import { Result } from '../../Model/Result.js';
-import { secondesToTime } from '../../utility/date-convert.js';
+import { secondesToTime, convertDate } from '../../utility/date-convert.js';
 
 export async function getProfile(zwiftRiderId) {
 	try {
@@ -41,7 +41,7 @@ export async function getProfile(zwiftRiderId) {
 			});
 		});
 
-		results.sort((a, b) => a.date - b.date);
+		results.sort((a, b) => convertDate(b.date) - convertDate(a.date));
 		return results;
 	} catch (error) {
 		console.log(error);
