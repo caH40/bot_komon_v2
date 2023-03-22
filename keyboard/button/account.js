@@ -33,7 +33,7 @@ export async function accountButtons(ctx) {
 			riderDB
 				? [Markup.button.webApp('Обратная связь 💬', `${process.env.SERVER}/feedback/`)]
 				: [],
-			isAdmin || isRoot ? [Markup.button.callback('Админ пароль 🗝️', 'm_3_6_E')] : [],
+			// isAdmin || isRoot ? [Markup.button.callback('Админ пароль 🗝️', 'm_3_6_E')] : [],
 			[Markup.button.callback('Главное меню ❗️', 'main')],
 		];
 	} catch (error) {

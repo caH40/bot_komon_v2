@@ -169,7 +169,7 @@ export function teamManagementKeyboard(userId) {
 		]),
 	};
 }
-export function resultSeriesGeneralKeyboard(seriesId, quantityWomenCategory) {
+export function resultSeriesGeneralKeyboard(seriesId, quantityWomenCategory, hideW) {
 	if (quantityWomenCategory === 1)
 		return {
 			parse_mode: 'html',
@@ -236,12 +236,14 @@ export function resultSeriesGeneralKeyboard(seriesId, quantityWomenCategory) {
 						`${process.env.SERVER}/results/general/WB${seriesId}`
 					),
 				],
-				[
-					Markup.button.webApp(
-						'Группа "W" (Очки для командного зачета)',
-						`${process.env.SERVER}/results/general/WT${seriesId}`
-					),
-				],
+				hideW
+					? []
+					: [
+							Markup.button.webApp(
+								'Группа "W" (Очки для командного зачета)',
+								`${process.env.SERVER}/results/general/WT${seriesId}`
+							),
+					  ],
 				[Markup.button.callback('Назад 🔙 ', `m_1_all__${seriesId}`)],
 				[Markup.button.callback('Главное меню ❗️', 'main')],
 			]),

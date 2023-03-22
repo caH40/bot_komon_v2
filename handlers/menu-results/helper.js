@@ -60,6 +60,8 @@ export async function resultGeneral(ctx, cbqData) {
 		const { name, dateStart, type } = await Series.findOne({ _id });
 
 		let quantityWomenCategory = 2;
+		let hideW = false;
+		if (dateStart > 1672531200000) hideW = true;
 		if (name === 'Autumn Race series 2022') quantityWomenCategory = 1;
 
 		if (type === 'tour') {
@@ -70,7 +72,7 @@ export async function resultGeneral(ctx, cbqData) {
 		} else {
 			return await ctx.editMessageText(
 				`<b>👑 Генеральный зачет серии "${name}" ${getEmojiSeason(dateStart)}</b>`,
-				resultSeriesGeneralKeyboard(_id, quantityWomenCategory)
+				resultSeriesGeneralKeyboard(_id, quantityWomenCategory, hideW)
 			);
 		}
 	} catch (error) {
