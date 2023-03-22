@@ -72,7 +72,7 @@ export function scheduleKeyboard(series) {
 	const keyboard = {
 		parse_mode: 'html',
 		...Markup.inlineKeyboard([
-			[Markup.button.callback('Еженедельные заезды 📌', 'm_2_V')],
+			// [Markup.button.callback('Еженедельные заезды 📌', 'm_2_V')],
 			...series.map(elm => [
 				Markup.button.callback(
 					`${getEmojiSeason(elm.dateStart)} ${elm.name} 🚴🏻‍♀️`,
