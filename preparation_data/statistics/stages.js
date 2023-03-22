@@ -13,18 +13,21 @@ export async function getStatStages() {
 				result => String(result.stageId) === String(stageElm._id)
 			);
 
+			const leaderResult = resultsStage?.sort((a, b) => a.time - b.time)[0];
 			stage._id = resultsStage[0]?._id;
 			stage.series = stageElm.seriesId.name;
+			stage.stageId = stageElm._id;
 			stage.number = stageElm.number;
 			stage.route = stageElm.route;
 			stage.type = stageElm.type;
 			stage.dateStart = stageElm.dateStart;
 			stage.quantity = resultsStage?.length;
-			stage.timeBest = resultsStage?.sort((a, b) => a.time - b.time)[0].time;
+			stage.timeBest = leaderResult.time;
+			stage.leader = leaderResult.name;
 			statistics.push(stage);
 		});
 
-		statistics.sort((a, b) => a.dateStart - b.dateStart);
+		statistics.sort((a, b) => b.dateStart - a.dateStart);
 
 		return statistics;
 	} catch (error) {
