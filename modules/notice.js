@@ -2,6 +2,7 @@ import { session, Telegraf } from 'telegraf';
 
 import { Click } from '../Model/Click.js';
 import { Rider } from '../Model/Rider.js';
+import { Series } from '../Model/Series.js';
 import { Stage } from '../Model/Stage.js';
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
@@ -38,9 +39,10 @@ export async function getUsersForSpam(theme) {
 
 export async function noticeGetResult(protocol) {
   try {
-    const users = await getUsersForSpam('botInfo');
-    const stageDB = await Stage.findOne({ _id: protocol.stageId }).populate('seriesId');
+    const seriesName = protocol.fileAttributes.name.split('_')[0];
+    const stageNumber = protocol.fileAttributes.name.split('_Stage-')[1].split('.')[0];
 
+    const users = await getUsersForSpam('botInfo');
     //массив с telegramID райдеров, принимавших участие в заезде
     const ridersDB = await Rider.find();
     let telegramIdRidersInProtocol = [];
@@ -54,9 +56,7 @@ export async function noticeGetResult(protocol) {
       let subMessage = telegramIdRidersInProtocol.includes(telegramId)
         ? 'в котором Вы принимали участие.'
         : '';
-      let message = `${new Date().toLocaleString()}. Загружены результаты этапа №${
-        stageDB.number
-      } ${stageDB.seriesId.name} ${subMessage} 📋`;
+      let message = `${new Date().toLocaleString()}. Загружены результаты этапа №${stageNumber} ${seriesName} ${subMessage} 📋`;
       setTimeout(async () => {
         await bot.telegram
           .sendMessage(telegramId, message)
