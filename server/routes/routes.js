@@ -1,30 +1,33 @@
 import { Router } from 'express';
+
+import { postNoticeProtocol, postNoticeForAll } from '../controllers/bot.js';
 import {
-	mainPage,
-	resultsStage,
-	getRiderSettings,
-	postRiderSettings,
-	postStageEdit,
-	postStagePoints,
-	getGeneralPoints,
-	getMountainPoints,
-	getSprintPoints,
-	postStagePenalty,
-	postAddResult,
-	getTeamsPoints,
-	postClick,
-	getStatisticsRiders,
-	getStatisticsStages,
-	getFeedback,
-	postFeedback,
-	getTeams,
-	getRiders,
-	postDisqualification,
-	authenticate,
-	postUnderChecking,
-	getGeneralTour,
-	postProfile,
+  mainPage,
+  resultsStage,
+  getRiderSettings,
+  postRiderSettings,
+  postStageEdit,
+  postStagePoints,
+  getGeneralPoints,
+  getMountainPoints,
+  getSprintPoints,
+  postStagePenalty,
+  postAddResult,
+  getTeamsPoints,
+  postClick,
+  getStatisticsRiders,
+  getStatisticsStages,
+  getFeedback,
+  postFeedback,
+  getTeams,
+  getRiders,
+  postDisqualification,
+  authenticate,
+  postUnderChecking,
+  getGeneralTour,
+  postProfile,
 } from '../controllers/controllers.js';
+import { authAdmin } from '../middleware/authRole.js';
 
 export const router = new Router();
 
@@ -52,3 +55,6 @@ router.post('/api/riders', getRiders);
 router.post('/api/disqualification', postDisqualification);
 router.post('/api/underchecking', postUnderChecking);
 router.post('/api/profile', postProfile);
+
+router.post('/api/notice/protocol', authAdmin, postNoticeProtocol);
+router.post('/api/notice/message', authAdmin, postNoticeForAll);
