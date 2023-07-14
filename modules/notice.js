@@ -108,3 +108,19 @@ export async function noticeFromAdminService(message) {
     console.log(error);
   }
 }
+// отправка сообщения о новом релизе на сайте в группу telegramId с последующим закреплением сообщения
+export async function noticeGroupWithPinService(messageObg) {
+  try {
+    const date = new Date(messageObg.releaseDate).toLocaleDateString();
+    const message = `Обновление на сайте от ${date}!\n<b>${messageObg.text}</b>`;
+    const telegramId = process.env.TELEGRAM_GROUP_NOTICE;
+    const response = await bot.telegram
+      .sendMessage(telegramId, message, { parse_mode: 'html' })
+      .catch((_) => true);
+    await bot.telegram
+      .pinChatMessage(telegramId, response.message_id, message)
+      .catch((_) => true);
+  } catch (error) {
+    console.log(error);
+  }
+}

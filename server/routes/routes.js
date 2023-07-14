@@ -1,6 +1,10 @@
 import { Router } from 'express';
 
-import { postNoticeProtocol, postNoticeForAll } from '../controllers/bot.js';
+import {
+  postNoticeProtocol,
+  postNoticeForAll,
+  postNoticeGroupPin,
+} from '../controllers/bot.js';
 import {
   mainPage,
   resultsStage,
@@ -58,3 +62,4 @@ router.post('/api/profile', postProfile);
 
 router.post('/api/notice/protocol', authAdmin, postNoticeProtocol);
 router.post('/api/notice/message', authAdmin, postNoticeForAll);
+router.post('/api/notice/group/pin', postNoticeGroupPin);

@@ -16,11 +16,11 @@ import { readChannelPosts } from './modules/channel.js';
 import { sendNotice } from './controllers/notice-post.js';
 
 await mongoose
-	.connect(process.env.MONGODB)
-	.then(() => console.log('Connected to Mongo..'))
-	.catch(error => console.log(error));
+  .connect(process.env.MONGODB)
+  .then(() => console.log('Connected to Mongo..'))
+  .catch((error) => console.log(error));
 
-await serverExpress().catch(error => console.log(error));
+await serverExpress().catch((error) => console.log(error));
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
@@ -31,13 +31,13 @@ bot.use(stage.middleware());
 bot.use(filterMessage);
 bot.use(countClick);
 
-bot.command('start', async ctx => await start(ctx));
-bot.command('help', async ctx => await help(ctx));
-bot.command('main', async ctx => await mainMenu(ctx));
-bot.command('click', async ctx => await getClicks(ctx));
-bot.on('callback_query', async ctx => await callbackQuery(ctx));
-bot.on('channel_post', async ctx => await readChannelPosts(ctx, ctx.update.channel_post));
-bot.on('message', async ctx => await sendNotice(ctx));
+bot.command('start', async (ctx) => await start(ctx));
+bot.command('help', async (ctx) => await help(ctx));
+bot.command('main', async (ctx) => await mainMenu(ctx));
+bot.command('click', async (ctx) => await getClicks(ctx));
+bot.on('callback_query', async (ctx) => await callbackQuery(ctx));
+bot.on('channel_post', async (ctx) => await readChannelPosts(ctx, ctx.update.channel_post));
+bot.on('message', async (ctx) => await sendNotice(ctx));
 
 bot.launch().then(nodeSchedule());
 
