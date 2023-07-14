@@ -112,7 +112,7 @@ export async function noticeFromAdminService(message) {
 export async function noticeGroupWithPinService(messageObg) {
   try {
     const date = new Date(messageObg.releaseDate).toLocaleDateString();
-    const message = `Обновление на сайте от ${date}!\n<b>${messageObg.text}</b>`;
+    const message = `<i>обновление на сайте от ${date}:</i>\n<b>${messageObg.text}</b>`;
     const telegramId = process.env.TELEGRAM_GROUP_NOTICE;
     const response = await bot.telegram
       .sendMessage(telegramId, message, { parse_mode: 'html' })
